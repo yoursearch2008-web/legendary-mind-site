@@ -273,6 +273,15 @@
     /* ── SCROLL REVEAL ── */
     .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s, transform 0.6s; }
     .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── EMAIL CAPTURE ── */
+    .newsletter-wrap { background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--green); border-radius: 8px; padding: 48px 40px; text-align: center; max-width: 600px; margin: 0 auto; }
+    .newsletter-icon { font-size: 2rem; margin-bottom: 12px; }
+    .newsletter-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 2px; margin-bottom: 8px; }
+    .newsletter-sub { color: #888; font-size: 0.9rem; margin-bottom: 28px; line-height: 1.6; }
+    .newsletter-form { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+    .newsletter-input { flex: 1; min-width: 220px; padding: 14px 18px; background: #0a0a0a; border: 1px solid #2a2a2a; border-radius: 4px; color: #fff; font-size: 0.9rem; outline: none; }
+    .newsletter-btn { padding: 14px 28px; background: var(--green); color: #000; font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; border: none; border-radius: 4px; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -413,8 +422,63 @@
         <h4>Should You Upgrade to GTA VI?</h4>
         <p>Honest answer depending on your setup and what you care about.</p>
       </a>
+      <a class="guide" href="pages/gta5-cheats.html">
+        <div class="guide-num">05</div>
+        <h4>GTA V Cheat Codes — Full List</h4>
+        <p>Every cheat for PS5, Xbox, and PC. Copy-paste ready fr fr.</p>
+      </a>
+      <a class="guide" href="pages/gta6-release-date.html">
+        <div class="guide-num">06</div>
+        <h4>GTA VI Release Date & Info</h4>
+        <p>Everything Rockstar confirmed — platforms, price, map, characters.</p>
+      </a>
+      <a class="guide" href="pages/gta6-characters.html">
+        <div class="guide-num">07</div>
+        <h4>GTA VI Characters — Jason & Lucia</h4>
+        <p>Who they are and why this duo hits different than GTA V's trio.</p>
+      </a>
+      <a class="guide" href="pages/gta5-mods.html">
+        <div class="guide-num">08</div>
+        <h4>Best GTA V Mods 2025</h4>
+        <p>Graphics, gameplay, and map mods that make GTA V feel brand new.</p>
+      </a>
+      <a class="guide" href="pages/gta6-tips.html">
+        <div class="guide-num">09</div>
+        <h4>GTA VI Tips & Tricks</h4>
+        <p>Money, combat, wanted level, online — the things the game won't tell you.</p>
+      </a>
     </div>
   </section>
+
+  <!-- EMAIL CAPTURE -->
+  <section id="newsletter" style="padding-top:0">
+    <div class="newsletter-wrap reveal">
+      <div class="newsletter-icon">🎮</div>
+      <div class="newsletter-title">GET FREE GTA VI TIPS</div>
+      <p class="newsletter-sub">Drop your email. We send you fire GTA VI tips, money guides, and early access content. No spam, no cap.</p>
+      <form class="newsletter-form" action="https://formsubmit.co/yoursearch2008@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="New legendary.mind subscriber!" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_next" value="https://yoursearch2008-web.github.io/legendary-mind-site/?subscribed=1" />
+        <input class="newsletter-input" type="email" name="email" placeholder="your@email.com" required />
+        <button class="newsletter-btn" type="submit">Send Me Tips →</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ADSENSE PLACEHOLDER — paste your publisher ID when approved -->
+  <!-- To activate: replace ca-pub-XXXXXXXXXXXXXXXX with your AdSense ID -->
+  <!--
+  <section style="padding:20px 24px;max-width:1100px;margin:0 auto;text-align:center">
+    <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+      data-ad-slot="AUTO"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </section>
+  -->
 
   <!-- FOOTER -->
   <footer>
