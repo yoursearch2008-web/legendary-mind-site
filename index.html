@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>legendary.mind — GTA VI vs GTA V</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap');
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --green:  #00ff88;
+      --red:    #ff3c3c;
+      --dark:   #080808;
+      --card:   #111111;
+      --border: #1e1e1e;
+      --muted:  #555;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 40px;
+      background: rgba(8,8,8,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      color: var(--green);
+      letter-spacing: 2px;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #fff; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        url('https://image.pollinations.ai/prompt/GTA%20VI%20and%20GTA%20V%20cinematic%20banner%2C%20Vice%20City%20neon%20skyline%2C%20Los%20Santos%20in%20background%2C%20ultra%20wide%2C%20dark%20dramatic%20lighting%2C%20no%20text%2C%20hyperrealistic%204k?width=1920&height=1080&nologo=true')
+        center/cover no-repeat;
+      filter: brightness(0.35);
+      z-index: 0;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, var(--dark) 100%);
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 860px; }
+
+    .badge {
+      display: inline-block;
+      background: var(--red);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 2px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      line-height: 0.95;
+      letter-spacing: 2px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 span.v6 { color: var(--green); }
+    .hero h1 span.vs { color: var(--muted); font-size: 60%; }
+    .hero h1 span.v5 { color: var(--red); }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: #aaa;
+      max-width: 560px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: transform 0.15s, opacity 0.15s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn:hover { transform: translateY(-2px); opacity: 0.9; }
+    .btn-primary { background: var(--green); color: #000; }
+    .btn-secondary { background: transparent; color: #fff; border: 2px solid var(--border); }
+    .btn-red { background: var(--red); color: #fff; }
+
+    /* ── STATS BAR ── */
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      padding: 40px 24px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.4rem;
+      color: var(--green);
+      letter-spacing: 1px;
+    }
+    .stat-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+    /* ── SECTIONS ── */
+    section { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+    .section-sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 48px; }
+
+    /* ── COMPARISON CARDS ── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 28px;
+      transition: border-color 0.2s, transform 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .card:hover { border-color: var(--green); transform: translateY(-4px); }
+
+    .card-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+    .card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; }
+    .card p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+    .card-arrow { margin-top: 20px; color: var(--green); font-size: 0.85rem; font-weight: 600; }
+
+    /* ── VERDICT ── */
+    .verdict {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--green);
+      border-radius: 8px;
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    @media (max-width: 600px) { .verdict { grid-template-columns: 1fr; } }
+    .verdict-side h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+    .verdict-side.gta6 h3 { color: var(--green); }
+    .verdict-side.gta5 h3 { color: var(--red); }
+    .pro { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; font-size: 0.88rem; color: #ccc; }
+    .pro::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+
+    /* ── GUIDES ── */
+    .guides { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .guide {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 22px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s;
+    }
+    .guide:hover { border-color: var(--red); }
+    .guide-num { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--border); margin-bottom: 8px; }
+    .guide h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+    .guide p { font-size: 0.8rem; color: var(--muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 40px 24px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+    footer a { color: var(--green); text-decoration: none; }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s, transform 0.6s; }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="logo" href="#">legendary.mind 💀</a>
+    <ul class="nav-links">
+      <li><a href="#comparison">Comparison</a></li>
+      <li><a href="#verdict">Verdict</a></li>
+      <li><a href="#guides">Guides</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <span class="badge">🔥 The Ultimate Breakdown</span>
+      <h1>
+        <span class="v6">GTA VI</span><br>
+        <span class="vs">vs</span><br>
+        <span class="v5">GTA V</span>
+      </h1>
+      <p>No cap — we broke down every difference, upgrade, and W between the two biggest games on the planet. fr fr this is the only guide you need.</p>
+      <div class="hero-btns">
+        <a class="btn btn-primary" href="#comparison">See Comparison 🎮</a>
+        <a class="btn btn-secondary" href="#guides">Read Guides</a>
+        <a class="btn btn-red" href="#verdict">Final Verdict 💀</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats reveal">
+    <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Categories Compared</div></div>
+    <div class="stat"><div class="stat-num">12Y</div><div class="stat-label">Between Releases</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">No Fluff</div></div>
+    <div class="stat"><div class="stat-num">FR FR</div><div class="stat-label">Honest Takes</div></div>
+  </div>
+
+  <!-- COMPARISON -->
+  <section id="comparison">
+    <div class="reveal">
+      <div class="section-title">THE COMPARISONS 🎮</div>
+      <div class="section-sub">Click any card to go deep on that topic</div>
+    </div>
+    <div class="cards reveal">
+      <a class="card" href="pages/graphics.html">
+        <div class="card-tag">Graphics</div>
+        <h3>Visuals & Engine</h3>
+        <p>GTA VI on RAGE engine vs GTA V — how much of a glow-up are we actually talking?</p>
+        <div class="card-arrow">Read more →</div>
+      </a>
+      <a class="card" href="pages/map.html">
+        <div class="card-tag">Map</div>
+        <h3>World Size & Detail</h3>
+        <p>Vice City vs Los Santos + Blaine County. Which map hits harder for exploration?</p>
+        <div class="card-arrow">Read more →</div>
+      </a>
+      <a class="card" href="pages/gameplay.html">
+        <div class="card-tag">Gameplay</div>
+        <h3>Mechanics & Controls</h3>
+        <p>Dual protagonists, new physics, updated combat — is GTA VI actually different to play?</p>
+        <div class="card-arrow">Read more →</div>
+      </a>
+      <a class="card" href="pages/story.html">
+        <div class="card-tag">Story</div>
+        <h3>Campaign & Characters</h3>
+        <p>Lucia vs Michael, Trevor & Franklin. Which story is the real W?</p>
+        <div class="card-arrow">Read more →</div>
+      </a>
+      <a class="card" href="pages/online.html">
+        <div class="card-tag">Online</div>
+        <h3>GTA Online vs GTA VI Online</h3>
+        <p>10 years of GTA Online content vs a fresh start. What actually matters?</p>
+        <div class="card-arrow">Read more →</div>
+      </a>
+      <a class="card" href="pages/value.html">
+        <div class="card-tag">Value</div>
+        <h3>Price & Platform</h3>
+        <p>$70 new game vs GTA V for free on PS Plus. Is the upgrade worth it fr fr?</p>
+        <div class="card-arrow">Read more →</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- VERDICT -->
+  <section id="verdict" style="padding-top:0">
+    <div class="reveal">
+      <div class="section-title">THE VERDICT 💀</div>
+      <div class="section-sub">No cap, here's the real answer</div>
+    </div>
+    <div class="verdict reveal">
+      <div class="verdict-side gta6">
+        <h3>GTA VI ✓</h3>
+        <div class="pro">Next-gen visuals that make GTA V look like a PS2 game ngl</div>
+        <div class="pro">Fresh story with first female GTA protagonist</div>
+        <div class="pro">Florida / Vice City map is absolutely massive</div>
+        <div class="pro">New mechanics — swimming, climbing, physics all upgraded</div>
+        <div class="pro">Built for the long haul — online will be wild</div>
+      </div>
+      <div class="verdict-side gta5">
+        <h3>GTA V Still Valid</h3>
+        <div class="pro" style="--tw: var(--red)">10 years of GTA Online content you already own</div>
+        <div class="pro">Runs on everything including toasters</div>
+        <div class="pro">Massive modding community</div>
+        <div class="pro">Free or cheap on most platforms right now</div>
+        <div class="pro">Nostalgia hits different fr fr</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GUIDES -->
+  <section id="guides">
+    <div class="reveal">
+      <div class="section-title">GUIDES & TIPS 📖</div>
+      <div class="section-sub">Everything you need to not be cooked</div>
+    </div>
+    <div class="guides reveal">
+      <a class="guide" href="pages/guide-gta6-beginner.html">
+        <div class="guide-num">01</div>
+        <h4>GTA VI Beginner Guide</h4>
+        <p>First things to do when you boot up GTA VI. Don't sleep on this.</p>
+      </a>
+      <a class="guide" href="pages/guide-money-gta5.html">
+        <div class="guide-num">02</div>
+        <h4>Make Money Fast in GTA V</h4>
+        <p>Best money methods still working in 2026. No glitches, just W plays.</p>
+      </a>
+      <a class="guide" href="pages/guide-weapons.html">
+        <div class="guide-num">03</div>
+        <h4>Best Weapons — Both Games</h4>
+        <p>Which guns are actually worth using and which are just cooked.</p>
+      </a>
+      <a class="guide" href="pages/guide-should-upgrade.html">
+        <div class="guide-num">04</div>
+        <h4>Should You Upgrade to GTA VI?</h4>
+        <p>Honest answer depending on your setup and what you care about.</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p style="margin-bottom:8px">
+      <a href="#">legendary.mind</a> — gaming content, no cap
+    </p>
+    <p>Follow on <a href="https://tiktok.com/@legendary.mind">TikTok</a> · <a href="#">Twitter</a> · <a href="#">YouTube</a></p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
