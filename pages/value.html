@@ -58,6 +58,7 @@
   </div>
 
   <footer><p><a href="../landing.html">legendary.mind</a> — gaming content, no cap</p></footer>
+  <script src="banners.js"></script>
   <script>
     const obs = new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')}),{threshold:0.1});
     document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));

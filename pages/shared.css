@@ -73,8 +73,53 @@ footer a { color: var(--green); text-decoration: none; }
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.5s, transform 0.5s; }
 .reveal.visible { opacity: 1; transform: none; }
 
+/* ── AD BANNERS ── */
+.ad-strip {
+  background: linear-gradient(135deg, #0f0f0f 0%, #141414 100%);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--green);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin: 32px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s, transform 0.15s;
+}
+.ad-strip:hover { border-color: var(--green); transform: translateY(-2px); }
+.ad-strip.red { border-left-color: var(--red); }
+.ad-strip.red:hover { border-color: var(--red); }
+
+.ad-strip-left { display: flex; align-items: center; gap: 16px; }
+.ad-icon { font-size: 2rem; flex-shrink: 0; }
+.ad-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--green); margin-bottom: 4px; }
+.ad-strip.red .ad-label { color: var(--red); }
+.ad-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; }
+.ad-sub { font-size: 0.78rem; color: var(--muted); }
+
+.ad-btn {
+  background: var(--green);
+  color: #000;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.ad-strip.red .ad-btn { background: var(--red); color: #fff; }
+
+.ad-disclosure { font-size: 0.65rem; color: #333; text-align: center; margin-top: -20px; margin-bottom: 12px; }
+
 @media (max-width: 600px) {
   nav { padding: 14px 20px; }
   .nav-links { gap: 16px; }
   .vs-table td:first-child { display: none; }
+  .ad-strip { flex-direction: column; align-items: flex-start; }
 }
