@@ -42,9 +42,12 @@
   </div>
 </div>
 
+<!-- Dependencies -->
+<script src="https://unpkg.com/@solana/web3.js@1.95.3/lib/index.iife.min.js"></script>
 <!-- Jupiter Terminal -->
 <script src="https://terminal.jup.ag/main-v3.js" data-preload></script>
 <script>
+  const { PublicKey } = solanaWeb3;
   window.Jupiter.init({
     displayMode: 'integrated',
     integratedTargetId: 'swap-wrap',
@@ -52,9 +55,13 @@
     platformFeeAndAccounts: {
       feeBps: 30,
       feeAccounts: new Map([
-        // SOL fee account — receive 0.3% of SOL-output swaps
-        // Initialize via: https://station.jup.ag/docs/jupiter-swap/referral
-        // For now uses wallet-level collection (Jupiter sends to referral account)
+        // Referral account: 4DikgdR1PL115hrTgt6HQKobB8Y4PvNPE8JBBYKG1mCK
+        // PDAs derived from REFER4ZgmyYx9c6He5XfaTMiGfdLwRnkV4RPp9t9iF3
+        ['So11111111111111111111111111111111111111112',     new PublicKey('5HjiTcoskdKDxZuBBHsuaNwDaDUhyzL8UKXR2Ub4YTMu')],
+        ['EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',  new PublicKey('3wEwyZUfeTRgw3bznNtTgPMv9pqumi66KvzVW8idk1VS')],
+        ['Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB',   new PublicKey('3P2gjeQu9DvjZMARghVLNpGrokM32GvE82du5fW6creg')],
+        ['JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN',   new PublicKey('5q8MUcR88j9MBo3bJNXmqARcZ5EcKy8wkVuvmokgd5K5')],
+        ['DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263',  new PublicKey('5abmqnZvAygaNz2icUSeWvDYHBU2a8HvDSdcqRoSXCij')],
       ]),
     },
     defaultExplorer: 'Solscan',
