@@ -18,13 +18,15 @@
   .tool-card { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:28px 24px;
                text-decoration:none; color:var(--text); transition:transform .12s,border-color .12s; display:block; }
   .tool-card:hover { transform:translateY(-3px); border-color:var(--accent); }
+  .tool-card.fire:hover { border-color:#ff6b35; }
   .tool-card .icon { font-size:36px; margin-bottom:14px; }
   .tool-card h2 { font-size:20px; font-weight:800; margin-bottom:6px; }
   .tool-card .desc { color:var(--muted); font-size:14px; line-height:1.5; margin-bottom:16px; }
   .tool-card .badge { display:inline-block; background:#0f2018; border:1px solid var(--accent); border-radius:8px;
                       padding:4px 10px; font-size:12px; color:var(--accent); font-weight:700; }
   .tool-card .badge.purple { background:#1a0f2e; border-color:var(--accent2); color:var(--accent2); }
-  .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-bottom:48px; }
+  .tool-card .badge.orange { background:#1a0a00; border-color:#ff6b35; color:#ff6b35; }
+  .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:48px; }
   .stat { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px 24px; text-align:center; }
   .stat .n { font-size:28px; font-weight:900; color:var(--accent); }
   .stat .l { color:var(--muted); font-size:13px; margin-top:4px; }
@@ -68,13 +70,19 @@
       <p class="desc">Bulk SOL sender. Airdrops, team payments, distributions — paste a list of addresses and send in one click.</p>
       <span class="badge">0.001 SOL per recipient</span>
     </a>
+
+    <a class="tool-card fire" href="../solburn/">
+      <div class="icon">🔥</div>
+      <h2>SolBurn</h2>
+      <p class="desc">Burn spam & airdrop dust tokens with non-zero balance. Reclaim locked rent SOL from accounts you can't close otherwise.</p>
+      <span class="badge orange">0.001 SOL per account</span>
+    </a>
   </div>
 
   <div class="stats">
     <div class="stat"><div class="n">~0.002</div><div class="l">SOL recovered per account</div></div>
-    <div class="stat"><div class="n">30+</div><div class="l">DEX routes compared</div></div>
-    <div class="stat"><div class="n">60s</div><div class="l">To launch your token</div></div>
-    <div class="stat"><div class="n">15</div><div class="l">Recipients per tx</div></div>
+    <div class="stat"><div class="n">5</div><div class="l">Free tools, one hub</div></div>
+    <div class="stat"><div class="n">0</div><div class="l">Seed phrases ever seen</div></div>
   </div>
 
   <div class="footer">
