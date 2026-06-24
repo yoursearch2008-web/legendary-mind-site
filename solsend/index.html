@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SolSend — Bulk SOL & Token Sender</title>
+<style>
+  :root { --bg:#0b0e14; --card:#141a26; --accent:#14f195; --accent2:#9945ff; --text:#e6edf3; --muted:#8b98a9; --danger:#ff5c5c; --border:#222c3d; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:radial-gradient(1200px 700px at 50% -5%,#1a2333 0%,var(--bg) 60%); color:var(--text);
+         font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif; min-height:100vh; }
+  .wrap { max-width:680px; margin:0 auto; padding:36px 20px 80px; }
+  .logo { font-weight:800; font-size:26px; letter-spacing:-0.5px; margin-bottom:4px; }
+  .logo span { background:linear-gradient(90deg,var(--accent),var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .tag { color:var(--muted); font-size:14px; margin-bottom:28px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; margin-bottom:16px; }
+  .card h3 { font-size:15px; font-weight:700; margin-bottom:16px; }
+  label { display:block; color:var(--muted); font-size:13px; margin-bottom:6px; margin-top:14px; }
+  label:first-of-type { margin-top:0; }
+  input, textarea, select { width:100%; background:#0f1622; border:1px solid var(--border); border-radius:10px; padding:11px 14px;
+                    color:var(--text); font-size:14px; outline:none; transition:border-color .15s; font-family:inherit; }
+  input:focus, textarea:focus, select:focus { border-color:var(--accent); }
+  textarea { resize:vertical; min-height:160px; font-family:ui-monospace,Consolas,monospace; font-size:13px; }
+  button { font-size:15px; font-weight:700; border:0; border-radius:12px; padding:14px 22px; cursor:pointer;
+           color:#04110a; background:linear-gradient(90deg,var(--accent),#0fd182); transition:transform .05s,opacity .2s; width:100%; margin-top:6px; }
+  button:hover { transform:translateY(-1px); }
+  button:disabled { opacity:.45; cursor:not-allowed; transform:none; }
+  button.secondary { background:#243044; color:var(--text); }
+  button.danger { background:linear-gradient(90deg,#ff5c5c,#e04444); color:#fff; }
+  .pill { display:inline-block; background:#0f1622; border:1px solid var(--border); border-radius:999px; padding:4px 12px; font-size:13px; color:var(--muted); }
+  .ok { color:var(--accent); } .err { color:var(--danger); } .warn { color:#f4c542; }
+  #log { font-family:ui-monospace,Consolas,monospace; font-size:12px; color:var(--muted); white-space:pre-wrap; max-height:260px; overflow:auto; margin-top:14px;
+         background:#080c14; border:1px solid var(--border); border-radius:8px; padding:12px; }
+  .fee-box { background:#0a1418; border:1px solid #1a3040; border-radius:12px; padding:16px; margin-top:14px; }
+  .fee-row { display:flex; justify-content:space-between; font-size:13px; padding:4px 0; }
+  .fee-row .lbl { color:var(--muted); }
+  .fee-total { border-top:1px solid #1d2633; margin-top:8px; padding-top:10px; font-weight:700; }
+  .fee-total .val { color:var(--accent); }
+  .recipients-table { width:100%; border-collapse:collapse; font-size:13px; margin-top:8px; }
+  .recipients-table th { color:var(--muted); font-weight:600; text-align:left; padding:6px 8px; border-bottom:1px solid var(--border); }
+  .recipients-table td { padding:6px 8px; border-bottom:1px solid #1a2030; }
+  .recipients-table tr:last-child td { border-bottom:none; }
+  .recipients-table .addr { font-family:ui-monospace,Consolas,monospace; font-size:11px; color:var(--muted); }
+  .recipients-table .amt { color:var(--accent); font-weight:700; }
+  .recipients-table .err-row td { color:var(--danger); }
+  .badge { display:inline-block; background:#0f2018; border:1px solid var(--accent); border-radius:8px;
+           padding:3px 9px; font-size:12px; color:var(--accent); font-weight:700; }
+  .step-indicator { display:flex; gap:8px; margin-bottom:24px; }
+  .step { flex:1; height:4px; border-radius:99px; background:var(--border); transition:background .3s; }
+  .step.done { background:var(--accent); }
+  .step.active { background:linear-gradient(90deg,var(--accent),var(--accent2)); }
+  .examples { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+  .example-btn { background:#141a26; border:1px solid var(--border); border-radius:8px; padding:5px 10px;
+                 font-size:12px; color:var(--muted); cursor:pointer; width:auto; margin:0; }
+  .example-btn:hover { border-color:var(--accent); color:var(--accent); transform:none; }
+  a { color:var(--accent); text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo">Sol<span>Send</span></div>
+  <div class="tag">Bulk SOL sender. Airdrops, payments, distributions — one click.</div>
+
+  <div class="step-indicator">
+    <div class="step active" id="s1"></div>
+    <div class="step" id="s2"></div>
+    <div class="step" id="s3"></div>
+  </div>
+
+  <!-- Step 1: Connect -->
+  <div class="card" id="connectCard">
+    <h3>Step 1 — Connect Wallet</h3>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+      <button id="btnPhantom" class="secondary" style="width:auto">👻 Phantom</button>
+      <button id="btnSolflare" class="secondary" style="width:auto">☀️ Solflare</button>
+      <button id="btnBackpack" class="secondary" style="width:auto">🎒 Backpack</button>
+      <span class="pill" id="walletPill">Not connected</span>
+    </div>
+  </div>
+
+  <!-- Step 2: Recipients -->
+  <div class="card" id="inputCard" style="display:none">
+    <h3>Step 2 — Recipients</h3>
+
+    <label>Paste addresses and amounts — one per line</label>
+    <div class="examples">
+      <span style="color:var(--muted);font-size:12px;align-self:center">Format:</span>
+      <button class="example-btn" id="exCsv">address, amount</button>
+      <button class="example-btn" id="exTab">address TAB amount</button>
+      <button class="example-btn" id="exSpace">address SPACE amount</button>
+    </div>
+    <textarea id="recipientInput" placeholder="EjnFPeimFN5sYkrNGrTb2jCXbMJBisPDV1BjR2pkWTp8, 0.1&#10;BfJV93B6j7PxJKpEzmLkyxJdvJTbg5rCa8TuY2XnZ9q, 0.05&#10;7xZsm3KJv..."></textarea>
+
+    <div id="preview" style="display:none;margin-top:16px">
+      <div style="font-size:13px;font-weight:700;margin-bottom:8px">Preview <span id="recipientCount" class="badge">0</span></div>
+      <div style="max-height:200px;overflow:auto">
+        <table class="recipients-table">
+          <thead><tr><th>#</th><th>Address</th><th>Amount (SOL)</th><th></th></tr></thead>
+          <tbody id="previewBody"></tbody>
+        </table>
+      </div>
+      <div class="fee-box">
+        <div class="fee-row"><span class="lbl">Recipients</span><span id="feeCount">0</span></div>
+        <div class="fee-row"><span class="lbl">Total SOL to send</span><span id="feeTotal">0</span></div>
+        <div class="fee-row"><span class="lbl">SolSend service fee</span><span id="feeSvc">0</span></div>
+        <div class="fee-row"><span class="lbl">Est. tx fees</span><span id="feeTx">~0.000005 SOL/tx</span></div>
+        <div class="fee-row fee-total"><span class="lbl">Total estimated</span><span class="val" id="feeGrand">0</span></div>
+      </div>
+      <div id="errorList" style="margin-top:10px"></div>
+    </div>
+
+    <button id="parseBtn" style="margin-top:14px">Parse & Preview →</button>
+  </div>
+
+  <!-- Step 3: Send -->
+  <div class="card" id="sendCard" style="display:none">
+    <h3>Step 3 — Review &amp; Send</h3>
+    <div id="sendSummary"></div>
+    <div id="log"></div>
+    <div style="display:flex;gap:10px;margin-top:14px">
+      <button class="secondary" id="backBtn" style="width:auto;padding:12px 20px">← Back</button>
+      <button id="sendBtn">Send to All →</button>
+    </div>
+  </div>
+
+  <!-- Result -->
+  <div class="card" id="resultCard" style="display:none;text-align:center;padding:28px 24px">
+    <div style="font-size:48px;margin-bottom:12px">✅</div>
+    <h3 style="font-size:20px;font-weight:800;color:var(--accent);margin-bottom:8px">Sent!</h3>
+    <div id="resultText" style="color:var(--muted);font-size:14px;margin-bottom:16px"></div>
+    <div id="txLinks" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center"></div>
+    <button class="secondary" id="newSendBtn" style="margin-top:16px;width:auto;padding:12px 24px">Send another</button>
+  </div>
+
+  <div class="card" style="margin-top:8px">
+    <div style="font-size:13px;color:var(--muted);line-height:1.6">
+      <b style="color:var(--text)">Pricing:</b> 0.001 SOL per recipient (min 0.005 SOL). Fee is sent in the same transaction you approve.<br><br>
+      <b style="color:var(--text)">Limits:</b> Up to 15 recipients per transaction (Solana tx size limit). Large lists are split into multiple transactions automatically.<br><br>
+      <b style="color:var(--text)">Safety:</b> 100% non-custodial. You sign every transaction. We never hold funds or keys.
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/@solana/web3.js@1.95.3/lib/index.iife.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
