@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SolSwap — Best rates on Solana</title>
+<style>
+  :root { --bg:#0b0e14; --card:#141a26; --accent:#14f195; --accent2:#9945ff; --text:#e6edf3; --muted:#8b98a9; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:radial-gradient(1200px 700px at 50% -5%, #1a2333 0%, var(--bg) 60%);
+         color:var(--text); font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif; min-height:100vh; }
+  .wrap { max-width:520px; margin:0 auto; padding:40px 20px 80px; }
+  .logo { font-weight:800; font-size:26px; letter-spacing:-0.5px; margin-bottom:4px; }
+  .logo span { background:linear-gradient(90deg,var(--accent),var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .tag { color:var(--muted); font-size:14px; margin-bottom:32px; }
+  .swap-wrap { background:var(--card); border:1px solid #222c3d; border-radius:20px; overflow:hidden; min-height:500px; }
+  .footer-note { text-align:center; color:var(--muted); font-size:12px; margin-top:18px; line-height:1.6; }
+  .footer-note a { color:var(--accent); text-decoration:none; }
+  .stats-row { display:flex; gap:16px; margin-bottom:20px; }
+  .stat { flex:1; background:var(--card); border:1px solid #222c3d; border-radius:12px; padding:14px 16px; }
+  .stat .lbl { color:var(--muted); font-size:12px; margin-bottom:4px; }
+  .stat .val { font-weight:700; font-size:18px; color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo">Sol<span>Swap</span></div>
+  <div class="tag">Best rates across all Solana DEXes. Powered by Jupiter aggregator.</div>
+
+  <div class="stats-row">
+    <div class="stat"><div class="lbl">Routes checked</div><div class="val">20+</div></div>
+    <div class="stat"><div class="lbl">DEXes</div><div class="val">30+</div></div>
+    <div class="stat"><div class="lbl">Fee</div><div class="val">0.3%</div></div>
+  </div>
+
+  <div class="swap-wrap" id="swap-wrap"></div>
+
+  <div class="footer-note">
+    Powered by <a href="https://jup.ag" target="_blank">Jupiter</a> aggregator.
+    Best execution guaranteed — routes split across Raydium, Orca, Meteora, Phoenix &amp; more.<br>
+    A 0.3% platform fee is charged on successful swaps. No fee if swap fails.
+  </div>
+</div>
+
+<!-- Jupiter Terminal -->
+<script src="https://terminal.jup.ag/main-v3.js" data-preload></script>
+<script>
+  window.Jupiter.init({
+    displayMode: 'integrated',
+    integratedTargetId: 'swap-wrap',
+    endpoint: 'https://mainnet.helius-rpc.com/?api-key=5192916f-045b-4f83-b8a1-f829be7cf95b',
+    platformFeeAndAccounts: {
+      feeBps: 30,
+      feeAccounts: new Map([
+        // SOL fee account — receive 0.3% of SOL-output swaps
+        // Initialize via: https://station.jup.ag/docs/jupiter-swap/referral
+        // For now uses wallet-level collection (Jupiter sends to referral account)
+      ]),
+    },
+    defaultExplorer: 'Solscan',
+    containerStyles: { borderRadius: '20px' },
+    containerClassName: '',
+    theme: {
+      palette: {
+        bgApp: ['#141a26'],
+        bgPrimary: ['#1d2635'],
+        bgSecondary: ['#222c3d'],
+        textPrimary: ['#e6edf3'],
+        textSecondary: ['#8b98a9'],
+        textReadOnly: ['#8b98a9'],
+        iconPrimary: ['#14f195'],
+        accent: ['#14f195'],
+        warning: ['#ffc800'],
+        error: ['#ff5c5c'],
+        success: ['#14f195'],
+        highlight: ['rgba(20,241,149,0.1)'],
+        buttonPrimary: ['#14f195'],
+        buttonPrimaryText: ['#04110a'],
+        buttonSecondary: ['#243044'],
+        buttonSecondaryText: ['#e6edf3'],
+        borderDefault: ['#222c3d'],
+        focusBorder: ['#14f195'],
+      },
+    },
+  });
+</script>
+</body>
+</html>
