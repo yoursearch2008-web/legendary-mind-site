@@ -3,499 +3,129 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="GTA VI vs GTA V — the ultimate breakdown. Graphics, map, gameplay, story, online and more. No cap, fr fr." />
-  <meta name="keywords" content="GTA VI, GTA V, GTA 6, GTA 5, comparison, guide, Vice City, Los Santos" />
-  <meta property="og:title" content="GTA VI vs GTA V — legendary.mind" />
-  <meta property="og:description" content="The ultimate GTA VI vs GTA V breakdown. Graphics, map, story, online and more." />
-  <meta property="og:url" content="https://yoursearch2008-web.github.io/legendary-mind-site/" />
+  <title>SolTools — Free Solana Wallet Tools</title>
+  <meta name="description" content="Free Solana wallet tools. SolSweep reclaims locked rent SOL from empty token accounts. SolSwap, SolMint, SolSend, SolBurn — no signup, Phantom only." />
+  <meta name="keywords" content="solana tools, solana wallet, reclaim SOL, solsweep, spl token, defi tools, phantom wallet, solana rent" />
+  <meta property="og:title" content="SolTools — Free Solana Wallet Tools" />
+  <meta property="og:description" content="Reclaim locked SOL, swap tokens, mint, send and burn SPL tokens. Free, non-custodial, Phantom only." />
+  <meta property="og:url" content="https://soltools.fyi" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="canonical" href="https://yoursearch2008-web.github.io/legendary-mind-site/" />
+  <meta name="twitter:title" content="SolTools — Free Solana Wallet Tools" />
+  <meta name="twitter:description" content="Reclaim locked SOL from empty token accounts in 30 seconds. Free, no signup." />
+  <link rel="canonical" href="https://soltools.fyi" />
   <meta name="google-site-verification" content="_Ch3iiU_H5oIHtBzil0EpaM1KLMHMCTqIK5EJRG35rc" />
-  <title>legendary.mind — GTA VI vs GTA V</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "SolTools",
+    "url": "https://soltools.fyi",
+    "description": "Free Solana wallet tools — reclaim SOL, swap, mint, send, burn SPL tokens",
+    "offers": [
+      {"@type":"Offer","name":"SolSweep","description":"Close empty SPL token accounts and reclaim locked rent SOL","price":"0","priceCurrency":"USD"},
+      {"@type":"Offer","name":"SolSwap","description":"Best-rate token swaps via Jupiter","price":"0","priceCurrency":"USD"},
+      {"@type":"Offer","name":"SolMint","description":"Create SPL tokens in 60 seconds","price":"0","priceCurrency":"USD"},
+      {"@type":"Offer","name":"SolSend","description":"Send SPL tokens to multiple recipients","price":"0","priceCurrency":"USD"},
+      {"@type":"Offer","name":"SolBurn","description":"Burn unwanted SPL tokens","price":"0","priceCurrency":"USD"}
+    ]
+  }
+  </script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap');
-
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --green:  #00ff88;
-      --red:    #ff3c3c;
-      --dark:   #080808;
-      --card:   #111111;
-      --border: #1e1e1e;
-      --muted:  #555;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--dark);
-      color: #fff;
-      font-family: 'Inter', sans-serif;
-      overflow-x: hidden;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 40px;
-      background: rgba(8,8,8,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    .logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.6rem;
-      color: var(--green);
-      letter-spacing: 2px;
-      text-decoration: none;
-    }
-    .nav-links { display: flex; gap: 32px; list-style: none; }
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: #fff; }
-
-    /* ── HERO ── */
-    .hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 120px 24px 80px;
-      overflow: hidden;
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background:
-        url('https://image.pollinations.ai/prompt/GTA%20VI%20and%20GTA%20V%20cinematic%20banner%2C%20Vice%20City%20neon%20skyline%2C%20Los%20Santos%20in%20background%2C%20ultra%20wide%2C%20dark%20dramatic%20lighting%2C%20no%20text%2C%20hyperrealistic%204k?width=1920&height=1080&nologo=true')
-        center/cover no-repeat;
-      filter: brightness(0.35);
-      z-index: 0;
-    }
-
-    .hero-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, transparent 40%, var(--dark) 100%);
-    }
-
-    .hero-content { position: relative; z-index: 1; max-width: 860px; }
-
-    .badge {
-      display: inline-block;
-      background: var(--red);
-      color: #fff;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 5px 14px;
-      border-radius: 2px;
-      margin-bottom: 24px;
-    }
-
-    .hero h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(3.5rem, 10vw, 8rem);
-      line-height: 0.95;
-      letter-spacing: 2px;
-      margin-bottom: 24px;
-    }
-
-    .hero h1 span.v6 { color: var(--green); }
-    .hero h1 span.vs { color: var(--muted); font-size: 60%; }
-    .hero h1 span.v5 { color: var(--red); }
-
-    .hero p {
-      font-size: 1.1rem;
-      color: #aaa;
-      max-width: 560px;
-      margin: 0 auto 40px;
-      line-height: 1.7;
-    }
-
-    .hero-btns {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 28px;
-      border-radius: 4px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: transform 0.15s, opacity 0.15s;
-      cursor: pointer;
-      border: none;
-    }
-    .btn:hover { transform: translateY(-2px); opacity: 0.9; }
-    .btn-primary { background: var(--green); color: #000; }
-    .btn-secondary { background: transparent; color: #fff; border: 2px solid var(--border); }
-    .btn-red { background: var(--red); color: #fff; }
-
-    /* ── STATS BAR ── */
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 60px;
-      padding: 40px 24px;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      flex-wrap: wrap;
-    }
-    .stat { text-align: center; }
-    .stat-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.4rem;
-      color: var(--green);
-      letter-spacing: 1px;
-    }
-    .stat-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
-
-    /* ── SECTIONS ── */
-    section { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
-
-    .section-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      letter-spacing: 2px;
-      margin-bottom: 8px;
-    }
-    .section-sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 48px; }
-
-    /* ── COMPARISON CARDS ── */
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 28px;
-      transition: border-color 0.2s, transform 0.2s;
-      text-decoration: none;
-      color: inherit;
-      display: block;
-    }
-    .card:hover { border-color: var(--green); transform: translateY(-4px); }
-
-    .card-tag {
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--green);
-      margin-bottom: 12px;
-    }
-    .card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; }
-    .card p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
-    .card-arrow { margin-top: 20px; color: var(--green); font-size: 0.85rem; font-weight: 600; }
-
-    /* ── VERDICT ── */
-    .verdict {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--green);
-      border-radius: 8px;
-      padding: 40px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-    }
-    @media (max-width: 600px) { .verdict { grid-template-columns: 1fr; } }
-    .verdict-side h3 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.8rem;
-      letter-spacing: 1px;
-      margin-bottom: 16px;
-    }
-    .verdict-side.gta6 h3 { color: var(--green); }
-    .verdict-side.gta5 h3 { color: var(--red); }
-    .pro { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; font-size: 0.88rem; color: #ccc; }
-    .pro::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
-
-    /* ── GUIDES ── */
-    .guides { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
-    .guide {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 22px;
-      text-decoration: none;
-      color: inherit;
-      transition: border-color 0.2s;
-    }
-    .guide:hover { border-color: var(--red); }
-    .guide-num { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--border); margin-bottom: 8px; }
-    .guide h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
-    .guide p { font-size: 0.8rem; color: var(--muted); }
-
-    /* ── FOOTER ── */
-    footer {
-      text-align: center;
-      padding: 40px 24px;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 0.8rem;
-    }
-    footer a { color: var(--green); text-decoration: none; }
-
-    /* ── SCROLL REVEAL ── */
-    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s, transform 0.6s; }
-    .reveal.visible { opacity: 1; transform: none; }
-
-    /* ── EMAIL CAPTURE ── */
-    .newsletter-wrap { background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--green); border-radius: 8px; padding: 48px 40px; text-align: center; max-width: 600px; margin: 0 auto; }
-    .newsletter-icon { font-size: 2rem; margin-bottom: 12px; }
-    .newsletter-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 2px; margin-bottom: 8px; }
-    .newsletter-sub { color: #888; font-size: 0.9rem; margin-bottom: 28px; line-height: 1.6; }
-    .newsletter-form { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
-    .newsletter-input { flex: 1; min-width: 220px; padding: 14px 18px; background: #0a0a0a; border: 1px solid #2a2a2a; border-radius: 4px; color: #fff; font-size: 0.9rem; outline: none; }
-    .newsletter-btn { padding: 14px 28px; background: var(--green); color: #000; font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; border: none; border-radius: 4px; cursor: pointer; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#0b0e14;--card:#141a26;--accent:#14f195;--accent2:#9945ff;--text:#e6edf3;--muted:#8b98a9;--border:#222c3d}
+    body{background:radial-gradient(1400px 700px at 50% -5%,#1a2333 0%,var(--bg) 60%);color:var(--text);font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}
+    .wrap{max-width:960px;margin:0 auto;padding:48px 20px 80px}
+    .hero{text-align:center;margin-bottom:56px}
+    .hero h1{font-size:48px;font-weight:900;letter-spacing:-1px;line-height:1.1;margin-bottom:12px}
+    .hero h1 span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .hero p{color:var(--muted);font-size:18px;max-width:520px;margin:12px auto 0;line-height:1.6}
+    .badge{display:inline-block;background:#14f19518;color:var(--accent);border:1px solid #14f19540;border-radius:99px;padding:4px 14px;font-size:13px;font-weight:600;margin-bottom:16px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-bottom:48px}
+    .tool-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 24px;text-decoration:none;color:var(--text);transition:transform .12s,border-color .12s;display:block}
+    .tool-card:hover{transform:translateY(-3px);border-color:var(--accent)}
+    .tool-icon{font-size:32px;margin-bottom:12px}
+    .tool-name{font-size:18px;font-weight:700;margin-bottom:6px}
+    .tool-desc{color:var(--muted);font-size:14px;line-height:1.5}
+    .tool-earn{display:inline-block;margin-top:10px;color:var(--accent);font-size:12px;font-weight:600}
+    .trust{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;padding:32px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:48px}
+    .trust-item{text-align:center}
+    .trust-val{font-size:28px;font-weight:800;color:var(--accent)}
+    .trust-lbl{font-size:13px;color:var(--muted);margin-top:2px}
+    .faq{max-width:680px;margin:0 auto}
+    .faq h2{font-size:24px;font-weight:700;margin-bottom:24px;text-align:center}
+    .faq-item{border-bottom:1px solid var(--border);padding:16px 0}
+    .faq-q{font-weight:600;margin-bottom:6px}
+    .faq-a{color:var(--muted);font-size:14px;line-height:1.6}
   </style>
 </head>
 <body>
-
-  <!-- NAV -->
-  <nav>
-    <a class="logo" href="#">legendary.mind 💀</a>
-    <ul class="nav-links">
-      <li><a href="#comparison">Comparison</a></li>
-      <li><a href="#verdict">Verdict</a></li>
-      <li><a href="#guides">Guides</a></li>
-    </ul>
-  </nav>
-
-  <!-- HERO -->
+<div class="wrap">
   <div class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-content">
-      <span class="badge">🔥 The Ultimate Breakdown</span>
-      <h1>
-        <span class="v6">GTA VI</span><br>
-        <span class="vs">vs</span><br>
-        <span class="v5">GTA V</span>
-      </h1>
-      <p>No cap — we broke down every difference, upgrade, and W between the two biggest games on the planet. fr fr this is the only guide you need.</p>
-      <div class="hero-btns">
-        <a class="btn btn-primary" href="#comparison">See Comparison 🎮</a>
-        <a class="btn btn-secondary" href="#guides">Read Guides</a>
-        <a class="btn btn-red" href="#verdict">Final Verdict 💀</a>
-      </div>
-    </div>
+    <div class="badge">Free forever · No signup · Phantom only</div>
+    <h1>Free <span>Solana</span> wallet tools</h1>
+    <p>Reclaim locked SOL, swap tokens, mint, send &amp; burn — all client-side, all free.</p>
   </div>
 
-  <!-- STATS -->
-  <div class="stats reveal">
-    <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Categories Compared</div></div>
-    <div class="stat"><div class="stat-num">12Y</div><div class="stat-label">Between Releases</div></div>
-    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">No Fluff</div></div>
-    <div class="stat"><div class="stat-num">FR FR</div><div class="stat-label">Honest Takes</div></div>
+  <div class="trust">
+    <div class="trust-item"><div class="trust-val">0.002–0.05</div><div class="trust-lbl">SOL reclaimed per empty account</div></div>
+    <div class="trust-item"><div class="trust-val">10–30</div><div class="trust-lbl">empty accounts in avg wallet</div></div>
+    <div class="trust-item"><div class="trust-val">100%</div><div class="trust-lbl">client-side · no backend</div></div>
+    <div class="trust-item"><div class="trust-val">30s</div><div class="trust-lbl">average time to reclaim SOL</div></div>
   </div>
 
-  <!-- COMPARISON -->
-  <section id="comparison">
-    <div class="reveal">
-      <div class="section-title">THE COMPARISONS 🎮</div>
-      <div class="section-sub">Click any card to go deep on that topic</div>
-    </div>
-    <div class="cards reveal">
-      <a class="card" href="pages/graphics.html">
-        <div class="card-tag">Graphics</div>
-        <h3>Visuals & Engine</h3>
-        <p>GTA VI on RAGE engine vs GTA V — how much of a glow-up are we actually talking?</p>
-        <div class="card-arrow">Read more →</div>
-      </a>
-      <a class="card" href="pages/map.html">
-        <div class="card-tag">Map</div>
-        <h3>World Size & Detail</h3>
-        <p>Vice City vs Los Santos + Blaine County. Which map hits harder for exploration?</p>
-        <div class="card-arrow">Read more →</div>
-      </a>
-      <a class="card" href="pages/gameplay.html">
-        <div class="card-tag">Gameplay</div>
-        <h3>Mechanics & Controls</h3>
-        <p>Dual protagonists, new physics, updated combat — is GTA VI actually different to play?</p>
-        <div class="card-arrow">Read more →</div>
-      </a>
-      <a class="card" href="pages/story.html">
-        <div class="card-tag">Story</div>
-        <h3>Campaign & Characters</h3>
-        <p>Lucia vs Michael, Trevor & Franklin. Which story is the real W?</p>
-        <div class="card-arrow">Read more →</div>
-      </a>
-      <a class="card" href="pages/online.html">
-        <div class="card-tag">Online</div>
-        <h3>GTA Online vs GTA VI Online</h3>
-        <p>10 years of GTA Online content vs a fresh start. What actually matters?</p>
-        <div class="card-arrow">Read more →</div>
-      </a>
-      <a class="card" href="pages/value.html">
-        <div class="card-tag">Value</div>
-        <h3>Price & Platform</h3>
-        <p>$70 new game vs GTA V for free on PS Plus. Is the upgrade worth it fr fr?</p>
-        <div class="card-arrow">Read more →</div>
-      </a>
-    </div>
-  </section>
+  <div class="grid">
+    <a href="/solsweep/" class="tool-card">
+      <div class="tool-icon">🧹</div>
+      <div class="tool-name">SolSweep</div>
+      <div class="tool-desc">Close empty SPL token accounts and reclaim the locked rent deposit back to your wallet.</div>
+      <span class="tool-earn">Get SOL back →</span>
+    </a>
+    <a href="/solswap/" class="tool-card">
+      <div class="tool-icon">🔄</div>
+      <div class="tool-name">SolSwap</div>
+      <div class="tool-desc">Best-rate token swaps powered by Jupiter routing. Always the best price across all Solana DEXes.</div>
+      <span class="tool-earn">Swap now →</span>
+    </a>
+    <a href="/solmint/" class="tool-card">
+      <div class="tool-icon">🪙</div>
+      <div class="tool-name">SolMint</div>
+      <div class="tool-desc">Create your own SPL token in 60 seconds. No code needed. Set name, symbol, supply and metadata.</div>
+      <span class="tool-earn">Create token →</span>
+    </a>
+    <a href="/solsend/" class="tool-card">
+      <div class="tool-icon">📤</div>
+      <div class="tool-name">SolSend</div>
+      <div class="tool-desc">Send SPL tokens to multiple recipients in one transaction. Perfect for airdrops and payments.</div>
+      <span class="tool-earn">Send tokens →</span>
+    </a>
+    <a href="/solburn/" class="tool-card">
+      <div class="tool-icon">🔥</div>
+      <div class="tool-name">SolBurn</div>
+      <div class="tool-desc">Permanently destroy unwanted or spam tokens and reclaim the rent from their token accounts.</div>
+      <span class="tool-earn">Burn tokens →</span>
+    </a>
+  </div>
 
-  <!-- VERDICT -->
-  <section id="verdict" style="padding-top:0">
-    <div class="reveal">
-      <div class="section-title">THE VERDICT 💀</div>
-      <div class="section-sub">No cap, here's the real answer</div>
+  <div class="faq">
+    <h2>Common questions</h2>
+    <div class="faq-item">
+      <div class="faq-q">Is this safe? Do you hold my tokens?</div>
+      <div class="faq-a">No. All tools are 100% client-side. Your Phantom wallet signs every transaction locally — nothing is sent to any server. You can inspect every transaction before signing.</div>
     </div>
-    <div class="verdict reveal">
-      <div class="verdict-side gta6">
-        <h3>GTA VI ✓</h3>
-        <div class="pro">Next-gen visuals that make GTA V look like a PS2 game ngl</div>
-        <div class="pro">Fresh story with first female GTA protagonist</div>
-        <div class="pro">Florida / Vice City map is absolutely massive</div>
-        <div class="pro">New mechanics — swimming, climbing, physics all upgraded</div>
-        <div class="pro">Built for the long haul — online will be wild</div>
-      </div>
-      <div class="verdict-side gta5">
-        <h3>GTA V Still Valid</h3>
-        <div class="pro" style="--tw: var(--red)">10 years of GTA Online content you already own</div>
-        <div class="pro">Runs on everything including toasters</div>
-        <div class="pro">Massive modding community</div>
-        <div class="pro">Free or cheap on most platforms right now</div>
-        <div class="pro">Nostalgia hits different fr fr</div>
-      </div>
+    <div class="faq-item">
+      <div class="faq-q">How much SOL can I reclaim with SolSweep?</div>
+      <div class="faq-a">Each empty token account holds ~0.002 SOL as a rent deposit. A typical active DeFi wallet has 10–30 of these, so most users reclaim 0.02–0.10 SOL on their first sweep.</div>
     </div>
-  </section>
-
-  <!-- GUIDES -->
-  <section id="guides">
-    <div class="reveal">
-      <div class="section-title">GUIDES & TIPS 📖</div>
-      <div class="section-sub">Everything you need to not be cooked</div>
+    <div class="faq-item">
+      <div class="faq-q">What are the fees?</div>
+      <div class="faq-a">SolSweep takes 10% of the reclaimed rent (e.g. you get 0.018 SOL back from a 0.020 SOL account). SolSwap takes 0.3% referral from Jupiter. All other tools charge only the Solana network gas fee.</div>
     </div>
-    <div class="guides reveal">
-      <a class="guide" href="pages/guide-gta6-beginner.html">
-        <div class="guide-num">01</div>
-        <h4>GTA VI Beginner Guide</h4>
-        <p>First things to do when you boot up GTA VI. Don't sleep on this.</p>
-      </a>
-      <a class="guide" href="pages/guide-money-gta5.html">
-        <div class="guide-num">02</div>
-        <h4>Make Money Fast in GTA V</h4>
-        <p>Best money methods still working in 2026. No glitches, just W plays.</p>
-      </a>
-      <a class="guide" href="pages/guide-weapons.html">
-        <div class="guide-num">03</div>
-        <h4>Best Weapons — Both Games</h4>
-        <p>Which guns are actually worth using and which are just cooked.</p>
-      </a>
-      <a class="guide" href="pages/guide-should-upgrade.html">
-        <div class="guide-num">04</div>
-        <h4>Should You Upgrade to GTA VI?</h4>
-        <p>Honest answer depending on your setup and what you care about.</p>
-      </a>
-      <a class="guide" href="pages/gta5-cheats.html">
-        <div class="guide-num">05</div>
-        <h4>GTA V Cheat Codes — Full List</h4>
-        <p>Every cheat for PS5, Xbox, and PC. Copy-paste ready fr fr.</p>
-      </a>
-      <a class="guide" href="pages/gta6-release-date.html">
-        <div class="guide-num">06</div>
-        <h4>GTA VI Release Date & Info</h4>
-        <p>Everything Rockstar confirmed — platforms, price, map, characters.</p>
-      </a>
-      <a class="guide" href="pages/gta6-characters.html">
-        <div class="guide-num">07</div>
-        <h4>GTA VI Characters — Jason & Lucia</h4>
-        <p>Who they are and why this duo hits different than GTA V's trio.</p>
-      </a>
-      <a class="guide" href="pages/gta5-mods.html">
-        <div class="guide-num">08</div>
-        <h4>Best GTA V Mods 2025</h4>
-        <p>Graphics, gameplay, and map mods that make GTA V feel brand new.</p>
-      </a>
-      <a class="guide" href="pages/gta6-tips.html">
-        <div class="guide-num">09</div>
-        <h4>GTA VI Tips & Tricks</h4>
-        <p>Money, combat, wanted level, online — the things the game won't tell you.</p>
-      </a>
+    <div class="faq-item">
+      <div class="faq-q">Which wallet is supported?</div>
+      <div class="faq-a">Phantom wallet on desktop and mobile. More wallets coming soon.</div>
     </div>
-  </section>
-
-  <!-- EMAIL CAPTURE -->
-  <section id="newsletter" style="padding-top:0">
-    <div class="newsletter-wrap reveal">
-      <div class="newsletter-icon">🎮</div>
-      <div class="newsletter-title">GET FREE GTA VI TIPS</div>
-      <p class="newsletter-sub">Drop your email. We send you fire GTA VI tips, money guides, and early access content. No spam, no cap.</p>
-      <form class="newsletter-form" action="https://formsubmit.co/65242c239cce976e2babb10146be5ef6" method="POST">
-        <input type="hidden" name="_subject" value="New legendary.mind subscriber!" />
-        <input type="hidden" name="_captcha" value="false" />
-        <input type="hidden" name="_next" value="https://yoursearch2008-web.github.io/legendary-mind-site/?subscribed=1" />
-        <input class="newsletter-input" type="email" name="email" placeholder="your@email.com" required />
-        <button class="newsletter-btn" type="submit">Send Me Tips →</button>
-      </form>
-    </div>
-  </section>
-
-  <!-- ADSENSE PLACEHOLDER — paste your publisher ID when approved -->
-  <!-- To activate: replace ca-pub-XXXXXXXXXXXXXXXX with your AdSense ID -->
-  <!--
-  <section style="padding:20px 24px;max-width:1100px;margin:0 auto;text-align:center">
-    <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-      data-ad-slot="AUTO"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-  </section>
-  -->
-
-  <!-- FOOTER -->
-  <footer>
-    <p style="margin-bottom:8px">
-      <a href="#">legendary.mind</a> — gaming content, no cap
-    </p>
-    <p>Follow on <a href="https://tiktok.com/@legendary.mind">TikTok</a> · <a href="#">Twitter</a> · <a href="#">YouTube</a></p>
-  </footer>
-
-  <script src="pages/banners.js"></script>
-  <script>
-    // Scroll reveal
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-  </script>
+  </div>
+</div>
 </body>
 </html>
