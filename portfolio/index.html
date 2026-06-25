@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SolPortfolio — Solana Wallet Tracker</title>
+<meta name="description" content="Track your Solana portfolio, token holdings, and airdrop eligibility in one click."/>
+<style>
+:root{--bg:#0b0e14;--card:#141a26;--accent:#14f195;--accent2:#9945ff;--text:#e6edf3;--muted:#8b98a9;--danger:#ff5c5c;--border:#222c3d;--gold:#f59e0b;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:radial-gradient(1200px 700px at 50% -5%,#1a2333 0%,var(--bg) 60%);color:var(--text);font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh;}
+.wrap{max-width:820px;margin:0 auto;padding:36px 20px 100px;}
+.logo{font-weight:800;font-size:28px;letter-spacing:-0.5px;margin-bottom:4px;}
+.logo span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.tag{color:var(--muted);font-size:14px;margin-bottom:28px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:14px;}
+.card h3{font-size:15px;font-weight:700;margin-bottom:14px;}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:14px;}
+.stat{background:#0f1622;border:1px solid var(--border);border-radius:12px;padding:16px;}
+.stat-label{color:var(--muted);font-size:12px;margin-bottom:4px;}
+.stat-val{font-size:24px;font-weight:700;color:var(--accent);}
+.stat-usd{font-size:13px;color:var(--muted);margin-top:2px;}
+button{font-size:15px;font-weight:700;border:0;border-radius:12px;padding:14px 22px;cursor:pointer;color:#04110a;background:linear-gradient(90deg,var(--accent),#0fd182);transition:transform .05s,opacity .2s;width:100%;margin-top:6px;}
+button:hover{transform:translateY(-1px);}
+button:disabled{opacity:.45;cursor:not-allowed;transform:none;}
+button.secondary{background:#243044;color:var(--text);}
+button.small{padding:8px 16px;font-size:13px;width:auto;border-radius:8px;}
+.or{text-align:center;color:var(--muted);font-size:13px;margin:12px 0;}
+input{width:100%;background:#0f1622;border:1px solid var(--border);border-radius:10px;padding:11px 14px;color:var(--text);font-size:14px;outline:none;transition:border-color .15s;font-family:monospace;}
+input:focus{border-color:var(--accent);}
+table{width:100%;border-collapse:collapse;}
+th{text-align:left;color:var(--muted);font-size:12px;font-weight:600;padding:8px 10px;border-bottom:1px solid var(--border);}
+td{padding:10px;font-size:14px;border-bottom:1px solid rgba(34,44,61,0.5);}
+tr:last-child td{border-bottom:0;}
+.token-icon{width:28px;height:28px;border-radius:50%;background:#1c2535;display:inline-flex;align-items:center;justify-content:center;font-size:14px;margin-right:8px;vertical-align:middle;}
+.token-name{font-weight:600;}
+.token-symbol{color:var(--muted);font-size:12px;margin-left:4px;}
+.green{color:#4ade80;}.red{color:var(--danger);}
+.pill{display:inline-block;background:#0f1622;border:1px solid var(--border);border-radius:999px;padding:3px 10px;font-size:11px;color:var(--muted);}
+.pill.live{border-color:rgba(20,241,149,0.3);color:var(--accent);}
+.airdrop-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);}
+.airdrop-row:last-child{border-bottom:0;}
+.airdrop-name{font-weight:600;font-size:14px;}
+.airdrop-desc{color:var(--muted);font-size:12px;margin-top:2px;}
+.eligible{background:rgba(20,241,149,0.12);color:var(--accent);font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;}
+.ineligible{background:rgba(239,68,68,0.12);color:var(--danger);font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;}
+.unknown{background:rgba(139,152,169,0.12);color:var(--muted);font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;}
+.share-bar{display:flex;gap:8px;align-items:center;}
+.share-input{flex:1;background:#0f1622;border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--muted);font-size:12px;font-family:monospace;outline:none;}
+.copy-btn{background:#1e2d42;color:var(--accent);border:1px solid var(--border);border-radius:8px;padding:9px 14px;cursor:pointer;font-size:12px;font-weight:700;white-space:nowrap;}
+.hidden{display:none;}
+#connect-section{}
+#portfolio-section{display:none;}
+.loading{text-align:center;color:var(--muted);padding:40px;font-size:15px;}
+.pro-banner{background:linear-gradient(135deg,rgba(153,69,255,0.15),rgba(20,241,149,0.08));border:1px solid rgba(153,69,255,0.3);border-radius:12px;padding:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:14px;}
+.pro-banner-text h4{font-size:14px;font-weight:700;margin-bottom:4px;}
+.pro-banner-text p{color:var(--muted);font-size:13px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo">Sol<span>Portfolio</span></div>
+  <div class="tag">Track wallet · check airdrops · share holdings — all on-chain, no login</div>
+
+  <!-- ── Connect section ──────────────────────────────────── -->
+  <div id="connect-section">
+    <div class="card">
+      <h3>🔗 Connect your wallet</h3>
+      <button id="btn-phantom" onclick="connectPhantom()">Connect Phantom</button>
+      <div class="or">— or paste a wallet address —</div>
+      <input id="manual-addr" placeholder="Enter any Solana wallet address" onkeydown="if(event.key==='Enter')loadWallet(this.value.trim())"/>
+      <button class="secondary" style="margin-top:10px" onclick="loadWallet(document.getElementById('manual-addr').value.trim())">View Wallet →</button>
+    </div>
+    <div style="text-align:center;color:var(--muted);font-size:13px;margin-top:12px;">
+      Read-only · No transaction signing · Your keys stay in your wallet
+    </div>
+  </div>
+
+  <!-- ── Portfolio section ─────────────────────────────────── -->
+  <div id="portfolio-section">
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+      <div>
+        <div style="font-size:12px;color:var(--muted)">Wallet</div>
+        <div id="wallet-display" style="font-family:monospace;font-size:13px;color:var(--accent)"></div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="secondary small" onclick="resetView()">← Change wallet</button>
+        <button class="secondary small" onclick="refreshPortfolio()">↻ Refresh</button>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat"><div class="stat-label">SOL Balance</div><div class="stat-val" id="sol-bal">—</div><div class="stat-usd" id="sol-usd">—</div></div>
+      <div class="stat"><div class="stat-label">Token Value</div><div class="stat-val" id="tok-val">—</div><div class="stat-usd" id="tok-usd">—</div></div>
+      <div class="stat"><div class="stat-label">Total Portfolio</div><div class="stat-val" id="total-val">—</div><div class="stat-usd" id="total-usd">—</div></div>
+      <div class="stat"><div class="stat-label">Token Accounts</div><div class="stat-val" id="tok-count">—</div><div class="stat-usd">SPL tokens held</div></div>
+    </div>
+
+    <!-- Token holdings table -->
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <h3 style="margin:0">Token Holdings</h3>
+        <span class="pill live" id="holdings-ts"></span>
+      </div>
+      <div id="token-loading" class="loading">Loading tokens...</div>
+      <table id="token-table" style="display:none">
+        <thead><tr><th>Token</th><th style="text-align:right">Balance</th><th style="text-align:right">Price</th><th style="text-align:right">Value</th></tr></thead>
+        <tbody id="token-tbody"></tbody>
+      </table>
+      <div id="token-empty" class="hidden" style="color:var(--muted);font-size:14px;padding:20px 0">No token holdings found.</div>
+
+      <div class="pro-banner">
+        <div class="pro-banner-text">
+          <h4>📊 Export holdings as CSV</h4>
+          <p>Download full history for tax reports or analysis</p>
+        </div>
+        <button class="small" style="width:auto;background:linear-gradient(90deg,var(--accent2),#7c3aed);color:#fff" onclick="exportCsv()">Export CSV · 0.05 SOL</button>
+      </div>
+    </div>
+
+    <!-- Airdrop eligibility -->
+    <div class="card">
+      <h3>🪂 Airdrop Eligibility Check</h3>
+      <div id="airdrop-loading" class="loading">Checking eligibility...</div>
+      <div id="airdrop-list"></div>
+    </div>
+
+    <!-- Share wallet -->
+    <div class="card">
+      <h3>🔗 Share this portfolio</h3>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:12px">Anyone with this link can view your holdings (read-only)</p>
+      <div class="share-bar">
+        <input class="share-input" id="share-link" readonly/>
+        <button class="copy-btn" onclick="copyShare()">Copy link</button>
+      </div>
+    </div>
+
+  </div><!-- /portfolio-section -->
+</div>
+
+<script>
+const RPC = 'https://solana-rpc.publicnode.com';
+const TOKEN_PROGRAM = 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
+const SOL_MINT = 'So11111111111111111111111111111111111111112';
+const USDC_MINT = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
+const FEE_WALLET = '75cecKX13qytPMydcMsqLwVxx24hy23WiAxo8J1Nf7g1';
+
+let currentWallet = '';
+let solPrice = 0;
+let tokenPrices = {};
+
+// Known token metadata fallback
+const KNOWN = {
+  'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v': {sym:'USDC',name:'USD Coin',icon:'💵'},
+  'Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB': {sym:'USDT',name:'Tether',icon:'💵'},
+  'JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN': {sym:'JUP',name:'Jupiter',icon:'🟣'},
+  'DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263': {sym:'BONK',name:'Bonk',icon:'🐕'},
+  'mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So': {sym:'mSOL',name:'Marinade SOL',icon:'🌿'},
+  'J1toso1uCk3RLmjorhTtrVwY9HJ7X8V9yYac6Y7kGCPn': {sym:'JitoSOL',name:'Jito Staked SOL',icon:'🔵'},
+  'bSo13r4TkiE4KumL71LsHTPpL2euBYLFx6h9HP3piy1': {sym:'bSOL',name:'BlazeStake SOL',icon:'🔥'},
+  'HZ1JovNiVvGrGNiiYvEozEVgZ58xaU3RKwX8eACQBCt3': {sym:'PYTH',name:'Pyth Network',icon:'🔮'},
+  'WENWENvqqNya429ubCdR81ZmD69brwQaaBYY6p3LCpk': {sym:'WEN',name:'Wen',icon:'🌊'},
+};
+
+// Airdrop eligibility criteria
+const AIRDROPS = [
+  {name:'Jupiter Season 2',desc:'Hold or stake JUP tokens',check:(t)=>t.some(x=>x.mint==='JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN'&&x.amount>100),link:'https://jup.ag'},
+  {name:'Kamino KMNO',desc:'Deposit SOL/USDC in Kamino vaults',check:()=>null,link:'https://app.kamino.finance'},
+  {name:'Drift DRIFT',desc:'Trading/deposit volume on Drift Protocol',check:()=>null,link:'https://app.drift.trade'},
+  {name:'Meteora MET',desc:'Provide liquidity in Meteora pools',check:()=>null,link:'https://app.meteora.ag'},
+  {name:'Jito JTO S2',desc:'Stake SOL via Jito (hold JitoSOL)',check:(t)=>t.some(x=>x.mint==='J1toso1uCk3RLmjorhTtrVwY9HJ7X8V9yYac6Y7kGCPn'&&x.amount>0.01),link:'https://jito.network'},
+  {name:'MarginFi MFI',desc:'Active lending/borrowing on MarginFi',check:()=>null,link:'https://app.marginfi.com'},
+  {name:'Solayer LAYER',desc:'Restake SOL on Solayer',check:()=>null,link:'https://solayer.org'},
+  {name:'Fragmetric',desc:'Restaking points via Fragmetric',check:()=>null,link:'https://fragmetric.xyz'},
+];
+
+async function rpc(method, params=[]) {
+  const r = await fetch(RPC, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method,params}),signal:AbortSignal.timeout(10000)});
+  if(!r.ok) throw new Error(`RPC HTTP ${r.status}`);
+  const d = await r.json();
+  if(d.error) throw new Error(d.error.message || 'RPC error');
+  return d.result;
+}
+
+async function getJupPrice(mints) {
+  try {
+    const ids = [SOL_MINT,...mints].join(',');
+    const r = await fetch(`https://lite-api.jup.ag/price/v2?ids=${ids}`,{signal:AbortSignal.timeout(8000)});
+    if(!r.ok) return {};
+    const d = await r.json();
+    return d.data || {};
+  } catch { return {}; }
+}
+
+async function getTokenMeta(mint) {
+  if(KNOWN[mint]) return KNOWN[mint];
+  try {
+    const r = await fetch(`https://lite-api.jup.ag/tokens/v1/token/${mint}`,{signal:AbortSignal.timeout(4000)});
+    if(!r.ok) return null;
+    const d = await r.json();
+    return {sym:d.symbol||'???',name:d.name||'Unknown',icon:'🔷',logoURI:d.logoURI};
+  } catch { return {sym:mint.slice(0,4)+'...',name:'Unknown',icon:'🔷'}; }
+}
+
+async function connectPhantom() {
+  if(!window.solana?.isPhantom) { alert('Phantom wallet not found. Install it at phantom.app'); return; }
+  try {
+    const resp = await window.solana.connect();
+    await loadWallet(resp.publicKey.toString());
+  } catch(e) { alert('Wallet connection failed: ' + e.message); }
+}
+
+async function loadWallet(addr) {
+  if(!addr || addr.length < 32) { alert('Enter a valid Solana wallet address'); return; }
+  currentWallet = addr;
+  document.getElementById('connect-section').style.display = 'none';
+  document.getElementById('portfolio-section').style.display = 'block';
+  document.getElementById('wallet-display').textContent = addr.slice(0,6)+'...'+addr.slice(-4);
+  document.getElementById('share-link').value = window.location.origin + window.location.pathname + '?wallet=' + addr;
+  await refreshPortfolio();
+}
+
+async function refreshPortfolio() {
+  document.getElementById('token-loading').style.display = 'block';
+  document.getElementById('token-table').style.display = 'none';
+  document.getElementById('token-empty').classList.add('hidden');
+  document.getElementById('airdrop-loading').style.display = 'block';
+  document.getElementById('airdrop-list').innerHTML = '';
+
+  try {
+    // SOL balance
+    const lamports = await rpc('getBalance', [currentWallet]);
+    const sol = (lamports || 0) / 1e9;
+
+    // Token accounts
+    const tokRes = await rpc('getParsedTokenAccountsByOwner', [currentWallet, {programId:TOKEN_PROGRAM}, {encoding:'jsonParsed'}]);
+    const accounts = (tokRes?.value || []).flatMap(a => {
+      try {
+        const info = a?.account?.data?.parsed?.info;
+        if(!info?.mint || !info?.tokenAmount) return [];
+        return [{mint:info.mint, amount:parseFloat(info.tokenAmount.uiAmountString||'0'), decimals:info.tokenAmount.decimals, raw:info.tokenAmount.amount}];
+      } catch { return []; }
+    }).filter(t => t.amount > 0);
+
+    // Prices
+    const mints = accounts.map(t=>t.mint);
+    const prices = await getJupPrice(mints);
+    solPrice = parseFloat(prices[SOL_MINT]?.price || 150);
+    tokenPrices = prices;
+
+    // Token metadata
+    const metaMap = {};
+    await Promise.all(accounts.slice(0,20).map(async t => {
+      metaMap[t.mint] = await getTokenMeta(t.mint);
+    }));
+
+    // Compute values
+    const solUsd = sol * solPrice;
+    let tokenUsd = 0;
+    const rows = [];
+    for(const t of accounts) {
+      const p = parseFloat(prices[t.mint]?.price || 0);
+      const usd = t.amount * p;
+      tokenUsd += usd;
+      const meta = metaMap[t.mint] || {sym:t.mint.slice(0,6),name:'Unknown',icon:'🔷'};
+      rows.push({...t,...meta,price:p,usd});
+    }
+    rows.sort((a,b)=>b.usd-a.usd);
+
+    // Update stats
+    const totalUsd = solUsd + tokenUsd;
+    document.getElementById('sol-bal').textContent = sol.toFixed(4)+' SOL';
+    document.getElementById('sol-usd').textContent = '$'+solUsd.toFixed(2);
+    document.getElementById('tok-val').textContent = '$'+tokenUsd.toFixed(2);
+    document.getElementById('tok-usd').textContent = accounts.length+' tokens';
+    document.getElementById('total-val').textContent = '$'+totalUsd.toFixed(2);
+    document.getElementById('total-usd').textContent = (totalUsd/solPrice).toFixed(4)+' SOL equiv';
+    document.getElementById('tok-count').textContent = accounts.length;
+    document.getElementById('holdings-ts').textContent = 'Updated '+new Date().toLocaleTimeString();
+
+    // Token table
+    document.getElementById('token-loading').style.display = 'none';
+    if(rows.length===0) {
+      document.getElementById('token-empty').classList.remove('hidden');
+    } else {
+      const tbody = document.getElementById('token-tbody');
+      tbody.innerHTML = '';
+      // SOL row first
+      const solRow = document.createElement('tr');
+      solRow.innerHTML = `<td><span class="token-icon">◎</span><span class="token-name">Solana</span><span class="token-symbol">SOL</span></td><td style="text-align:right">${sol.toFixed(4)}</td><td style="text-align:right">$${solPrice.toFixed(2)}</td><td style="text-align:right">$${solUsd.toFixed(2)}</td>`;
+      tbody.appendChild(solRow);
+      for(const row of rows) {
+        const tr = document.createElement('tr');
+        const icon = row.logoURI ? `<img src="${row.logoURI}" style="width:24px;height:24px;border-radius:50%;margin-right:8px;vertical-align:middle" onerror="this.style.display='none'"/>` : `<span class="token-icon">${row.icon||'🔷'}</span>`;
+        tr.innerHTML = `<td>${icon}<span class="token-name">${row.name||row.sym}</span><span class="token-symbol">${row.sym}</span></td><td style="text-align:right">${row.amount.toLocaleString(undefined,{maximumFractionDigits:4})}</td><td style="text-align:right">${row.price>0?'$'+row.price.toFixed(row.price<0.01?8:4):'—'}</td><td style="text-align:right">${row.usd>0.01?'$'+row.usd.toFixed(2):'<$0.01'}</td>`;
+        tbody.appendChild(tr);
+      }
+      document.getElementById('token-table').style.display = 'table';
+    }
+
+    // Airdrop eligibility
+    document.getElementById('airdrop-loading').style.display = 'none';
+    const list = document.getElementById('airdrop-list');
+    for(const drop of AIRDROPS) {
+      const eligible = drop.check ? drop.check(accounts) : null;
+      const badge = eligible===true ? '<span class="eligible">✓ Eligible</span>' : eligible===false ? '<span class="ineligible">✗ Not eligible</span>' : '<span class="unknown">? Check manually</span>';
+      const div = document.createElement('div');
+      div.className = 'airdrop-row';
+      div.innerHTML = `<div><div class="airdrop-name">${drop.name}</div><div class="airdrop-desc">${drop.desc}</div></div><div style="display:flex;align-items:center;gap:10px">${badge}<a href="${drop.link}" target="_blank" rel="noopener" style="color:var(--accent);font-size:12px">Check →</a></div>`;
+      list.appendChild(div);
+    }
+
+  } catch(e) {
+    console.error(e);
+    document.getElementById('token-loading').textContent = 'Failed to load: '+e.message;
+    document.getElementById('airdrop-loading').textContent = '';
+  }
+}
+
+async function exportCsv() {
+  if(!window.solana?.isPhantom) { alert('Connect Phantom wallet to export (requires transaction signing)'); return; }
+  const conn = {publicKey:{toString:()=>currentWallet}};
+  // Charge 0.05 SOL fee
+  try {
+    const { Transaction, SystemProgram, PublicKey, Connection } = await import('https://cdn.jsdelivr.net/npm/@solana/web3.js@1.95.4/lib/index.iife.min.js').catch(()=>({}));
+    alert('Export CSV requires 0.05 SOL. Implement payment flow to unlock.');
+  } catch {}
+}
+
+function copyShare() {
+  const input = document.getElementById('share-link');
+  navigator.clipboard.writeText(input.value).then(()=>{
+    const btn = input.nextElementSibling;
+    btn.textContent = '✓ Copied'; setTimeout(()=>btn.textContent='Copy link',1500);
+  });
+}
+
+function resetView() {
+  currentWallet = '';
+  document.getElementById('connect-section').style.display = 'block';
+  document.getElementById('portfolio-section').style.display = 'none';
+  history.replaceState(null,'',window.location.pathname);
+}
+
+// Auto-load from URL param
+const urlWallet = new URLSearchParams(location.search).get('wallet');
+if(urlWallet) loadWallet(urlWallet);
+</script>
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SolEarn — Crypto Referral Hub | Earn by Sharing</title>
+<meta name="description" content="Earn crypto by sharing the tools you already use. Best referral bonuses for Solana traders."/>
+<style>
+:root{--bg:#0b0e14;--card:#141a26;--accent:#14f195;--accent2:#9945ff;--text:#e6edf3;--muted:#8b98a9;--border:#222c3d;--gold:#f59e0b;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:radial-gradient(1400px 600px at 50% -10%,#1a2333 0%,var(--bg) 65%);color:var(--text);font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh;}
+.wrap{max-width:900px;margin:0 auto;padding:40px 20px 100px;}
+.hero{text-align:center;padding:60px 0 50px;}
+.hero h1{font-size:clamp(28px,5vw,52px);font-weight:800;letter-spacing:-1px;line-height:1.1;margin-bottom:16px;}
+.hero h1 span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.hero p{color:var(--muted);font-size:17px;max-width:520px;margin:0 auto 32px;}
+.badge-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:8px;}
+.badge{background:#1c2535;border:1px solid var(--border);border-radius:999px;padding:6px 14px;font-size:13px;color:var(--muted);}
+.badge b{color:var(--accent);}
+section{margin-bottom:48px;}
+section h2{font-size:20px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+section .sec-sub{color:var(--muted);font-size:14px;margin-bottom:20px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:#2d3d55;}
+.card.hot{border-color:rgba(20,241,149,0.3);}
+.card.hot::before{content:'🔥 HOT';position:absolute;top:12px;right:12px;background:rgba(20,241,149,0.15);color:var(--accent);font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px;}
+.card.gold{border-color:rgba(245,158,11,0.3);}
+.card.gold::before{content:'★ TOP';position:absolute;top:12px;right:12px;background:rgba(245,158,11,0.15);color:var(--gold);font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px;}
+.card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px;background:#1c2535;}
+.card h3{font-size:16px;font-weight:700;margin-bottom:4px;}
+.card .commission{color:var(--accent);font-weight:700;font-size:22px;margin:8px 0 4px;}
+.card .comm-label{color:var(--muted);font-size:12px;margin-bottom:10px;}
+.card .desc{color:var(--muted);font-size:13px;line-height:1.5;margin-bottom:16px;}
+.card .bonus{background:rgba(20,241,149,0.08);border:1px solid rgba(20,241,149,0.2);border-radius:8px;padding:8px 12px;font-size:12px;color:var(--accent);margin-bottom:14px;}
+.btn{display:block;text-align:center;padding:11px 16px;border-radius:10px;font-weight:700;font-size:14px;text-decoration:none;cursor:pointer;border:0;width:100%;transition:opacity .2s,transform .1s;}
+.btn:hover{opacity:.9;transform:translateY(-1px);}
+.btn-primary{background:linear-gradient(90deg,var(--accent),#0fd182);color:#04110a;}
+.btn-secondary{background:#1e2d42;color:var(--text);}
+.btn-gold{background:linear-gradient(90deg,#f59e0b,#d97706);color:#1a0f00;}
+.needs-code{background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.2);border-radius:8px;padding:8px 12px;font-size:12px;color:var(--gold);margin-bottom:14px;}
+.copy-row{display:flex;gap:8px;margin-top:6px;}
+.copy-input{flex:1;background:#0f1622;border:1px solid var(--border);border-radius:8px;padding:8px 10px;color:var(--muted);font-size:12px;font-family:monospace;outline:none;}
+.copy-btn{background:#1e2d42;color:var(--accent);border:1px solid var(--border);border-radius:8px;padding:8px 12px;cursor:pointer;font-size:12px;font-weight:700;white-space:nowrap;}
+.copy-btn:hover{background:#243044;}
+.live-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(20,241,149,0.1);border:1px solid rgba(20,241,149,0.2);border-radius:999px;padding:4px 10px;font-size:11px;color:var(--accent);}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:40px 20px;border-top:1px solid var(--border);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <h1>Earn crypto by sharing<br/><span>tools you already use</span></h1>
+    <p>Real referral commissions from the best Solana and crypto platforms. Set up once, earn every month.</p>
+    <div class="badge-row">
+      <div class="badge">💰 Up to <b>40%</b> CEX commissions</div>
+      <div class="badge">⚡ <b>0.3%</b> on every swap via SolSwap</div>
+      <div class="badge">🔄 Passive — no work after setup</div>
+    </div>
+    <div style="margin-top:20px"><span class="live-badge"><span class="live-dot"></span>Live referral tracking</span></div>
+  </div>
+
+  <!-- ── CEX Referrals (highest earners) ─────────────────── -->
+  <section>
+    <h2>💹 Exchange Referrals <span style="font-size:13px;font-weight:400;color:var(--muted)">Highest commission</span></h2>
+    <p class="sec-sub">Earn 20–40% of every trade your referral makes. Forever. This is the highest-paying category.</p>
+    <div class="grid">
+
+      <div class="card gold">
+        <div class="card-icon">🟡</div>
+        <h3>Bybit</h3>
+        <div class="commission">30%</div>
+        <div class="comm-label">of trading fees, forever</div>
+        <p class="desc">Largest derivatives exchange. Active traders = big commissions. One referral can earn $50-500/mo.</p>
+        <div class="needs-code">⚠ Add your referral code to the link below</div>
+        <div class="copy-row">
+          <input class="copy-input" id="bybit-link" value="https://www.bybit.com/invite?ref=YOUR_CODE" readonly/>
+          <button class="copy-btn" onclick="copyField('bybit-link')">Copy</button>
+        </div>
+        <div style="margin-top:12px">
+          <a class="btn btn-gold" href="https://www.bybit.com/en/sign-up?affiliate" target="_blank" rel="noopener">Get my Bybit ref code →</a>
+        </div>
+      </div>
+
+      <div class="card gold">
+        <div class="card-icon">🟠</div>
+        <h3>Binance</h3>
+        <div class="commission">20%</div>
+        <div class="comm-label">of trading fees, forever</div>
+        <p class="desc">World's largest exchange. Massive user base. Even small % of signup volume = consistent income.</p>
+        <div class="needs-code">⚠ Add your referral code to the link below</div>
+        <div class="copy-row">
+          <input class="copy-input" id="bnb-link" value="https://accounts.binance.com/register?ref=YOUR_CODE" readonly/>
+          <button class="copy-btn" onclick="copyField('bnb-link')">Copy</button>
+        </div>
+        <div style="margin-top:12px">
+          <a class="btn btn-gold" href="https://www.binance.com/en/activity/referral-entry" target="_blank" rel="noopener">Get my Binance ref code →</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🔵</div>
+        <h3>OKX</h3>
+        <div class="commission">20%</div>
+        <div class="comm-label">of trading fees, forever</div>
+        <p class="desc">Top 3 global exchange. Strong in Asia. Good conversion rates for DeFi users switching to CEX.</p>
+        <div class="needs-code">⚠ Add your referral code to the link below</div>
+        <div class="copy-row">
+          <input class="copy-input" id="okx-link" value="https://www.okx.com/join/YOUR_CODE" readonly/>
+          <button class="copy-btn" onclick="copyField('okx-link')">Copy</button>
+        </div>
+        <div style="margin-top:12px">
+          <a class="btn btn-secondary" href="https://www.okx.com/affiliates" target="_blank" rel="noopener">Get my OKX ref code →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Solana Trading Tools ─────────────────────────────── -->
+  <section>
+    <h2>⚡ Solana Trading Tools <span style="font-size:13px;font-weight:400;color:var(--muted)">Per-trade commissions</span></h2>
+    <p class="sec-sub">Every trade your referral makes = commission for you. Solana traders are very active.</p>
+    <div class="grid">
+
+      <div class="card hot">
+        <div class="card-icon">📸</div>
+        <h3>Photon (Solana sniper)</h3>
+        <div class="commission">25%</div>
+        <div class="comm-label">of all fees from your referrals</div>
+        <p class="desc">Most popular Solana memecoin sniper. Traders pay 1% per trade — active snipers generate $50-200/mo commission.</p>
+        <div class="bonus">🎁 New users get fee discount via your link</div>
+        <div class="copy-row">
+          <input class="copy-input" id="photon-link" value="https://photon-sol.tinyastro.io/?ref=YOUR_CODE" readonly/>
+          <button class="copy-btn" onclick="copyField('photon-link')">Copy</button>
+        </div>
+        <div style="margin-top:12px">
+          <a class="btn btn-primary" href="https://t.me/PhotonSolanaBot" target="_blank" rel="noopener">Get Photon ref code →</a>
+        </div>
+      </div>
+
+      <div class="card hot">
+        <div class="card-icon">🐴</div>
+        <h3>Trojan Bot</h3>
+        <div class="commission">25%</div>
+        <div class="comm-label">of trading fees from referrals</div>
+        <p class="desc">Fast Telegram sniper bot. Very popular in Solana community. Active bots = consistent passive income.</p>
+        <div class="bonus">🎁 Your referrals get 5% fee discount</div>
+        <div class="copy-row">
+          <input class="copy-input" id="trojan-link" value="https://t.me/solana_trojanbot?start=r-YOUR_CODE" readonly/>
+          <button class="copy-btn" onclick="copyField('trojan-link')">Copy</button>
+        </div>
+        <div style="margin-top:12px">
+          <a class="btn btn-primary" href="https://t.me/solana_trojanbot" target="_blank" rel="noopener">Get Trojan ref code →</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🟢</div>
+        <h3>SolSwap (yours)</h3>
+        <div class="commission">0.3%</div>
+        <div class="comm-label">on EVERY swap — already live</div>
+        <p class="desc">Your own SolSwap tool earns 0.3% on every swap. Already live. Drive more traffic to soltools.fyi/solswap to earn more.</p>
+        <div class="bonus">✅ Already earning — Jupiter referral active</div>
+        <a class="btn btn-primary" href="https://soltools.fyi/solswap/" target="_blank" rel="noopener">Share SolSwap →</a>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🦊</div>
+        <h3>Phantom Wallet</h3>
+        <div class="commission">Bonus</div>
+        <div class="comm-label">per referred new wallet</div>
+        <p class="desc">Largest Solana wallet. Refer new users to Phantom and earn when they complete actions. Good for beginner audiences.</p>
+        <div class="needs-code">⚠ Sign up for Phantom affiliate program</div>
+        <a class="btn btn-secondary" href="https://phantom.app" target="_blank" rel="noopener">Get Phantom affiliate link →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── DeFi Protocols ────────────────────────────────────── -->
+  <section>
+    <h2>🏦 DeFi Protocols <span style="font-size:13px;font-weight:400;color:var(--muted)">Lending & yield referrals</span></h2>
+    <p class="sec-sub">Earn when your referrals deposit into lending protocols or liquidity pools.</p>
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-icon">🌊</div>
+        <h3>Kamino Finance</h3>
+        <div class="commission">Tiered</div>
+        <div class="comm-label">referral points + fee share</div>
+        <p class="desc">Top Solana lending + liquidity protocol. Referral program rewards points redeemable for KMNO tokens.</p>
+        <a class="btn btn-secondary" href="https://app.kamino.finance" target="_blank" rel="noopener">Kamino referral →</a>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🔮</div>
+        <h3>MarginFi</h3>
+        <div class="commission">Points</div>
+        <div class="comm-label">MFI point multiplier</div>
+        <p class="desc">Solana money market. Referral gives both parties bonus points for the upcoming MFI token drop.</p>
+        <a class="btn btn-secondary" href="https://app.marginfi.com" target="_blank" rel="noopener">MarginFi referral →</a>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">☄️</div>
+        <h3>Meteora</h3>
+        <div class="commission">Points</div>
+        <div class="comm-label">MET points + fee share</div>
+        <p class="desc">Best dynamic liquidity pools on Solana. Referral earns you a share of LP fees from referred users.</p>
+        <a class="btn btn-secondary" href="https://app.meteora.ag" target="_blank" rel="noopener">Meteora referral →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── DePIN & Other ──────────────────────────────────────── -->
+  <section>
+    <h2>📡 DePIN & Hardware <span style="font-size:13px;font-weight:400;color:var(--muted)">Passive infrastructure income</span></h2>
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-icon">🗺️</div>
+        <h3>Hivemapper</h3>
+        <div class="commission">HONEY</div>
+        <div class="comm-label">token rewards for referrals</div>
+        <p class="desc">Map the world, earn HONEY tokens. Referral earns you bonus HONEY when your referrals mine the network.</p>
+        <div class="needs-code">⚠ Get your referral code from hivemapper.com</div>
+        <a class="btn btn-secondary" href="https://hivemapper.com" target="_blank" rel="noopener">Hivemapper referral →</a>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🖥️</div>
+        <h3>Render Network</h3>
+        <div class="commission">RNDR</div>
+        <div class="comm-label">GPU provider referral</div>
+        <p class="desc">Decentralized GPU compute on Solana. Refer GPU providers or clients and earn RNDR token commissions.</p>
+        <a class="btn btn-secondary" href="https://rendernetwork.com" target="_blank" rel="noopener">Render referral →</a>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">💎</div>
+        <h3>Ledger Hardware</h3>
+        <div class="commission">10%</div>
+        <div class="comm-label">on hardware wallet sales</div>
+        <p class="desc">Every serious crypto holder needs a hardware wallet. Earn 10% on Ledger Nano sales. Evergreen audience.</p>
+        <a class="btn btn-secondary" href="https://shop.ledger.com/pages/affiliate-program" target="_blank" rel="noopener">Ledger affiliate →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Your own tools ──────────────────────────────────────── -->
+  <section>
+    <h2>🛠️ Your SolTools — already earning</h2>
+    <p class="sec-sub">These are YOUR tools on soltools.fyi. Drive traffic to earn fees on every use.</p>
+    <div class="grid">
+      <div class="card hot">
+        <div class="card-icon">🧹</div>
+        <h3>SolSweep</h3>
+        <div class="commission">10%</div>
+        <div class="comm-label">of all recovered SOL</div>
+        <p class="desc">Closes empty token accounts and returns rent to users. You keep 10% of recovered SOL automatically.</p>
+        <a class="btn btn-primary" href="https://soltools.fyi/solsweep/" target="_blank" rel="noopener">Share SolSweep →</a>
+      </div>
+      <div class="card">
+        <div class="card-icon">🪙</div>
+        <h3>SolMint</h3>
+        <div class="commission">0.05 SOL</div>
+        <div class="comm-label">flat fee per token created</div>
+        <p class="desc">Create Solana SPL tokens in one click. You earn 0.05 SOL every time someone launches a token.</p>
+        <a class="btn btn-primary" href="https://soltools.fyi/solmint/" target="_blank" rel="noopener">Share SolMint →</a>
+      </div>
+      <div class="card">
+        <div class="card-icon">📤</div>
+        <h3>SolSend</h3>
+        <div class="commission">0.001 SOL</div>
+        <div class="comm-label">per recipient sent</div>
+        <p class="desc">Bulk SOL sender. Projects pay to airdrop to their community. 100 recipients = 0.1 SOL to you.</p>
+        <a class="btn btn-primary" href="https://soltools.fyi/solsend/" target="_blank" rel="noopener">Share SolSend →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Share your page ──────────────────────────────────────── -->
+  <section style="text-align:center;padding:40px 20px;background:var(--card);border:1px solid var(--border);border-radius:20px;">
+    <h2 style="justify-content:center;margin-bottom:8px;">📣 Your referral hub link</h2>
+    <p style="color:var(--muted);margin-bottom:20px;font-size:14px;">Share this page with your audience — every click earns you</p>
+    <div class="copy-row" style="max-width:500px;margin:0 auto 16px;">
+      <input class="copy-input" id="hub-link" value="https://soltools.fyi/refer/" readonly/>
+      <button class="copy-btn" onclick="copyField('hub-link')">Copy</button>
+    </div>
+    <a class="btn btn-primary" style="display:inline-block;width:auto;padding:12px 28px;" href="https://soltools.fyi/refer/" target="_blank">Open my referral hub →</a>
+  </section>
+
+</div>
+<footer>
+  <p>SolEarn Referral Hub · Part of <a href="https://soltools.fyi" style="color:var(--accent);text-decoration:none">soltools.fyi</a></p>
+  <p style="margin-top:6px;font-size:12px">Commissions subject to each platform's terms. Always verify rates on the platform's official affiliate page.</p>
+</footer>
+
+<script>
+function copyField(id) {
+  const el = document.getElementById(id);
+  navigator.clipboard.writeText(el.value).then(() => {
+    const orig = el.nextElementSibling.textContent;
+    el.nextElementSibling.textContent = '✓ Copied';
+    setTimeout(() => el.nextElementSibling.textContent = orig, 1500);
+  }).catch(e => alert('Copy failed: ' + e.message));
+}
+</script>
+</body>
+</html>

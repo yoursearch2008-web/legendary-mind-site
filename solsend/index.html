@@ -12,7 +12,7 @@
   .wrap { max-width:680px; margin:0 auto; padding:36px 20px 80px; }
   .logo { font-weight:800; font-size:26px; letter-spacing:-0.5px; margin-bottom:4px; }
   .logo span { background:linear-gradient(90deg,var(--accent),var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .tag { color:var(--muted); font-size:14px; margin-bottom:28px; }
+  .tag { color:var(--muted); font-size:14px; margin-bottom:20px; }
   .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; margin-bottom:16px; }
   .card h3 { font-size:15px; font-weight:700; margin-bottom:16px; }
   label { display:block; color:var(--muted); font-size:13px; margin-bottom:6px; margin-top:14px; }
@@ -27,6 +27,7 @@
   button:disabled { opacity:.45; cursor:not-allowed; transform:none; }
   button.secondary { background:#243044; color:var(--text); }
   button.danger { background:linear-gradient(90deg,#ff5c5c,#e04444); color:#fff; }
+  button.purple { background:linear-gradient(90deg,var(--accent2),#7c3aed); color:#fff; }
   .pill { display:inline-block; background:#0f1622; border:1px solid var(--border); border-radius:999px; padding:4px 12px; font-size:13px; color:var(--muted); }
   .ok { color:var(--accent); } .err { color:var(--danger); } .warn { color:#f4c542; }
   #log { font-family:ui-monospace,Consolas,monospace; font-size:12px; color:var(--muted); white-space:pre-wrap; max-height:260px; overflow:auto; margin-top:14px;
@@ -45,6 +46,7 @@
   .recipients-table .err-row td { color:var(--danger); }
   .badge { display:inline-block; background:#0f2018; border:1px solid var(--accent); border-radius:8px;
            padding:3px 9px; font-size:12px; color:var(--accent); font-weight:700; }
+  .badge.purple { background:#1a0f2e; border-color:var(--accent2); color:#c084fc; }
   .step-indicator { display:flex; gap:8px; margin-bottom:24px; }
   .step { flex:1; height:4px; border-radius:99px; background:var(--border); transition:background .3s; }
   .step.done { background:var(--accent); }
@@ -54,94 +56,552 @@
                  font-size:12px; color:var(--muted); cursor:pointer; width:auto; margin:0; }
   .example-btn:hover { border-color:var(--accent); color:var(--accent); transform:none; }
   a { color:var(--accent); text-decoration:none; }
+
+  /* ── Mode tabs ─────────────────────────────────────────── */
+  .mode-tabs { display:flex; gap:0; margin-bottom:24px; background:#0a0d14; border:1px solid var(--border); border-radius:12px; padding:4px; }
+  .mode-tab { flex:1; padding:10px; border-radius:9px; font-size:14px; font-weight:700; cursor:pointer; border:0; background:transparent; color:var(--muted); transition:all .2s; }
+  .mode-tab.active { background:var(--card); color:var(--text); }
+  .mode-tab.active.pro { color:#c084fc; }
+
+  /* ── Token info box ────────────────────────────────────── */
+  .token-info-box { background:#0a0f1a; border:1px solid var(--border); border-radius:10px; padding:14px; margin-top:12px; display:none; }
+  .token-info-box .ti-row { display:flex; gap:16px; flex-wrap:wrap; }
+  .token-info-box .ti-item { flex:1; min-width:120px; }
+  .token-info-box .ti-label { color:var(--muted); font-size:11px; margin-bottom:2px; }
+  .token-info-box .ti-val { font-weight:700; font-size:15px; }
+
+  /* ── CSV upload ───────────────────────────────────────── */
+  .file-drop { border:2px dashed var(--border); border-radius:10px; padding:20px; text-align:center; color:var(--muted); font-size:14px; cursor:pointer; margin-top:10px; transition:border-color .2s; }
+  .file-drop:hover { border-color:var(--accent); }
+  .file-drop input { display:none; }
+
+  /* ── Progress bar ─────────────────────────────────────── */
+  .progress-bar { height:6px; background:var(--border); border-radius:99px; margin-top:12px; overflow:hidden; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,var(--accent),#0fd182); border-radius:99px; transition:width .3s; width:0; }
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="logo">Sol<span>Send</span></div>
-  <div class="tag">Bulk SOL sender. Airdrops, payments, distributions — one click.</div>
+  <div class="tag">Bulk SOL & token sender. Airdrops, payments, distributions — one click.</div>
 
-  <div class="step-indicator">
-    <div class="step active" id="s1"></div>
-    <div class="step" id="s2"></div>
-    <div class="step" id="s3"></div>
+  <!-- ── Mode tabs ────────────────────────────────────────── -->
+  <div class="mode-tabs">
+    <button class="mode-tab active" id="tabSolBtn" onclick="switchMode('sol')">◎ SOL Send</button>
+    <button class="mode-tab pro" id="tabTokenBtn" onclick="switchMode('token')">✦ Token Airdrop <span class="badge purple" style="font-size:10px;padding:2px 6px;margin-left:4px">PRO</span></button>
   </div>
 
-  <!-- Step 1: Connect -->
-  <div class="card" id="connectCard">
-    <h3>Step 1 — Connect Wallet</h3>
-    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-      <button id="btnPhantom" class="secondary" style="width:auto">👻 Phantom</button>
-      <button id="btnSolflare" class="secondary" style="width:auto">☀️ Solflare</button>
-      <button id="btnBackpack" class="secondary" style="width:auto">🎒 Backpack</button>
-      <span class="pill" id="walletPill">Not connected</span>
+  <!-- ════════════════════════════════════════════════════════
+       SOL SEND (existing flow)
+  ═════════════════════════════════════════════════════════ -->
+  <div id="solTab">
+    <div class="step-indicator">
+      <div class="step active" id="s1"></div>
+      <div class="step" id="s2"></div>
+      <div class="step" id="s3"></div>
     </div>
-  </div>
 
-  <!-- Step 2: Recipients -->
-  <div class="card" id="inputCard" style="display:none">
-    <h3>Step 2 — Recipients</h3>
-
-    <label>Paste addresses and amounts — one per line</label>
-    <div class="examples">
-      <span style="color:var(--muted);font-size:12px;align-self:center">Format:</span>
-      <button class="example-btn" id="exCsv">address, amount</button>
-      <button class="example-btn" id="exTab">address TAB amount</button>
-      <button class="example-btn" id="exSpace">address SPACE amount</button>
-    </div>
-    <textarea id="recipientInput" placeholder="EjnFPeimFN5sYkrNGrTb2jCXbMJBisPDV1BjR2pkWTp8, 0.1&#10;BfJV93B6j7PxJKpEzmLkyxJdvJTbg5rCa8TuY2XnZ9q, 0.05&#10;7xZsm3KJv..."></textarea>
-
-    <div id="preview" style="display:none;margin-top:16px">
-      <div style="font-size:13px;font-weight:700;margin-bottom:8px">Preview <span id="recipientCount" class="badge">0</span></div>
-      <div style="max-height:200px;overflow:auto">
-        <table class="recipients-table">
-          <thead><tr><th>#</th><th>Address</th><th>Amount (SOL)</th><th></th></tr></thead>
-          <tbody id="previewBody"></tbody>
-        </table>
+    <!-- Step 1: Connect -->
+    <div class="card" id="connectCard">
+      <h3>Step 1 — Connect Wallet</h3>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+        <button id="btnPhantom" class="secondary" style="width:auto">👻 Phantom</button>
+        <button id="btnSolflare" class="secondary" style="width:auto">☀️ Solflare</button>
+        <button id="btnBackpack" class="secondary" style="width:auto">🎒 Backpack</button>
+        <span class="pill" id="walletPill">Not connected</span>
       </div>
-      <div class="fee-box">
-        <div class="fee-row"><span class="lbl">Recipients</span><span id="feeCount">0</span></div>
-        <div class="fee-row"><span class="lbl">Total SOL to send</span><span id="feeTotal">0</span></div>
-        <div class="fee-row"><span class="lbl">SolSend service fee</span><span id="feeSvc">0</span></div>
-        <div class="fee-row"><span class="lbl">Est. tx fees</span><span id="feeTx">~0.000005 SOL/tx</span></div>
-        <div class="fee-row fee-total"><span class="lbl">Total estimated</span><span class="val" id="feeGrand">0</span></div>
+    </div>
+
+    <!-- Step 2: Recipients -->
+    <div class="card" id="inputCard" style="display:none">
+      <h3>Step 2 — Recipients</h3>
+      <label>Paste addresses and amounts — one per line</label>
+      <div class="examples">
+        <span style="color:var(--muted);font-size:12px;align-self:center">Format:</span>
+        <button class="example-btn" id="exCsv">address, amount</button>
+        <button class="example-btn" id="exTab">address TAB amount</button>
+        <button class="example-btn" id="exSpace">address SPACE amount</button>
       </div>
-      <div id="errorList" style="margin-top:10px"></div>
+      <textarea id="recipientInput" placeholder="EjnFPeimFN5sYkrNGrTb2jCXbMJBisPDV1BjR2pkWTp8, 0.1&#10;BfJV93B6j7PxJKpEzmLkyxJdvJTbg5rCa8TuY2XnZ9q, 0.05&#10;7xZsm3KJv..."></textarea>
+
+      <div id="preview" style="display:none;margin-top:16px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px">Preview <span id="recipientCount" class="badge">0</span></div>
+        <div style="max-height:200px;overflow:auto">
+          <table class="recipients-table">
+            <thead><tr><th>#</th><th>Address</th><th>Amount (SOL)</th><th></th></tr></thead>
+            <tbody id="previewBody"></tbody>
+          </table>
+        </div>
+        <div class="fee-box">
+          <div class="fee-row"><span class="lbl">Recipients</span><span id="feeCount">0</span></div>
+          <div class="fee-row"><span class="lbl">Total SOL to send</span><span id="feeTotal">0</span></div>
+          <div class="fee-row"><span class="lbl">SolSend service fee</span><span id="feeSvc">0</span></div>
+          <div class="fee-row"><span class="lbl">Est. tx fees</span><span id="feeTx">~0.000005 SOL/tx</span></div>
+          <div class="fee-row fee-total"><span class="lbl">Total estimated</span><span class="val" id="feeGrand">0</span></div>
+        </div>
+        <div id="errorList" style="margin-top:10px"></div>
+      </div>
+
+      <button id="parseBtn" style="margin-top:14px">Parse & Preview →</button>
     </div>
 
-    <button id="parseBtn" style="margin-top:14px">Parse & Preview →</button>
-  </div>
-
-  <!-- Step 3: Send -->
-  <div class="card" id="sendCard" style="display:none">
-    <h3>Step 3 — Review &amp; Send</h3>
-    <div id="sendSummary"></div>
-    <div id="log"></div>
-    <div style="display:flex;gap:10px;margin-top:14px">
-      <button class="secondary" id="backBtn" style="width:auto;padding:12px 20px">← Back</button>
-      <button id="sendBtn">Send to All →</button>
+    <!-- Step 3: Send -->
+    <div class="card" id="sendCard" style="display:none">
+      <h3>Step 3 — Review &amp; Send</h3>
+      <div id="sendSummary"></div>
+      <div id="log"></div>
+      <div style="display:flex;gap:10px;margin-top:14px">
+        <button class="secondary" id="backBtn" style="width:auto;padding:12px 20px">← Back</button>
+        <button id="sendBtn">Send to All →</button>
+      </div>
     </div>
-  </div>
 
-  <!-- Result -->
-  <div class="card" id="resultCard" style="display:none;text-align:center;padding:28px 24px">
-    <div style="font-size:48px;margin-bottom:12px">✅</div>
-    <h3 style="font-size:20px;font-weight:800;color:var(--accent);margin-bottom:8px">Sent!</h3>
-    <div id="resultText" style="color:var(--muted);font-size:14px;margin-bottom:16px"></div>
-    <div id="txLinks" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center"></div>
-    <button class="secondary" id="newSendBtn" style="margin-top:16px;width:auto;padding:12px 24px">Send another</button>
-  </div>
-
-  <div class="card" style="margin-top:8px">
-    <div style="font-size:13px;color:var(--muted);line-height:1.6">
-      <b style="color:var(--text)">Pricing:</b> 0.001 SOL per recipient (min 0.005 SOL). Fee is sent in the same transaction you approve.<br><br>
-      <b style="color:var(--text)">Limits:</b> Up to 15 recipients per transaction (Solana tx size limit). Large lists are split into multiple transactions automatically.<br><br>
-      <b style="color:var(--text)">Safety:</b> 100% non-custodial. You sign every transaction. We never hold funds or keys.
+    <!-- Result -->
+    <div class="card" id="resultCard" style="display:none;text-align:center;padding:28px 24px">
+      <div style="font-size:48px;margin-bottom:12px">✅</div>
+      <h3 style="font-size:20px;font-weight:800;color:var(--accent);margin-bottom:8px">Sent!</h3>
+      <div id="resultText" style="color:var(--muted);font-size:14px;margin-bottom:16px"></div>
+      <div id="txLinks" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center"></div>
+      <button class="secondary" id="newSendBtn" style="margin-top:16px;width:auto;padding:12px 24px">Send another</button>
     </div>
-  </div>
-</div>
+
+    <div class="card" style="margin-top:8px">
+      <div style="font-size:13px;color:var(--muted);line-height:1.6">
+        <b style="color:var(--text)">Pricing:</b> 0.001 SOL per recipient (min 0.005 SOL). Fee sent in the same transaction you approve.<br><br>
+        <b style="color:var(--text)">Limits:</b> Up to 15 recipients per transaction. Large lists split automatically.<br><br>
+        <b style="color:var(--text)">Safety:</b> 100% non-custodial. You sign every transaction. We never hold funds or keys.
+      </div>
+    </div>
+  </div><!-- /solTab -->
+
+
+  <!-- ════════════════════════════════════════════════════════
+       TOKEN AIRDROP PRO
+  ═════════════════════════════════════════════════════════ -->
+  <div id="tokenTab" style="display:none">
+
+    <!-- Connect (shared state with SOL tab) -->
+    <div class="card" id="tConnectCard">
+      <h3>Step 1 — Connect Wallet</h3>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+        <button onclick="tConnectWallet('Phantom')" class="secondary" style="width:auto">👻 Phantom</button>
+        <button onclick="tConnectWallet('Solflare')" class="secondary" style="width:auto">☀️ Solflare</button>
+        <button onclick="tConnectWallet('Backpack')" class="secondary" style="width:auto">🎒 Backpack</button>
+        <span class="pill" id="tWalletPill">Not connected</span>
+      </div>
+    </div>
+
+    <!-- Token config -->
+    <div class="card" id="tConfigCard" style="display:none">
+      <h3>Step 2 — Token to Airdrop</h3>
+
+      <label>Token Mint Address</label>
+      <div style="display:flex;gap:8px">
+        <input id="tMintAddr" placeholder="e.g. EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v (USDC)" style="flex:1"/>
+        <button onclick="tLoadToken()" style="width:auto;padding:12px 16px;font-size:13px">Load</button>
+      </div>
+
+      <div class="token-info-box" id="tTokenInfo">
+        <div class="ti-row">
+          <div class="ti-item"><div class="ti-label">Symbol</div><div class="ti-val" id="ti-symbol">—</div></div>
+          <div class="ti-item"><div class="ti-label">Name</div><div class="ti-val" id="ti-name">—</div></div>
+          <div class="ti-item"><div class="ti-label">Decimals</div><div class="ti-val" id="ti-dec">—</div></div>
+          <div class="ti-item"><div class="ti-label">Your balance</div><div class="ti-val" id="ti-bal">—</div></div>
+        </div>
+      </div>
+
+      <label style="margin-top:16px">Send mode</label>
+      <select id="tSendMode" onchange="tToggleSendMode()">
+        <option value="uniform">Same amount to everyone</option>
+        <option value="custom">Custom amount per address (CSV)</option>
+      </select>
+
+      <div id="tUniformAmt">
+        <label>Amount per recipient (in token units, e.g. 100 for 100 USDC)</label>
+        <input id="tAmount" type="number" placeholder="100" min="0" step="any"/>
+      </div>
+
+      <button onclick="tGoToRecipients()" style="margin-top:16px">Next: Add recipients →</button>
+    </div>
+
+    <!-- Recipients -->
+    <div class="card" id="tRecipientsCard" style="display:none">
+      <h3>Step 3 — Recipients</h3>
+
+      <div id="tUniformHint" style="color:var(--muted);font-size:13px;margin-bottom:12px">One wallet address per line.</div>
+      <div id="tCustomHint" style="color:var(--muted);font-size:13px;margin-bottom:12px;display:none">Format: <code style="color:var(--accent)">address, amount</code> — one per line.</div>
+
+      <textarea id="tRecipients" placeholder="BfJV93B6j7PxJKpEzmLkyxJdvJTbg5rCa8TuY2XnZ9q&#10;EjnFPeimFN5sYkrNGrTb2jCXbMJBisPDV1BjR2pkWTp8&#10;..." style="min-height:180px"></textarea>
+
+      <div class="file-drop" onclick="document.getElementById('tCsvFile').click()">
+        📂 Or upload CSV / TXT file — click to browse
+        <input type="file" id="tCsvFile" accept=".csv,.txt" onchange="tLoadCsv(this)"/>
+      </div>
+
+      <button onclick="tParseAndPreview()" style="margin-top:14px">Parse & Preview →</button>
+    </div>
+
+    <!-- Preview + fee -->
+    <div class="card" id="tPreviewCard" style="display:none">
+      <h3>Step 4 — Review & Send</h3>
+
+      <div id="tPreviewSummary"></div>
+
+      <div class="fee-box" style="margin-top:14px">
+        <div class="fee-row"><span class="lbl">Recipients</span><span id="tFeeCount">0</span></div>
+        <div class="fee-row"><span class="lbl">Total tokens to send</span><span id="tFeeTokens">0</span></div>
+        <div class="fee-row"><span class="lbl">New ATAs to create</span><span id="tFeeATAs">0 × ~0.002 SOL rent</span></div>
+        <div class="fee-row"><span class="lbl">SolSend service fee</span><span id="tFeeSvc">0 SOL</span></div>
+        <div class="fee-row fee-total"><span class="lbl">Est. total SOL cost</span><span class="val" id="tFeeGrand">0</span></div>
+      </div>
+
+      <div id="tLog" style="font-family:ui-monospace,Consolas,monospace;font-size:12px;color:var(--muted);white-space:pre-wrap;max-height:260px;overflow:auto;margin-top:14px;background:#080c14;border:1px solid var(--border);border-radius:8px;padding:12px;display:none"></div>
+      <div class="progress-bar" id="tProgressBar" style="display:none"><div class="progress-fill" id="tProgressFill"></div></div>
+
+      <div style="display:flex;gap:10px;margin-top:16px">
+        <button class="secondary" onclick="tBack()" style="width:auto;padding:12px 20px">← Back</button>
+        <button class="purple" id="tSendBtn" onclick="tExecute()">🚀 Airdrop Tokens →</button>
+      </div>
+    </div>
+
+    <!-- Done -->
+    <div class="card" id="tDoneCard" style="display:none;text-align:center;padding:28px 24px">
+      <div style="font-size:48px;margin-bottom:12px">🎉</div>
+      <h3 style="font-size:20px;font-weight:800;color:var(--accent);margin-bottom:8px">Airdrop Complete!</h3>
+      <div id="tDoneText" style="color:var(--muted);font-size:14px;margin-bottom:16px"></div>
+      <div id="tTxLinks" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:16px"></div>
+      <button class="secondary" onclick="tReset()" style="width:auto;padding:12px 24px">New airdrop</button>
+    </div>
+
+    <div class="card" style="margin-top:8px">
+      <div style="font-size:13px;color:var(--muted);line-height:1.6">
+        <b style="color:var(--text)">Pricing:</b> 0.01 SOL per 100 recipients (min 0.01 SOL). Charged once per airdrop session.<br><br>
+        <b style="color:var(--text)">ATA creation:</b> ~0.002 SOL rent per new token account (Solana network cost, refundable if closed later).<br><br>
+        <b style="color:var(--text)">Batch size:</b> Up to 5 recipients per transaction when creating accounts, 15 when accounts exist. Large lists auto-batch.<br><br>
+        <b style="color:var(--text)">Safety:</b> 100% non-custodial. You sign every tx. Works with any SPL token.
+      </div>
+    </div>
+  </div><!-- /tokenTab -->
+
+</div><!-- /wrap -->
 
 <script src="https://unpkg.com/@solana/web3.js@1.95.3/lib/index.iife.min.js"></script>
 <script src="app.js"></script>
+
+<script>
+// ─────────────────────────────────────────────────────────────────────────────
+//  TOKEN AIRDROP PRO — inline logic
+// ─────────────────────────────────────────────────────────────────────────────
+const { Connection: Conn, PublicKey: PK, Transaction: TX, TransactionInstruction: TXI, SystemProgram: SYS } = solanaWeb3;
+
+const T_RPC     = 'https://solana-rpc.publicnode.com';
+const T_FEE_W   = new PK('75cecKX13qytPMydcMsqLwVxx24hy23WiAxo8J1Nf7g1');
+const TOKEN_PID = new PK('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA');
+const ATA_PID   = new PK('ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJe1bG');
+const RENT_SYS  = new PK('SysvarRent111111111111111111111111111111111');
+const tConn     = new Conn(T_RPC, 'confirmed');
+
+let tProvider = null, tOwner = null, tMint = null, tDecimals = 0;
+let tRecipientList = []; // [{addr, amount_raw}]
+
+// ── Tab switch ────────────────────────────────────────────────────────────────
+function switchMode(m) {
+  document.getElementById('solTab').style.display   = m === 'sol'   ? '' : 'none';
+  document.getElementById('tokenTab').style.display = m === 'token' ? '' : 'none';
+  document.getElementById('tabSolBtn').classList.toggle('active', m === 'sol');
+  document.getElementById('tabTokenBtn').classList.toggle('active', m === 'token');
+  // Sync wallet
+  if (m === 'token' && tOwner == null && typeof owner !== 'undefined' && owner) {
+    tOwner = owner; tProvider = provider;
+    document.getElementById('tWalletPill').textContent = owner.toString().slice(0,6)+'...'+owner.toString().slice(-4);
+    document.getElementById('tConnectCard').style.display = 'none';
+    document.getElementById('tConfigCard').style.display = '';
+  }
+}
+
+// ── Connect ───────────────────────────────────────────────────────────────────
+async function tConnectWallet(name) {
+  const providers = {
+    Phantom:  window.phantom?.solana   ?? (window.solana?.isPhantom ? window.solana : null),
+    Solflare: window.solflare?.isSolflare ? window.solflare : null,
+    Backpack: window.backpack?.isBackpack ? window.backpack : null,
+  };
+  const p = providers[name];
+  if (!p) { alert(name + ' not found. Install the wallet extension.'); return; }
+  try {
+    const r = await p.connect();
+    tProvider = p; tOwner = r.publicKey;
+    document.getElementById('tWalletPill').textContent = tOwner.toString().slice(0,6)+'...'+tOwner.toString().slice(-4);
+    document.getElementById('tConnectCard').style.display = 'none';
+    document.getElementById('tConfigCard').style.display = '';
+  } catch(e) { alert('Connect failed: ' + e.message); }
+}
+
+// ── Load token info ───────────────────────────────────────────────────────────
+async function tLoadToken() {
+  const mintStr = document.getElementById('tMintAddr').value.trim();
+  if (!mintStr) return;
+  try {
+    tMint = new PK(mintStr);
+  } catch { alert('Invalid mint address'); return; }
+  const infoBox = document.getElementById('tTokenInfo');
+  document.getElementById('ti-symbol').textContent = '…';
+  infoBox.style.display = 'block';
+
+  // Fetch token metadata from Jupiter
+  let sym = mintStr.slice(0,6)+'...', name = 'Unknown', dec = 6;
+  try {
+    const r = await fetch('https://lite-api.jup.ag/tokens/v1/token/' + mintStr, {signal: AbortSignal.timeout(5000)});
+    if (r.ok) {
+      const d = await r.json();
+      sym = d.symbol || sym; name = d.name || name; dec = d.decimals ?? dec;
+    }
+  } catch {}
+
+  // Fallback: read decimals from chain
+  try {
+    const acc = await tConn.getParsedAccountInfo(tMint);
+    dec = acc?.value?.data?.parsed?.info?.decimals ?? dec;
+  } catch {}
+
+  tDecimals = dec;
+  document.getElementById('ti-symbol').textContent = sym;
+  document.getElementById('ti-name').textContent = name;
+  document.getElementById('ti-dec').textContent = dec;
+
+  // Get sender's token balance
+  try {
+    const ata = await findATA(tOwner, tMint);
+    const bal = await tConn.getTokenAccountBalance(ata);
+    document.getElementById('ti-bal').textContent = bal.value.uiAmountString + ' ' + sym;
+  } catch { document.getElementById('ti-bal').textContent = '0 (no account)'; }
+}
+
+// ── ATA derivation ────────────────────────────────────────────────────────────
+async function findATA(wallet, mint) {
+  const [ata] = await PK.findProgramAddress(
+    [wallet.toBuffer(), TOKEN_PROGRAM_ID_buf(), mint.toBuffer()], ATA_PID
+  );
+  return ata;
+}
+function TOKEN_PROGRAM_ID_buf() { return TOKEN_PID.toBuffer(); }
+
+// ── Create ATA instruction ────────────────────────────────────────────────────
+function createATAIx(payer, ata, owner, mint) {
+  return new TXI({
+    keys: [
+      {pubkey: payer,             isSigner: true,  isWritable: true},
+      {pubkey: ata,               isSigner: false, isWritable: true},
+      {pubkey: owner,             isSigner: false, isWritable: false},
+      {pubkey: mint,              isSigner: false, isWritable: false},
+      {pubkey: SYS.programId,    isSigner: false, isWritable: false},
+      {pubkey: TOKEN_PID,         isSigner: false, isWritable: false},
+    ],
+    programId: ATA_PID,
+    data: Buffer.alloc(0),
+  });
+}
+
+// ── Token Transfer instruction ────────────────────────────────────────────────
+function tokenTransferIx(srcATA, dstATA, authority, amountRaw) {
+  const data = new Uint8Array(9);
+  data[0] = 3; // Transfer opcode
+  const view = new DataView(data.buffer);
+  // BigInt for u64 LE
+  const bigAmt = BigInt(Math.round(amountRaw));
+  const lo = Number(bigAmt & 0xFFFFFFFFn);
+  const hi = Number((bigAmt >> 32n) & 0xFFFFFFFFn);
+  view.setUint32(1, lo, true);
+  view.setUint32(5, hi, true);
+  return new TXI({
+    keys: [
+      {pubkey: srcATA,    isSigner: false, isWritable: true},
+      {pubkey: dstATA,    isSigner: false, isWritable: true},
+      {pubkey: authority, isSigner: true,  isWritable: false},
+    ],
+    programId: TOKEN_PID,
+    data,
+  });
+}
+
+// ── UI flow ───────────────────────────────────────────────────────────────────
+function tToggleSendMode() {
+  const custom = document.getElementById('tSendMode').value === 'custom';
+  document.getElementById('tUniformAmt').style.display = custom ? 'none' : '';
+  document.getElementById('tUniformHint').style.display = custom ? 'none' : '';
+  document.getElementById('tCustomHint').style.display = custom ? '' : 'none';
+}
+
+function tGoToRecipients() {
+  if (!tMint) { alert('Load a token first'); return; }
+  if (document.getElementById('tSendMode').value === 'uniform' && !document.getElementById('tAmount').value) {
+    alert('Enter an amount'); return;
+  }
+  document.getElementById('tConfigCard').style.display = 'none';
+  document.getElementById('tRecipientsCard').style.display = '';
+}
+
+function tLoadCsv(input) {
+  const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => { document.getElementById('tRecipients').value = e.target.result; };
+  reader.readAsText(file);
+}
+
+async function tParseAndPreview() {
+  const raw = document.getElementById('tRecipients').value.trim();
+  if (!raw) { alert('Paste some addresses first'); return; }
+  const mode = document.getElementById('tSendMode').value;
+  const uniformAmt = parseFloat(document.getElementById('tAmount').value || '0');
+  const lines = raw.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+  tRecipientList = [];
+  const errors = [];
+
+  for (const line of lines) {
+    const parts = line.split(/[,\t\s]+/);
+    const addr = parts[0].trim();
+    let amt = mode === 'uniform' ? uniformAmt : parseFloat(parts[1] || '0');
+    try { new PK(addr); } catch { errors.push('Invalid: ' + addr); continue; }
+    if (amt <= 0) { errors.push('Zero amount: ' + addr); continue; }
+    const amtRaw = Math.round(amt * Math.pow(10, tDecimals));
+    tRecipientList.push({ addr, amtRaw, amtDisplay: amt });
+  }
+
+  if (errors.length) { alert('Errors:\n' + errors.slice(0,5).join('\n') + (errors.length > 5 ? '\n...and ' + (errors.length-5) + ' more' : '')); }
+  if (!tRecipientList.length) return;
+
+  // Count ATAs to create
+  let atasToCreate = 0;
+  tLog('Checking destination accounts...');
+  document.getElementById('tPreviewCard').style.display = '';
+  document.getElementById('tRecipientsCard').style.display = 'none';
+
+  const sample = tRecipientList.slice(0, 20);
+  for (const r of sample) {
+    try {
+      const ata = await findATA(new PK(r.addr), tMint);
+      const info = await tConn.getAccountInfo(ata);
+      if (!info) atasToCreate++;
+    } catch {}
+  }
+  if (tRecipientList.length > 20) atasToCreate = Math.round(atasToCreate * tRecipientList.length / 20);
+
+  const totalTokens = tRecipientList.reduce((s,r) => s + r.amtDisplay, 0);
+  const svcFee = Math.max(0.01, Math.ceil(tRecipientList.length / 100) * 0.01);
+  const ataRent = atasToCreate * 0.00203928;
+  const grand = svcFee + ataRent;
+
+  document.getElementById('tFeeCount').textContent = tRecipientList.length;
+  document.getElementById('tFeeTokens').textContent = totalTokens.toLocaleString();
+  document.getElementById('tFeeATAs').textContent = atasToCreate + ' × ~0.002 SOL = ' + ataRent.toFixed(4) + ' SOL';
+  document.getElementById('tFeeSvc').textContent = svcFee.toFixed(3) + ' SOL';
+  document.getElementById('tFeeGrand').textContent = '~' + grand.toFixed(4) + ' SOL';
+
+  const sumDiv = document.getElementById('tPreviewSummary');
+  sumDiv.innerHTML = `<div style="font-size:13px;color:var(--muted);line-height:1.8">
+    Sending <b style="color:var(--accent)">${totalTokens.toLocaleString()} tokens</b> to <b style="color:var(--accent)">${tRecipientList.length} addresses</b>
+    in ~${Math.ceil(tRecipientList.length / 5)} transactions.
+  </div>`;
+  tLog('');
+}
+
+function tBack() {
+  document.getElementById('tPreviewCard').style.display = 'none';
+  document.getElementById('tRecipientsCard').style.display = '';
+  document.getElementById('tLog').style.display = 'none';
+  document.getElementById('tLog').textContent = '';
+  document.getElementById('tProgressBar').style.display = 'none';
+}
+
+function tLog(msg, cls='') {
+  const el = document.getElementById('tLog');
+  el.style.display = 'block';
+  el.innerHTML += (cls ? `<span style="color:${cls}">${msg}</span>` : msg) + '\n';
+  el.scrollTop = el.scrollHeight;
+}
+
+async function tExecute() {
+  const btn = document.getElementById('tSendBtn');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  const progress = document.getElementById('tProgressBar');
+  const fill = document.getElementById('tProgressFill');
+  progress.style.display = 'block';
+  tLog('Starting airdrop…');
+
+  try {
+    // Sender ATA
+    const senderATA = await findATA(tOwner, tMint);
+
+    // Service fee tx (first)
+    const svcFee = Math.max(0.01, Math.ceil(tRecipientList.length / 100) * 0.01);
+    const svcLamports = Math.round(svcFee * 1e9);
+    tLog('Sending service fee (' + svcFee.toFixed(3) + ' SOL)…');
+    const feeTx = new TX();
+    feeTx.add(SYS.transfer({fromPubkey: tOwner, toPubkey: T_FEE_W, lamports: svcLamports}));
+    feeTx.recentBlockhash = (await tConn.getLatestBlockhash()).blockhash;
+    feeTx.feePayer = tOwner;
+    const feeSigned = await tProvider.signTransaction(feeTx);
+    const feeSig = await tConn.sendRawTransaction(feeSigned.serialize());
+    await tConn.confirmTransaction(feeSig, 'confirmed');
+    tLog('✓ Service fee confirmed', '#14f195');
+
+    // Batch recipients (5 per tx when creating ATAs, 10 when existing)
+    const BATCH = 5;
+    let sent = 0, txSigs = [];
+    for (let i = 0; i < tRecipientList.length; i += BATCH) {
+      const batch = tRecipientList.slice(i, i + BATCH);
+      const tx = new TX();
+      for (const r of batch) {
+        const destPK = new PK(r.addr);
+        const destATA = await findATA(destPK, tMint);
+        const ataInfo = await tConn.getAccountInfo(destATA);
+        if (!ataInfo) tx.add(createATAIx(tOwner, destATA, destPK, tMint));
+        tx.add(tokenTransferIx(senderATA, destATA, tOwner, r.amtRaw));
+      }
+      tx.recentBlockhash = (await tConn.getLatestBlockhash()).blockhash;
+      tx.feePayer = tOwner;
+      const signed = await tProvider.signTransaction(tx);
+      const sig = await tConn.sendRawTransaction(signed.serialize());
+      txSigs.push(sig);
+      sent += batch.length;
+      tLog(`✓ Batch ${Math.ceil((i+1)/BATCH)}: ${batch.length} sent (tx: ${sig.slice(0,12)}…)`, '#14f195');
+      fill.style.width = Math.round(sent / tRecipientList.length * 100) + '%';
+    }
+
+    // Done
+    document.getElementById('tPreviewCard').style.display = 'none';
+    document.getElementById('tDoneCard').style.display = '';
+    document.getElementById('tDoneText').textContent = `Successfully airdropped to ${sent} addresses in ${txSigs.length} transactions.`;
+    const txDiv = document.getElementById('tTxLinks');
+    txSigs.forEach(sig => {
+      const a = document.createElement('a');
+      a.href = 'https://solscan.io/tx/' + sig; a.target = '_blank';
+      a.textContent = sig.slice(0,8)+'…'; a.style.cssText = 'background:#0f2018;border:1px solid var(--accent);border-radius:6px;padding:4px 10px;font-size:12px;color:var(--accent)';
+      txDiv.appendChild(a);
+    });
+
+  } catch(e) {
+    tLog('✗ Error: ' + e.message, '#ff5c5c');
+    btn.disabled = false; btn.textContent = '🚀 Airdrop Tokens →';
+  }
+}
+
+function tReset() {
+  tRecipientList = []; tMint = null;
+  ['tConfigCard','tRecipientsCard','tPreviewCard','tDoneCard'].forEach(id => document.getElementById(id).style.display = 'none');
+  document.getElementById('tConfigCard').style.display = '';
+  document.getElementById('tMintAddr').value = '';
+  document.getElementById('tAmount').value = '';
+  document.getElementById('tRecipients').value = '';
+  document.getElementById('tTokenInfo').style.display = 'none';
+  document.getElementById('tLog').textContent = '';
+  document.getElementById('tLog').style.display = 'none';
+  document.getElementById('tProgressBar').style.display = 'none';
+  document.getElementById('tProgressFill').style.width = '0';
+  document.getElementById('tSendBtn').disabled = false;
+  document.getElementById('tSendBtn').textContent = '🚀 Airdrop Tokens →';
+}
+</script>
 </body>
 </html>
