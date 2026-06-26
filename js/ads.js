@@ -10,7 +10,7 @@
 
 // ── CONFIG — fill your referral codes here ────────────────────────────────
 const ADS_CONFIG = {
-  bitvavo_ref:    '',   // bitvavo.com/en/affiliate → get code (10% fee share)
+  bitvavo_ref:    '2CD7BFA42C',   // bitvavo.com/invite?a=2CD7BFA42C (10% fee share)
   okx_ref:        'SOLTOOLS',   // okx.com/join
   ledger_ref:     'SOLTOOLS',   // ledger.com/affiliate
   koinly_ref:     '',   // koinly.io/affiliates → get code (30% recurring)
