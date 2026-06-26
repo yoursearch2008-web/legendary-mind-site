@@ -230,13 +230,13 @@ function injectAdNetworkSlot() {
   const slot = document.createElement('div');
   slot.className = 'st-ad-slot';
 
-  if (ADS_CONFIG.a_ads_unit) {
-    // A-ADS — works immediately after signup, no approval
+  if (ADS_CONFIG.a_ads_unit && window.ST_ADS_OK) {
+    // A-ADS — only after cookie consent (GDPR)
     const script = document.createElement('script');
     script.src = `//a-ads.com/${ADS_CONFIG.a_ads_unit}/invoke.js`;
     script.async = true;
     slot.appendChild(script);
-  } else if (ADS_CONFIG.coinzilla_zone) {
+  } else if (ADS_CONFIG.coinzilla_zone && window.ST_ADS_OK) {
     const script = document.createElement('script');
     script.src = 'https://coinzilla.io/scripts/banner.js';
     script.async = true;
