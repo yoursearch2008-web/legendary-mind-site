@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Sponsors & Advertising — SolTools.fyi</title>
+  <meta name="description" content="Reach thousands of active Solana wallet users. Advertise on SolTools.fyi — the free Solana toolkit trusted by the community."/>
+  <link rel="canonical" href="https://soltools.fyi/sponsors/"/>
+  <style>
+    :root{
+      --bg:#0b0e14;--card:#141a26;--accent:#14f195;--accent2:#9945ff;
+      --text:#e6edf3;--muted:#8b98a9;--border:#222c3d;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:var(--bg);color:var(--text);font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6;min-height:100vh}
+    body::before{content:'';position:fixed;inset:0;background:radial-gradient(1400px 700px at 50% -5%,#1a2333 0%,var(--bg) 60%);pointer-events:none;z-index:0}
+    .wrap{max-width:960px;margin:0 auto;padding:32px 20px 80px;position:relative;z-index:1}
+
+    /* NAV */
+    .nav{display:flex;align-items:center;justify-content:space-between;padding-bottom:32px;border-bottom:1px solid var(--border);margin-bottom:48px}
+    .nav-logo{font-weight:800;font-size:1.2rem;text-decoration:none;color:var(--accent)}
+    .nav-links{display:flex;gap:24px;flex-wrap:wrap}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:.9rem;transition:.15s}
+    .nav-links a:hover{color:var(--text)}
+    .nav-links a.active{color:var(--accent)}
+
+    /* HERO */
+    .hero{text-align:center;padding:0 0 56px}
+    .badge{display:inline-block;background:rgba(20,241,149,.12);border:1px solid rgba(20,241,149,.3);color:var(--accent);font-size:.75rem;font-weight:700;padding:5px 14px;border-radius:99px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:20px}
+    .hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800;line-height:1.15;margin-bottom:16px}
+    .hero h1 span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero p{color:var(--muted);font-size:1.1rem;max-width:580px;margin:0 auto 32px}
+    .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+    .btn{display:inline-block;padding:13px 28px;border-radius:10px;font-weight:700;font-size:.95rem;text-decoration:none;transition:.15s;cursor:pointer;border:none}
+    .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#000}
+    .btn-primary:hover{opacity:.88;transform:translateY(-1px)}
+    .btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
+    .btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+
+    /* STATS */
+    .stats{display:flex;gap:0;justify-content:center;flex-wrap:wrap;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 24px;margin-bottom:56px}
+    .stat{flex:1;min-width:140px;text-align:center;padding:12px 16px;border-right:1px solid var(--border)}
+    .stat:last-child{border-right:none}
+    .stat-val{font-size:2rem;font-weight:800;color:var(--accent);line-height:1}
+    .stat-lbl{font-size:.8rem;color:var(--muted);margin-top:6px}
+
+    /* SECTION */
+    .section{margin-bottom:60px}
+    .section-title{font-size:1.5rem;font-weight:700;margin-bottom:8px}
+    .section-sub{color:var(--muted);font-size:.95rem;margin-bottom:28px}
+
+    /* AUDIENCE */
+    .audience-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:32px}
+    .aud-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px 20px}
+    .aud-icon{font-size:1.8rem;margin-bottom:10px}
+    .aud-title{font-weight:700;margin-bottom:6px;font-size:.95rem}
+    .aud-desc{color:var(--muted);font-size:.84rem;line-height:1.5}
+
+    /* TIERS */
+    .tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-bottom:40px}
+    .tier-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 22px;position:relative;overflow:hidden;transition:.2s}
+    .tier-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+    .tier-card.featured{border-color:var(--accent);box-shadow:0 0 0 1px rgba(20,241,149,.2),0 8px 32px rgba(20,241,149,.08)}
+    .tier-badge{position:absolute;top:16px;right:16px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#000;font-size:.65rem;font-weight:800;padding:3px 10px;border-radius:99px;text-transform:uppercase;letter-spacing:.05em}
+    .tier-name{font-size:.8rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+    .tier-price{font-size:2.2rem;font-weight:800;line-height:1;margin-bottom:4px;color:var(--accent)}
+    .tier-period{color:var(--muted);font-size:.82rem;margin-bottom:18px}
+    .tier-features{list-style:none;padding:0;display:flex;flex-direction:column;gap:9px}
+    .tier-features li{font-size:.88rem;color:var(--text);padding-left:20px;position:relative;line-height:1.4}
+    .tier-features li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700}
+    .tier-features li.muted{color:var(--muted)}
+    .tier-features li.muted::before{color:var(--border);content:'—'}
+
+    /* PLACEMENTS */
+    .placements{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+    .placement-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px}
+    .placement-icon{font-size:1.4rem;margin-bottom:8px}
+    .placement-name{font-weight:700;font-size:.9rem;margin-bottom:4px}
+    .placement-desc{color:var(--muted);font-size:.8rem;line-height:1.5}
+
+    /* WHY */
+    .why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+    .why-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px}
+    .why-icon{font-size:1.5rem;margin-bottom:10px}
+    .why-title{font-weight:700;margin-bottom:6px}
+    .why-text{color:var(--muted);font-size:.87rem;line-height:1.55}
+
+    /* CONTACT */
+    .contact-box{background:var(--card);border:1px solid rgba(20,241,149,.3);border-radius:20px;padding:40px 36px;text-align:center;position:relative;overflow:hidden}
+    .contact-box::before{content:'';position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:400px;height:400px;background:radial-gradient(circle,rgba(20,241,149,.06) 0%,transparent 70%);pointer-events:none}
+    .contact-box h2{font-size:1.8rem;font-weight:800;margin-bottom:12px}
+    .contact-box p{color:var(--muted);margin-bottom:28px;max-width:500px;margin-left:auto;margin-right:auto}
+    .contact-links{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+    .contact-links a{display:inline-flex;align-items:center;gap:8px;background:rgba(20,241,149,.1);border:1px solid rgba(20,241,149,.25);color:var(--accent);padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:600;font-size:.9rem;transition:.15s}
+    .contact-links a:hover{background:rgba(20,241,149,.2)}
+    .contact-note{font-size:.82rem;color:var(--muted)}
+
+    /* PAST SPONSORS placeholder */
+    .sponsor-logos{display:flex;gap:24px;flex-wrap:wrap;align-items:center;justify-content:center;padding:28px;background:var(--card);border:1px solid var(--border);border-radius:16px;margin-bottom:32px}
+    .sponsor-logo-slot{background:rgba(255,255,255,.04);border:1px dashed var(--border);border-radius:10px;padding:14px 28px;color:var(--muted);font-size:.8rem;font-weight:600}
+
+    /* FOOTER */
+    .footer{border-top:1px solid var(--border);padding-top:28px;text-align:center;color:var(--muted);font-size:.8rem;margin-top:60px}
+    .footer a{color:var(--muted);text-decoration:none}
+    .footer a:hover{color:var(--accent)}
+
+    @media(max-width:600px){
+      .stat{min-width:110px;padding:10px 8px}
+      .stat-val{font-size:1.5rem}
+      .tiers{grid-template-columns:1fr}
+      .contact-box{padding:28px 20px}
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a class="nav-logo" href="/">SolTools.fyi</a>
+    <div class="nav-links">
+      <a href="/">Tools</a>
+      <a href="/solsweep/">SolSweep</a>
+      <a href="/solswap/">SolSwap</a>
+      <a href="/sponsors/" class="active">Sponsors</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="badge">Advertising & Sponsorships</div>
+    <h1>Reach <span>Active Solana</span><br>Wallet Holders</h1>
+    <p>SolTools.fyi is a free, no-signup toolkit used by real Solana users — people who hold SOL, swap tokens, and interact with dApps daily.</p>
+    <div class="cta-row">
+      <a href="mailto:yoursearch2008@gmail.com?subject=Sponsorship%20Inquiry%20%E2%80%94%20SolTools.fyi" class="btn btn-primary">Get a Media Kit</a>
+      <a href="#tiers" class="btn btn-outline">View Packages</a>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-val">5</div>
+      <div class="stat-lbl">Free Solana tools</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">0</div>
+      <div class="stat-lbl">Signups required</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">100%</div>
+      <div class="stat-lbl">Crypto-native audience</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">24/7</div>
+      <div class="stat-lbl">Global availability</div>
+    </div>
+  </div>
+
+  <!-- AUDIENCE -->
+  <div class="section">
+    <div class="section-title">Who Uses SolTools</div>
+    <div class="section-sub">Our users are active on-chain — not casual observers.</div>
+    <div class="audience-grid">
+      <div class="aud-card">
+        <div class="aud-icon">🧹</div>
+        <div class="aud-title">Wallet Optimizers</div>
+        <div class="aud-desc">Users closing empty token accounts to reclaim locked SOL rent — already motivated to manage their wallet.</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">🔄</div>
+        <div class="aud-title">Active Traders</div>
+        <div class="aud-desc">Users swapping tokens via Jupiter routing — the most price-sensitive, high-intent audience on Solana.</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">🪙</div>
+        <div class="aud-title">Token Creators</div>
+        <div class="aud-desc">Founders and communities launching SPL tokens — a direct audience for launchpad, marketing, and infrastructure tools.</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">📤</div>
+        <div class="aud-title">Airdrop Senders</div>
+        <div class="aud-desc">Users sending tokens to multiple addresses — projects, DAOs, and community reward programs.</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">🔥</div>
+        <div class="aud-title">Portfolio Cleaners</div>
+        <div class="aud-desc">Users burning spam tokens and dust — engaged community members who take wallet hygiene seriously.</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">🌍</div>
+        <div class="aud-title">Global Reach</div>
+        <div class="aud-desc">Available in English, French, and Arabic — reaching Solana users across Europe, MENA, and beyond.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIERS -->
+  <div class="section" id="tiers">
+    <div class="section-title">Sponsorship Packages</div>
+    <div class="section-sub">All prices in USD per month. Annual plans get 2 months free.</div>
+    <div class="tiers">
+
+      <div class="tier-card">
+        <div class="tier-name">Bronze</div>
+        <div class="tier-price">$299</div>
+        <div class="tier-period">per month</div>
+        <ul class="tier-features">
+          <li>Footer banner (728×90) on all 5 tools</li>
+          <li>Logo in sponsors section</li>
+          <li>Link to your site/app</li>
+          <li class="muted">No header placement</li>
+          <li class="muted">No newsletter mention</li>
+          <li class="muted">No social post</li>
+        </ul>
+      </div>
+
+      <div class="tier-card featured">
+        <div class="tier-badge">Most Popular</div>
+        <div class="tier-name">Gold</div>
+        <div class="tier-price">$799</div>
+        <div class="tier-period">per month</div>
+        <ul class="tier-features">
+          <li>Header banner on all 5 tools</li>
+          <li>Logo in nav bar</li>
+          <li>"Powered by" mention per tool</li>
+          <li>Monthly social shoutout</li>
+          <li>Custom landing page link</li>
+          <li class="muted">No exclusive placement</li>
+        </ul>
+      </div>
+
+      <div class="tier-card">
+        <div class="tier-name">Platinum</div>
+        <div class="tier-price">$1,999</div>
+        <div class="tier-period">per month</div>
+        <ul class="tier-features">
+          <li>Exclusive sponsor — no competitors</li>
+          <li>Header + sidebar placement</li>
+          <li>Logo in nav bar (prominent)</li>
+          <li>Weekly social posts (3 platforms)</li>
+          <li>Co-branded blog post / press release</li>
+          <li>Direct integration link (e.g. RPC, DEX)</li>
+        </ul>
+      </div>
+
+      <div class="tier-card">
+        <div class="tier-name">Custom</div>
+        <div class="tier-price">Let's talk</div>
+        <div class="tier-period">bespoke partnership</div>
+        <ul class="tier-features">
+          <li>Deep integration (referral links, RPC)</li>
+          <li>Revenue share / affiliate structure</li>
+          <li>Co-built feature (e.g. SolSweep × Helius)</li>
+          <li>White-label or sub-domain</li>
+          <li>Long-term partnership (3–12 months)</li>
+          <li>Priority support & roadmap input</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PLACEMENTS -->
+  <div class="section">
+    <div class="section-title">Ad Placements</div>
+    <div class="section-sub">We offer non-intrusive, crypto-native ad formats that fit the SolTools design system.</div>
+    <div class="placements">
+      <div class="placement-card">
+        <div class="placement-icon">🔝</div>
+        <div class="placement-name">Header Banner</div>
+        <div class="placement-desc">Full-width banner at the top of each tool page. Maximum visibility, above the fold.</div>
+      </div>
+      <div class="placement-card">
+        <div class="placement-icon">🧭</div>
+        <div class="placement-name">Nav Logo</div>
+        <div class="placement-desc">Your logo in the site navigation bar, visible on every page load.</div>
+      </div>
+      <div class="placement-card">
+        <div class="placement-icon">📦</div>
+        <div class="placement-name">Sidebar Widget</div>
+        <div class="placement-desc">Sticky sidebar unit with logo, tagline, and CTA button. High dwell time.</div>
+      </div>
+      <div class="placement-card">
+        <div class="placement-icon">🔗</div>
+        <div class="placement-name">Integration Link</div>
+        <div class="placement-desc">Direct referral or affiliate link embedded in tool flows (e.g. "Swap powered by X").</div>
+      </div>
+      <div class="placement-card">
+        <div class="placement-icon">📰</div>
+        <div class="placement-name">Blog / Press</div>
+        <div class="placement-desc">Co-branded article or announcement published on SolTools and syndicated on social.</div>
+      </div>
+      <div class="placement-card">
+        <div class="placement-icon">📣</div>
+        <div class="placement-name">Social Posts</div>
+        <div class="placement-desc">Sponsored content posted to Twitter/X, Telegram, and Bluesky audiences.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY -->
+  <div class="section">
+    <div class="section-title">Why Advertise Here</div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">🎯</div>
+        <div class="why-title">Intent-driven traffic</div>
+        <div class="why-text">Every visitor is actively managing their Solana wallet. No casual browsers — these are people taking on-chain action right now.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🚫</div>
+        <div class="why-title">No paywalls, no friction</div>
+        <div class="why-text">All tools are free and require no login. Users arrive with full attention — no checkout barriers or sign-up flows in the way.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🔒</div>
+        <div class="why-title">Privacy-first environment</div>
+        <div class="why-text">No trackers, no surveillance. Users trust SolTools. Your brand appears in a trusted, clean context — not next to clickbait.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">⚡</div>
+        <div class="why-title">Fast setup</div>
+        <div class="why-text">Live in 24 hours. Send us your banner assets and we deploy the same day. Simple invoicing, flexible terms.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CURRENT SPONSORS PLACEHOLDER -->
+  <div class="section">
+    <div class="section-title">Be Our First Featured Sponsor</div>
+    <div class="section-sub">Founding sponsor slots available now. Lock in the lowest rate before traffic scales.</div>
+    <div class="sponsor-logos">
+      <div class="sponsor-logo-slot">Your Logo Here</div>
+      <div class="sponsor-logo-slot">Your Logo Here</div>
+      <div class="sponsor-logo-slot">Your Logo Here</div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="contact-box">
+    <h2>Ready to Reach Solana Users?</h2>
+    <p>Email us with your goals and budget. We'll send a full media kit with traffic data, audience breakdown, and package options within 24 hours.</p>
+    <div class="contact-links">
+      <a href="mailto:yoursearch2008@gmail.com?subject=Sponsorship%20Inquiry%20%E2%80%94%20SolTools.fyi&body=Hi%2C%0A%0AI'm%20interested%20in%20sponsoring%20SolTools.fyi.%20Please%20send%20your%20media%20kit.%0A%0ACompany%3A%0ABudget%3A%0AGoal%3A">
+        ✉️ yoursearch2008@gmail.com
+      </a>
+      <a href="https://t.me/your_telegram_handle" target="_blank">
+        💬 Telegram DM
+      </a>
+    </div>
+    <p class="contact-note">Response guaranteed within 24 hours · All currencies accepted · Crypto payment welcome</p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>© 2026 SolTools.fyi · <a href="/">Home</a> · <a href="/privacy/">Privacy</a> · <a href="/sponsors/">Advertise</a></p>
+  </div>
+
+</div>
+</body>
+</html>
