@@ -13,7 +13,7 @@ const ADS_CONFIG = {
   bitvavo_ref:    '2CD7BFA42C',   // bitvavo.com/invite?a=2CD7BFA42C (10% fee share)
   okx_ref:        'SOLTOOLS',   // okx.com/join
   ledger_ref:     'SOLTOOLS',   // ledger.com/affiliate
-  koinly_ref:     '',   // koinly.io/affiliates → get code (30% recurring)
+  koinly_ref:     '85756FAD',   // koinly.io/?via=85756FAD (30% recurring)
   a_ads_unit:     '511975',   // a-ads.com unit ID
   coinzilla_zone: '',   // coinzilla.io → zone ID after approval
   hypelab_slug:   '',   // hypelab.com → property slug after approval
