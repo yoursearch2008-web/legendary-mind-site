@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SolBurn — Burn spam tokens & recover SOL</title>
+<title>SolBurn — Brûlez les tokens spam et récupérez le SOL</title>
+<meta name="description" content="Brûlez les tokens spam et d'airdrop, récupérez le SOL bloqué. SolBurn ferme les comptes de tokens ET brûle les tokens en une seule étape. Wallet propre, SOL récupéré." />
+<meta name="keywords" content="brûler tokens solana, solburn français, spam token solana, récupérer SOL rent, phantom wallet" />
+<meta property="og:title" content="SolBurn — Brûlez les tokens spam et récupérez du SOL" />
+<meta property="og:description" content="Détruisez les tokens indésirables et récupérez le SOL bloqué en un clic." />
+<link rel="canonical" href="https://soltools.fyi/fr/solburn/" />
 <link rel="alternate" hreflang="en" href="https://soltools.fyi/solburn/" />
 <link rel="alternate" hreflang="fr" href="https://soltools.fyi/fr/solburn/" />
 <link rel="alternate" hreflang="ar" href="https://soltools.fyi/ar/solburn/" />
@@ -13,6 +18,10 @@
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:radial-gradient(1200px 700px at 50% -5%,#1a1a2e 0%,var(--bg) 60%);color:var(--text);font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}
   .wrap{max-width:680px;margin:0 auto;padding:40px 20px 80px}
+  .lang-bar{text-align:right;margin-bottom:20px}
+  .lang-bar a{color:var(--muted);font-size:13px;text-decoration:none;padding:4px 8px;border-radius:6px;border:1px solid transparent;margin-left:4px}
+  .lang-bar a:hover{border-color:#222c3d;color:var(--text)}
+  .lang-bar a.active{color:var(--accent);border-color:var(--accent)}
   .logo{font-weight:800;font-size:26px;letter-spacing:-0.5px;margin-bottom:4px}
   .logo span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
   .tag{color:var(--muted);font-size:14px;margin-bottom:28px}
@@ -59,13 +68,19 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="logo">Sol<span>Burn</span></div>
-  <div class="tag">Burn spam & airdrop tokens. Recover locked SOL rent.</div>
-  <div class="badge">0.001 SOL fee per account closed</div>
+  <div class="lang-bar">
+    <a href="/solburn/">EN</a>
+    <a href="/fr/solburn/" class="active">FR</a>
+    <a href="/ar/solburn/">AR</a>
+  </div>
 
-  <!-- Step 1: Connect -->
+  <div class="logo">Sol<span>Burn</span></div>
+  <div class="tag">Brûlez les tokens spam et d'airdrop. Récupérez le SOL bloqué en loyer.</div>
+  <div class="badge">0.001 SOL de frais par compte fermé</div>
+
+  <!-- Étape 1 : Connecter -->
   <div class="card" id="connectCard">
-    <h3>Connect Wallet</h3>
+    <h3>Connecter le Wallet</h3>
     <div class="wallet-row">
       <button class="wallet-btn" id="btnPhantom"  onclick="connectWallet('Phantom')">Phantom</button>
       <button class="wallet-btn" id="btnSolflare" onclick="connectWallet('Solflare')">Solflare</button>
@@ -73,68 +88,69 @@
     </div>
   </div>
 
-  <!-- Step 2: Scan + burn -->
+  <!-- Étape 2 : Scanner + Brûler -->
   <div id="scanCard">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-      <span class="pill" id="walletPill">Not connected</span>
+      <span class="pill" id="walletPill">Non connecté</span>
       <div style="display:flex;gap:8px">
-        <button class="btn-sm" id="rescanBtn" onclick="scan()" style="display:none">Rescan</button>
-        <button class="btn-sm" id="disconnectBtn" onclick="disconnect()" style="display:none">Disconnect</button>
+        <button class="btn-sm" id="rescanBtn" onclick="scan()" style="display:none">Rescanner</button>
+        <button class="btn-sm" id="disconnectBtn" onclick="disconnect()" style="display:none">Déconnecter</button>
       </div>
     </div>
 
     <div class="info-box">
-      ⚠️ <strong>Warning:</strong> Burning tokens is <em>irreversible</em>. Only burn tokens you don't want.
-      Spam/airdrop tokens with no real value are safe to burn. If unsure, leave checked off.
+      ⚠️ <strong>Attention :</strong> La combustion de tokens est <em>irréversible</em>. Ne brûlez que les tokens dont vous ne voulez plus.
+      Les tokens spam ou d'airdrop sans valeur réelle peuvent être brûlés en toute sécurité. En cas de doute, laissez décoché.
     </div>
 
     <div class="stats-row">
-      <div class="stat"><div class="lbl">Accounts found</div><div class="val" id="acctCount">—</div></div>
-      <div class="stat"><div class="lbl">SOL recoverable</div><div class="val" id="reclaimSol">—</div></div>
-      <div class="stat"><div class="lbl">You receive</div><div class="val green" id="netSol">—</div></div>
+      <div class="stat"><div class="lbl">Comptes trouvés</div><div class="val" id="acctCount">—</div></div>
+      <div class="stat"><div class="lbl">SOL récupérable</div><div class="val" id="reclaimSol">—</div></div>
+      <div class="stat"><div class="lbl">Vous recevez</div><div class="val green" id="netSol">—</div></div>
     </div>
 
     <div id="accountTableWrap" style="display:none">
       <div class="actions-row">
-        <button class="btn-sm" onclick="selectAll(true)">Select All</button>
-        <button class="btn-sm" onclick="selectAll(false)">Deselect All</button>
+        <button class="btn-sm" onclick="selectAll(true)">Tout sélectionner</button>
+        <button class="btn-sm" onclick="selectAll(false)">Tout désélectionner</button>
       </div>
-      <div class="sel-info" id="selInfo">0 selected</div>
+      <div class="sel-info" id="selInfo">0 sélectionné</div>
       <div style="overflow-x:auto">
         <table>
           <thead>
             <tr>
               <th></th>
               <th>Token</th>
-              <th>Amount</th>
-              <th>Account</th>
-              <th>Rent (SOL)</th>
+              <th>Montant</th>
+              <th>Compte</th>
+              <th>Loyer (SOL)</th>
             </tr>
           </thead>
           <tbody id="accountTableBody"></tbody>
         </table>
       </div>
-      <p class="sel-info" style="margin-bottom:8px">Fee: <span id="feeDisp">—</span> SOL total &nbsp;·&nbsp; You get: <span id="netDisp">—</span> SOL</p>
-      <button class="btn btn-burn" id="burnBtn" onclick="burnSelected()" disabled>Burn & Recover SOL</button>
+      <p class="sel-info" style="margin-bottom:8px">Frais : <span id="feeDisp">—</span> SOL total &nbsp;·&nbsp; Vous recevez : <span id="netDisp">—</span> SOL</p>
+      <button class="btn btn-burn" id="burnBtn" onclick="burnSelected()" disabled>Brûler &amp; Récupérer SOL</button>
     </div>
 
     <div id="log"></div>
   </div>
 
   <div id="shareCard">
-    <h2 id="shareTitle">🔥 Burned & Recovered!</h2>
-    <p id="shareSubtitle">Spam tokens gone. SOL back in your wallet.</p>
-    <a class="share-btn" id="shareTw" href="#" target="_blank">Share on X</a>
-    <a class="share-btn" href="https://soltools.fyi" target="_blank" style="background:#14f19520;color:var(--green)">More SolTools</a>
+    <h2 id="shareTitle">🔥 Brûlé &amp; Récupéré !</h2>
+    <p id="shareSubtitle">Tokens spam supprimés. SOL de retour dans votre wallet.</p>
+    <a class="share-btn" id="shareTw" href="#" target="_blank">Partager sur X</a>
+    <a class="share-btn" href="https://soltools.fyi/fr/" target="_blank" style="background:#14f19520;color:var(--green)">Plus de SolTools</a>
   </div>
 
   <div style="text-align:center;color:var(--muted);font-size:12px;margin-top:28px;line-height:1.8">
-    100% client-side · Phantom signs · We never see your keys<br>
-    Fee: 0.001 SOL per account · <a href="https://soltools.fyi" style="color:var(--accent);text-decoration:none">soltools.fyi</a>
+    100% côté client · Phantom signe · Nous ne voyons jamais vos clés<br>
+    Frais : 0.001 SOL par compte · <a href="https://soltools.fyi/fr/" style="color:var(--accent);text-decoration:none">soltools.fyi</a>
   </div>
 </div>
 
 <script src="https://unpkg.com/@solana/web3.js@1.95.3/lib/index.iife.min.js"></script>
-<script src="app.js"></script>
-<script src="/js/ads.js"></script></body>
+<script src="../../solburn/app.js"></script>
+<script src="/js/ads.js"></script>
+</body>
 </html>

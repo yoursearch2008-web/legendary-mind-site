@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SolSweep — recover locked SOL from dead token accounts</title>
+<title>SolSweep — Récupérez le SOL bloqué dans vos comptes de tokens vides</title>
+<meta name="description" content="SolSweep ferme vos comptes SPL vides et vous rembourse le SOL bloqué. Non-custodial, 100% dans votre navigateur. Connectez Phantom et récupérez votre SOL en un clic." />
+<meta name="keywords" content="solsweep français, récupérer SOL bloqué, comptes tokens vides solana, phantom wallet france, solana rent recover" />
+<meta property="og:title" content="SolSweep — Récupérez votre SOL bloqué" />
+<meta property="og:description" content="Fermez vos comptes de tokens vides et récupérez le SOL bloqué en un clic. Gratuit, non-custodial." />
+<link rel="canonical" href="https://soltools.fyi/fr/solsweep/" />
 <link rel="alternate" hreflang="en" href="https://soltools.fyi/solsweep/" />
 <link rel="alternate" hreflang="fr" href="https://soltools.fyi/fr/solsweep/" />
 <link rel="alternate" hreflang="ar" href="https://soltools.fyi/ar/solsweep/" />
@@ -14,6 +19,10 @@
   body { margin:0; background:radial-gradient(1200px 600px at 50% -10%, #1a2333 0%, var(--bg) 60%);
          color:var(--text); font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; min-height:100vh; }
   .wrap { max-width:680px; margin:0 auto; padding:32px 20px 80px; }
+  .lang-bar { text-align:right; margin-bottom:20px; }
+  .lang-bar a { color:var(--muted); font-size:13px; text-decoration:none; padding:4px 8px; border-radius:6px; border:1px solid transparent; margin-left:4px; }
+  .lang-bar a:hover { border-color:#222c3d; color:var(--text); }
+  .lang-bar a.active { color:var(--accent); border-color:var(--accent); }
   .logo { font-weight:800; font-size:28px; letter-spacing:-0.5px; }
   .logo span { background:linear-gradient(90deg,var(--accent),var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
   .tag { color:var(--muted); margin:6px 0 28px; }
@@ -28,69 +37,69 @@
   button.tweet-btn { background:#1d9bf0; color:#fff; font-size:15px; }
   .row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
   .big { font-size:40px; font-weight:800; line-height:1.1; }
-  .big.success { font-size:36px; }
   .accent { color:var(--accent); }
   .muted { color:var(--muted); font-size:14px; }
   .pill { display:inline-block; background:#0f1622; border:1px solid #2a3344; border-radius:999px; padding:4px 12px; font-size:13px; color:var(--muted); }
-  .fee-note { font-size:13px; color:var(--muted); line-height:1.5; }
+  .fee-note { font-size:13px; color:var(--muted); line-height:1.6; }
   .ok { color:var(--accent); } .err { color:var(--danger); }
   a { color:var(--accent); }
   #log { font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12px; color:var(--muted); white-space:pre-wrap;
          max-height:180px; overflow:auto; margin-top:14px; }
-  /* account table */
   .acct-table { width:100%; border-collapse:collapse; margin-top:14px; font-size:12px; }
   .acct-table th { text-align:left; color:var(--muted); font-weight:600; padding:4px 6px; border-bottom:1px solid #1d2633; }
   .acct-table td { padding:5px 6px; border-bottom:1px solid #161e2c; color:var(--muted); font-family:ui-monospace,Consolas,monospace; }
   .acct-table td.sol { color:var(--accent); }
   #moreRow td { color:var(--accent); font-family:inherit; cursor:pointer; padding-top:8px; }
-  /* share card */
   #shareCard { text-align:center; }
   #shareCard .big.success { background:linear-gradient(90deg,var(--accent),var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
   #shareCard .share-sub { color:var(--muted); font-size:15px; margin:8px 0 22px; }
   #shareCard .row { justify-content:center; }
-  /* badge */
   .badge { display:inline-block; background:#0f2018; border:1px solid var(--accent); border-radius:8px; padding:3px 10px; font-size:12px; color:var(--accent); margin-left:8px; vertical-align:middle; }
 </style>
 </head>
 <body>
 <div class="wrap">
+  <div class="lang-bar">
+    <a href="/solsweep/">EN</a>
+    <a href="/fr/solsweep/" class="active">FR</a>
+    <a href="/ar/solsweep/">AR</a>
+  </div>
 
   <div class="logo">Sol<span>Sweep</span></div>
-  <div class="tag">Close your dead token accounts and recover the SOL locked inside them. Non-custodial — you sign, we never touch your keys.</div>
+  <div class="tag">Fermez vos comptes de tokens vides et récupérez le SOL bloqué à l'intérieur. Non-custodial — vous signez, nous n'avons jamais accès à vos clés.</div>
 
-  <!-- ── Connect card ─────────────────────────────── -->
+  <!-- Connecter le wallet -->
   <div class="card" id="connectCard">
-    <div class="muted" style="margin-bottom:14px">Connect your Solana wallet to start scanning</div>
+    <div class="muted" style="margin-bottom:14px">Connectez votre wallet Solana pour commencer le scan</div>
     <div class="row" id="walletBtns">
       <button class="wallet-btn" id="btnPhantom">👻 Phantom</button>
       <button class="wallet-btn" id="btnSolflare">☀️ Solflare</button>
       <button class="wallet-btn" id="btnBackpack">🎒 Backpack</button>
     </div>
     <div style="margin-top:14px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-      <span class="pill" id="walletPill">Not connected</span>
-      <button class="secondary" id="rescanBtn" style="display:none; padding:8px 14px; font-size:13px;">↻ Rescan</button>
-      <button class="secondary" id="disconnectBtn" style="display:none; padding:8px 14px; font-size:13px;">Disconnect</button>
+      <span class="pill" id="walletPill">Non connecté</span>
+      <button class="secondary" id="rescanBtn" style="display:none; padding:8px 14px; font-size:13px;">↻ Rescanner</button>
+      <button class="secondary" id="disconnectBtn" style="display:none; padding:8px 14px; font-size:13px;">Déconnecter</button>
     </div>
   </div>
 
-  <!-- ── Scan results card ─────────────────────────── -->
+  <!-- Résultats du scan -->
   <div class="card" id="scanCard" style="display:none">
     <div class="row" style="justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:12px">
       <div>
-        <div class="muted">Recoverable</div>
+        <div class="muted">Récupérable</div>
         <div class="big accent"><span id="reclaimSol">0</span> <span style="font-size:24px">SOL</span></div>
         <div class="muted" style="margin-top:4px">
-          <span id="acctCount">0</span> empty accounts ·
-          you keep <span id="netSol">0</span> SOL after <span id="feePct">10</span>% fee
+          <span id="acctCount">0</span> comptes vides ·
+          vous gardez <span id="netSol">0</span> SOL après <span id="feePct">10</span>% de frais
         </div>
       </div>
-      <button id="reclaimBtn" disabled>Recover SOL</button>
+      <button id="reclaimBtn" disabled>Récupérer SOL</button>
     </div>
 
-    <!-- account list -->
     <div id="accountTableWrap" style="display:none">
       <table class="acct-table">
-        <thead><tr><th>Mint</th><th>Type</th><th style="text-align:right">SOL locked</th></tr></thead>
+        <thead><tr><th>Mint</th><th>Type</th><th style="text-align:right">SOL bloqué</th></tr></thead>
         <tbody id="accountTableBody"></tbody>
       </table>
     </div>
@@ -98,30 +107,30 @@
     <div id="log"></div>
   </div>
 
-  <!-- ── Share card (shown after successful recovery) ─ -->
+  <!-- Carte de partage (après récupération réussie) -->
   <div class="card" id="shareCard" style="display:none">
-    <div class="big success">🎉 <span id="recoveredAmt">0</span> SOL recovered!</div>
+    <div class="big success">🎉 <span id="recoveredAmt">0</span> SOL récupéré !</div>
     <div class="share-sub">
-      Closed <span id="closedCount">0</span> empty token accounts · wallet is now clean
+      Fermé <span id="closedCount">0</span> comptes de tokens vides · wallet nettoyé
     </div>
     <div class="row">
-      <button class="tweet-btn" id="tweetBtn">𝕏 Share</button>
-      <button class="secondary" id="sweepAgainBtn">Sweep again</button>
+      <button class="tweet-btn" id="tweetBtn">𝕏 Partager</button>
+      <button class="secondary" id="sweepAgainBtn">Scanner à nouveau</button>
     </div>
   </div>
 
-  <!-- ── How it works ───────────────────────────────── -->
+  <!-- Comment ça marche -->
   <div class="card">
     <div class="fee-note">
-      <b>How it works:</b> every SPL token account locks ~0.002 SOL as rent. When you no longer hold that token, the account sits empty but the SOL stays locked. SolSweep finds every empty account and closes them in one click — the rent comes back to you.<br><br>
-      <b>Fee:</b> a <span id="feePct2">10</span>% fee on recovered SOL is included in the same transaction you approve. No recovery, no fee. You always see the exact amounts before signing.<br><br>
-      <b>Safety:</b> 100% in your browser. We only build a transaction; <b>you</b> approve it in your wallet. We never see your seed phrase or private key. Only empty (zero-balance) accounts are closed — your tokens are never touched.
+      <b>Comment ça marche :</b> chaque compte de token SPL bloque ~0,002 SOL comme loyer. Quand vous ne détenez plus ce token, le compte reste vide mais le SOL reste bloqué. SolSweep trouve tous les comptes vides et les ferme en un clic — le loyer vous revient.<br><br>
+      <b>Frais :</b> des frais de <span id="feePct2">10</span>% sur le SOL récupéré sont inclus dans la même transaction que vous approuvez. Pas de récupération, pas de frais. Vous voyez toujours les montants exacts avant de signer.<br><br>
+      <b>Sécurité :</b> 100% dans votre navigateur. Nous construisons uniquement la transaction ; <b>vous</b> l'approuvez dans votre wallet. Nous ne voyons jamais votre phrase de récupération ni votre clé privée. Seuls les comptes vides (solde zéro) sont fermés — vos tokens ne sont jamais touchés.
     </div>
   </div>
-
 </div>
 
 <script src="https://unpkg.com/@solana/web3.js@1.95.3/lib/index.iife.min.js"></script>
-<script src="app.js"></script>
-<script src="/js/ads.js"></script></body>
+<script src="../../solsweep/app.js"></script>
+<script src="/js/ads.js"></script>
+</body>
 </html>

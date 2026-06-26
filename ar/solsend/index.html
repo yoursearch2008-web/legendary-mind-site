@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SolSend — إرسال جماعي لـ SOL والرموز على Solana</title>
+<meta name="description" content="أرسل SOL أو رموز Solana إلى عدة محافظ في معاملة واحدة. Airdrops ومدفوعات وتوزيعات — بنقرة واحدة. 100% غير وصائي." />
+<meta name="keywords" content="إرسال جماعي سولانا, airdrop سولانا, solsend عربي, bulk send sol, phantom wallet payment" />
+<meta property="og:title" content="SolSend — إرسال جماعي SOL والرموز" />
+<meta property="og:description" content="أرسل إلى مئات المحافظ في معاملة واحدة. مثالي لـ Airdrops ومدفوعات Solana." />
+<link rel="canonical" href="https://soltools.fyi/ar/solsend/" />
+<link rel="alternate" hreflang="en" href="https://soltools.fyi/solsend/" />
+<link rel="alternate" hreflang="fr" href="https://soltools.fyi/fr/solsend/" />
+<link rel="alternate" hreflang="ar" href="https://soltools.fyi/ar/solsend/" />
+<link rel="alternate" hreflang="x-default" href="https://soltools.fyi/solsend/" />
+<style>
+  :root { --bg:#0b0e14; --card:#141a26; --accent:#14f195; --accent2:#9945ff; --text:#e6edf3; --muted:#8b98a9; --danger:#ff5c5c; --border:#222c3d; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:radial-gradient(1200px 700px at 50% -5%,#1a2333 0%,var(--bg) 60%); color:var(--text);
+         font-family:Tahoma,'Segoe UI',Arial,sans-serif; min-height:100vh; direction:rtl; }
+  .wrap { max-width:680px; margin:0 auto; padding:36px 20px 80px; }
+  .lang-bar { text-align:left; margin-bottom:20px; }
+  .lang-bar a { color:var(--muted); font-size:13px; text-decoration:none; padding:4px 8px; border-radius:6px; border:1px solid transparent; margin-right:4px; }
+  .lang-bar a:hover { border-color:var(--border); color:var(--text); }
+  .lang-bar a.active { color:var(--accent); border-color:var(--accent); }
+  .logo { font-weight:800; font-size:26px; letter-spacing:-0.5px; margin-bottom:4px; }
+  .logo span { background:linear-gradient(90deg,var(--accent),var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .tag { color:var(--muted); font-size:14px; margin-bottom:20px; line-height:1.7; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; margin-bottom:16px; }
+  .card h3 { font-size:15px; font-weight:700; margin-bottom:16px; }
+  label { display:block; color:var(--muted); font-size:13px; margin-bottom:6px; margin-top:14px; }
+  label:first-of-type { margin-top:0; }
+  input, textarea, select { width:100%; background:#0f1622; border:1px solid var(--border); border-radius:10px; padding:11px 14px;
+                    color:var(--text); font-size:14px; outline:none; transition:border-color .15s; font-family:inherit; direction:ltr; text-align:left; }
+  input:focus, textarea:focus, select:focus { border-color:var(--accent); }
+  textarea { resize:vertical; min-height:160px; font-family:ui-monospace,Consolas,monospace; font-size:13px; }
+  button { font-size:15px; font-weight:700; border:0; border-radius:12px; padding:14px 22px; cursor:pointer;
+           color:#04110a; background:linear-gradient(90deg,var(--accent),#0fd182); transition:transform .05s,opacity .2s; width:100%; margin-top:6px; }
+  button:hover { transform:translateY(-1px); }
+  button:disabled { opacity:.45; cursor:not-allowed; transform:none; }
+  button.secondary { background:#243044; color:var(--text); }
+  button.purple { background:linear-gradient(90deg,var(--accent2),#7c3aed); color:#fff; }
+  .pill { display:inline-block; background:#0f1622; border:1px solid var(--border); border-radius:999px; padding:4px 12px; font-size:13px; color:var(--muted); }
+  .ok { color:var(--accent); } .err { color:var(--danger); }
+  #log { font-family:ui-monospace,Consolas,monospace; font-size:12px; color:var(--muted); white-space:pre-wrap; max-height:260px; overflow:auto; margin-top:14px;
+         background:#080c14; border:1px solid var(--border); border-radius:8px; padding:12px; direction:ltr; text-align:left; }
+  .fee-box { background:#0a1418; border:1px solid #1a3040; border-radius:12px; padding:16px; margin-top:14px; }
+  .fee-row { display:flex; justify-content:space-between; font-size:13px; padding:4px 0; }
+  .fee-row .lbl { color:var(--muted); }
+  .fee-total { border-top:1px solid #1d2633; margin-top:8px; padding-top:10px; font-weight:700; }
+  .fee-total .val { color:var(--accent); }
+  .recipients-table { width:100%; border-collapse:collapse; font-size:13px; margin-top:8px; direction:ltr; }
+  .recipients-table th { color:var(--muted); font-weight:600; text-align:left; padding:6px 8px; border-bottom:1px solid var(--border); }
+  .recipients-table td { padding:6px 8px; border-bottom:1px solid #1a2030; }
+  .badge { display:inline-block; background:#0f2018; border:1px solid var(--accent); border-radius:8px; padding:3px 9px; font-size:12px; color:var(--accent); font-weight:700; }
+  .badge.purple { background:#1a0f2e; border-color:var(--accent2); color:#c084fc; }
+  .step-indicator { display:flex; gap:8px; margin-bottom:24px; }
+  .step { flex:1; height:4px; border-radius:99px; background:var(--border); transition:background .3s; }
+  .step.done { background:var(--accent); }
+  .step.active { background:linear-gradient(90deg,var(--accent),var(--accent2)); }
+  .mode-tabs { display:flex; gap:0; margin-bottom:24px; background:#0a0d14; border:1px solid var(--border); border-radius:12px; padding:4px; }
+  .mode-tab { flex:1; padding:10px; border-radius:9px; font-size:14px; font-weight:700; cursor:pointer; border:0; background:transparent; color:var(--muted); transition:all .2s; }
+  .mode-tab.active { background:var(--card); color:var(--text); }
+  .mode-tab.active.pro { color:#c084fc; }
+  .token-info-box { background:#0a0f1a; border:1px solid var(--border); border-radius:10px; padding:14px; margin-top:12px; display:none; }
+  .token-info-box .ti-row { display:flex; gap:16px; flex-wrap:wrap; }
+  .token-info-box .ti-item { flex:1; min-width:120px; }
+  .token-info-box .ti-label { color:var(--muted); font-size:11px; margin-bottom:2px; }
+  .token-info-box .ti-val { font-weight:700; font-size:15px; }
+  .file-drop { border:2px dashed var(--border); border-radius:10px; padding:20px; text-align:center; color:var(--muted); font-size:14px; cursor:pointer; margin-top:10px; transition:border-color .2s; }
+  .file-drop:hover { border-color:var(--accent); }
+  .file-drop input { display:none; }
+  .progress-bar { height:6px; background:var(--border); border-radius:99px; margin-top:12px; overflow:hidden; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,var(--accent),#0fd182); border-radius:99px; transition:width .3s; width:0; }
+  a { color:var(--accent); text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="lang-bar">
+    <a href="/solsend/">EN</a>
+    <a href="/fr/solsend/">FR</a>
+    <a href="/ar/solsend/" class="active">AR</a>
+  </div>
+
+  <div class="logo">Sol<span>Send</span></div>
+  <div class="tag">إرسال جماعي لـ SOL والرموز. Airdrops ومدفوعات وتوزيعات — بنقرة واحدة.</div>
+
+  <div class="mode-tabs">
+    <button class="mode-tab active" id="tabSolBtn" onclick="switchMode('sol')">◎ إرسال SOL</button>
+    <button class="mode-tab pro" id="tabTokenBtn" onclick="switchMode('token')">✦ Airdrop رموز <span class="badge purple" style="font-size:10px;padding:2px 6px;margin-right:4px">PRO</span></button>
+  </div>
+
+  <!-- SOL SEND -->
+  <div id="solTab">
+    <div class="step-indicator">
+      <div class="step active" id="s1"></div>
+      <div class="step" id="s2"></div>
+      <div class="step" id="s3"></div>
+    </div>
+
+    <div class="card" id="connectCard">
+      <h3>الخطوة 1 — ربط المحفظة</h3>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+        <button id="btnPhantom" class="secondary" style="width:auto">👻 Phantom</button>
+        <button id="btnSolflare" class="secondary" style="width:auto">☀️ Solflare</button>
+        <button id="btnBackpack" class="secondary" style="width:auto">🎒 Backpack</button>
+        <span class="pill" id="walletPill">غير متصل</span>
+      </div>
+    </div>
+
+    <div class="card" id="inputCard" style="display:none">
+      <h3>الخطوة 2 — المستلمون</h3>
+      <label>الصق العناوين والمبالغ — عنوان لكل سطر</label>
+      <textarea id="recipientInput" placeholder="EjnFPeimFN5sYkrNGrTb2jCXbMJBisPDV1BjR2pkWTp8, 0.1&#10;BfJV93B6j7PxJKpEzmLkyxJdvJTbg5rCa8TuY2XnZ9q, 0.05"></textarea>
+
+      <div id="preview" style="display:none;margin-top:16px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px">معاينة <span id="recipientCount" class="badge">0</span></div>
+        <div style="max-height:200px;overflow:auto">
+          <table class="recipients-table">
+            <thead><tr><th>#</th><th>العنوان</th><th>المبلغ (SOL)</th><th></th></tr></thead>
+            <tbody id="previewBody"></tbody>
+          </table>
+        </div>
+        <div class="fee-box">
+          <div class="fee-row"><span class="lbl">المستلمون</span><span id="feeCount">0</span></div>
+          <div class="fee-row"><span class="lbl">إجمالي SOL للإرسال</span><span id="feeTotal">0</span></div>
+          <div class="fee-row"><span class="lbl">رسوم خدمة SolSend</span><span id="feeSvc">0</span></div>
+          <div class="fee-row"><span class="lbl">رسوم المعاملة التقديرية</span><span id="feeTx">~0.000005 SOL/tx</span></div>
+          <div class="fee-row fee-total"><span class="lbl">الإجمالي التقديري</span><span class="val" id="feeGrand">0</span></div>
+        </div>
+        <div id="errorList" style="margin-top:10px"></div>
+      </div>
+
+      <button id="parseBtn" style="margin-top:14px">تحليل ومعاينة →</button>
+    </div>
+
+    <div class="card" id="sendCard" style="display:none">
+      <h3>الخطوة 3 — مراجعة وإرسال</h3>
+      <div id="sendSummary"></div>
+      <div id="log"></div>
+      <div style="display:flex;gap:10px;margin-top:14px">
+        <button class="secondary" id="backBtn" style="width:auto;padding:12px 20px">→ رجوع</button>
+        <button id="sendBtn">إرسال إلى الجميع →</button>
+      </div>
+    </div>
+
+    <div class="card" id="resultCard" style="display:none;text-align:center;padding:28px 24px">
+      <div style="font-size:48px;margin-bottom:12px">✅</div>
+      <h3 style="font-size:20px;font-weight:800;color:var(--accent);margin-bottom:8px">تم الإرسال!</h3>
+      <div id="resultText" style="color:var(--muted);font-size:14px;margin-bottom:16px"></div>
+      <div id="txLinks" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center"></div>
+      <button class="secondary" id="newSendBtn" style="margin-top:16px;width:auto;padding:12px 24px">إرسال جديد</button>
+    </div>
+
+    <div class="card" style="margin-top:8px">
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">
+        <b style="color:var(--text)">التسعير:</b> 0.001 SOL لكل مستلم (بحد أدنى 0.005 SOL). الرسوم مضمنة في المعاملة التي توافق عليها.<br><br>
+        <b style="color:var(--text)">الحدود:</b> حتى 15 مستلماً لكل معاملة. القوائم الكبيرة تُقسَّم تلقائياً.<br><br>
+        <b style="color:var(--text)">الأمان:</b> 100% غير وصائي. أنت توقّع كل معاملة. لا نحتفظ بالأموال أو المفاتيح أبداً.
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKEN AIRDROP PRO -->
+  <div id="tokenTab" style="display:none">
+    <div class="card" id="tConnectCard">
+      <h3>الخطوة 1 — ربط المحفظة</h3>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+        <button onclick="tConnectWallet('Phantom')" class="secondary" style="width:auto">👻 Phantom</button>
+        <button onclick="tConnectWallet('Solflare')" class="secondary" style="width:auto">☀️ Solflare</button>
+        <button onclick="tConnectWallet('Backpack')" class="secondary" style="width:auto">🎒 Backpack</button>
+        <span class="pill" id="tWalletPill">غير متصل</span>
+      </div>
+    </div>
+
+    <div class="card" id="tConfigCard" style="display:none">
+      <h3>الخطوة 2 — الرمز للـ Airdrop</h3>
+      <label>عنوان Mint للرمز</label>
+      <div style="display:flex;gap:8px">
+        <input id="tMintAddr" placeholder="مثال: EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v (USDC)" style="flex:1"/>
+        <button onclick="tLoadToken()" style="width:auto;padding:12px 16px;font-size:13px">تحميل</button>
+      </div>
+      <div class="token-info-box" id="tTokenInfo">
+        <div class="ti-row">
+          <div class="ti-item"><div class="ti-label">الرمز</div><div class="ti-val" id="ti-symbol">—</div></div>
+          <div class="ti-item"><div class="ti-label">الاسم</div><div class="ti-val" id="ti-name">—</div></div>
+          <div class="ti-item"><div class="ti-label">المنازل العشرية</div><div class="ti-val" id="ti-dec">—</div></div>
+          <div class="ti-item"><div class="ti-label">رصيدك</div><div class="ti-val" id="ti-bal">—</div></div>
+        </div>
+      </div>
+      <label style="margin-top:16px">وضع الإرسال</label>
+      <select id="tSendMode" onchange="tToggleSendMode()">
+        <option value="uniform">نفس المبلغ للجميع</option>
+        <option value="custom">مبلغ مخصص لكل عنوان (CSV)</option>
+      </select>
+      <div id="tUniformAmt">
+        <label>المبلغ لكل مستلم (بوحدات الرمز، مثلاً 100 لـ 100 USDC)</label>
+        <input id="tAmount" type="number" placeholder="100" min="0" step="any"/>
+      </div>
+      <button onclick="tGoToRecipients()" style="margin-top:16px">التالي: إضافة المستلمين →</button>
+    </div>
+
+    <div class="card" id="tRecipientsCard" style="display:none">
+      <h3>الخطوة 3 — المستلمون</h3>
+      <div id="tUniformHint" style="color:var(--muted);font-size:13px;margin-bottom:12px">عنوان محفظة واحد لكل سطر.</div>
+      <div id="tCustomHint" style="color:var(--muted);font-size:13px;margin-bottom:12px;display:none">الصيغة: <code style="color:var(--accent)">العنوان، المبلغ</code> — سطر لكل عنوان.</div>
+      <textarea id="tRecipients" placeholder="BfJV93B6j7PxJKpEzmLkyxJdvJTbg5rCa8TuY2XnZ9q&#10;EjnFPeimFN5sYkrNGrTb2jCXbMJBisPDV1BjR2pkWTp8" style="min-height:180px"></textarea>
+      <div class="file-drop" onclick="document.getElementById('tCsvFile').click()">
+        📂 أو ارفع ملف CSV / TXT — انقر للتصفح
+        <input type="file" id="tCsvFile" accept=".csv,.txt" onchange="tLoadCsv(this)"/>
+      </div>
+      <button onclick="tParseAndPreview()" style="margin-top:14px">تحليل ومعاينة →</button>
+    </div>
+
+    <div class="card" id="tPreviewCard" style="display:none">
+      <h3>الخطوة 4 — مراجعة وإرسال</h3>
+      <div id="tPreviewSummary"></div>
+      <div class="fee-box" style="margin-top:14px">
+        <div class="fee-row"><span class="lbl">المستلمون</span><span id="tFeeCount">0</span></div>
+        <div class="fee-row"><span class="lbl">إجمالي الرموز للإرسال</span><span id="tFeeTokens">0</span></div>
+        <div class="fee-row"><span class="lbl">ATAs جديدة للإنشاء</span><span id="tFeeATAs">0 × ~0.002 SOL</span></div>
+        <div class="fee-row"><span class="lbl">رسوم خدمة SolSend</span><span id="tFeeSvc">0 SOL</span></div>
+        <div class="fee-row fee-total"><span class="lbl">تكلفة SOL الإجمالية التقديرية</span><span class="val" id="tFeeGrand">0</span></div>
+      </div>
+      <div id="tLog" style="font-family:ui-monospace,Consolas,monospace;font-size:12px;color:var(--muted);white-space:pre-wrap;max-height:260px;overflow:auto;margin-top:14px;background:#080c14;border:1px solid var(--border);border-radius:8px;padding:12px;display:none;direction:ltr;text-align:left"></div>
+      <div class="progress-bar" id="tProgressBar" style="display:none"><div class="progress-fill" id="tProgressFill"></div></div>
+      <div style="display:flex;gap:10px;margin-top:16px">
+        <button class="secondary" onclick="tBack()" style="width:auto;padding:12px 20px">→ رجوع</button>
+        <button class="purple" id="tSendBtn" onclick="tExecute()">🚀 Airdrop الرموز →</button>
+      </div>
+    </div>
+
+    <div class="card" id="tDoneCard" style="display:none;text-align:center;padding:28px 24px">
+      <div style="font-size:48px;margin-bottom:12px">🎉</div>
+      <h3 style="font-size:20px;font-weight:800;color:var(--accent);margin-bottom:8px">اكتمل الـ Airdrop!</h3>
+      <div id="tDoneText" style="color:var(--muted);font-size:14px;margin-bottom:16px"></div>
+      <div id="tTxLinks" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:16px"></div>
+      <button class="secondary" onclick="tReset()" style="width:auto;padding:12px 24px">Airdrop جديد</button>
+    </div>
+
+    <div class="card" style="margin-top:8px">
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">
+        <b style="color:var(--text)">التسعير:</b> 0.01 SOL لكل 100 مستلم (بحد أدنى 0.01 SOL). يُخصم مرة واحدة لكل جلسة airdrop.<br><br>
+        <b style="color:var(--text)">إنشاء ATA:</b> ~0.002 SOL إيجار لكل حساب رمز جديد (تكلفة شبكة Solana، قابلة للاسترداد عند الإغلاق).<br><br>
+        <b style="color:var(--text)">حجم الدفعة:</b> حتى 5 مستلمين لكل معاملة عند إنشاء حسابات، 15 إذا كانت الحسابات موجودة. القوائم الكبيرة تُقسَّم تلقائياً.<br><br>
+        <b style="color:var(--text)">الأمان:</b> 100% غير وصائي. أنت توقّع كل معاملة. يعمل مع أي رمز SPL.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/@solana/web3.js@1.95.3/lib/index.iife.min.js"></script>
+<script src="../../solsend/app.js"></script>
+<script>
+const { Connection: Conn, PublicKey: PK, Transaction: TX, TransactionInstruction: TXI, SystemProgram: SYS } = solanaWeb3;
+const T_RPC     = 'https://solana-rpc.publicnode.com';
+const T_FEE_W   = new PK('75cecKX13qytPMydcMsqLwVxx24hy23WiAxo8J1Nf7g1');
+const TOKEN_PID = new PK('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA');
+const ATA_PID   = new PK('ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJe1bG');
+const tConn     = new Conn(T_RPC, 'confirmed');
+let tProvider = null, tOwner = null, tMint = null, tDecimals = 0;
+let tRecipientList = [];
+
+function switchMode(m) {
+  document.getElementById('solTab').style.display   = m === 'sol'   ? '' : 'none';
+  document.getElementById('tokenTab').style.display = m === 'token' ? '' : 'none';
+  document.getElementById('tabSolBtn').classList.toggle('active', m === 'sol');
+  document.getElementById('tabTokenBtn').classList.toggle('active', m === 'token');
+  if (m === 'token' && tOwner == null && typeof owner !== 'undefined' && owner) {
+    tOwner = owner; tProvider = provider;
+    document.getElementById('tWalletPill').textContent = owner.toString().slice(0,6)+'...'+owner.toString().slice(-4);
+    document.getElementById('tConnectCard').style.display = 'none';
+    document.getElementById('tConfigCard').style.display = '';
+  }
+}
+
+async function tConnectWallet(name) {
+  const providers = {
+    Phantom:  window.phantom?.solana ?? (window.solana?.isPhantom ? window.solana : null),
+    Solflare: window.solflare?.isSolflare ? window.solflare : null,
+    Backpack: window.backpack?.isBackpack ? window.backpack : null,
+  };
+  const p = providers[name];
+  if (!p) { alert(name + ' غير موجود. يرجى تثبيت إضافة المحفظة.'); return; }
+  try {
+    const r = await p.connect();
+    tProvider = p; tOwner = r.publicKey;
+    document.getElementById('tWalletPill').textContent = tOwner.toString().slice(0,6)+'...'+tOwner.toString().slice(-4);
+    document.getElementById('tConnectCard').style.display = 'none';
+    document.getElementById('tConfigCard').style.display = '';
+  } catch(e) { alert('فشل الاتصال: ' + e.message); }
+}
+
+async function tLoadToken() {
+  const mintStr = document.getElementById('tMintAddr').value.trim();
+  if (!mintStr) return;
+  try { tMint = new PK(mintStr); } catch { alert('عنوان Mint غير صالح'); return; }
+  document.getElementById('ti-symbol').textContent = '…';
+  document.getElementById('tTokenInfo').style.display = 'block';
+  let sym = mintStr.slice(0,6)+'...', name = 'Unknown', dec = 6;
+  try {
+    const r = await fetch('https://lite-api.jup.ag/tokens/v1/token/' + mintStr, {signal: AbortSignal.timeout(5000)});
+    if (r.ok) { const d = await r.json(); sym = d.symbol || sym; name = d.name || name; dec = d.decimals ?? dec; }
+  } catch {}
+  try { const acc = await tConn.getParsedAccountInfo(tMint); dec = acc?.value?.data?.parsed?.info?.decimals ?? dec; } catch {}
+  tDecimals = dec;
+  document.getElementById('ti-symbol').textContent = sym;
+  document.getElementById('ti-name').textContent = name;
+  document.getElementById('ti-dec').textContent = dec;
+  try {
+    const ata = await findATA(tOwner, tMint);
+    const bal = await tConn.getTokenAccountBalance(ata);
+    document.getElementById('ti-bal').textContent = bal.value.uiAmountString + ' ' + sym;
+  } catch { document.getElementById('ti-bal').textContent = '0 (لا يوجد حساب)'; }
+}
+
+async function findATA(wallet, mint) {
+  const [ata] = await PK.findProgramAddress([wallet.toBuffer(), TOKEN_PID.toBuffer(), mint.toBuffer()], ATA_PID);
+  return ata;
+}
+
+function createATAIx(payer, ata, owner, mint) {
+  return new TXI({
+    keys: [{pubkey:payer,isSigner:true,isWritable:true},{pubkey:ata,isSigner:false,isWritable:true},{pubkey:owner,isSigner:false,isWritable:false},{pubkey:mint,isSigner:false,isWritable:false},{pubkey:SYS.programId,isSigner:false,isWritable:false},{pubkey:TOKEN_PID,isSigner:false,isWritable:false}],
+    programId:ATA_PID,data:Buffer.alloc(0),
+  });
+}
+
+function tokenTransferIx(srcATA, dstATA, authority, amountRaw) {
+  const data = new Uint8Array(9); data[0] = 3;
+  const view = new DataView(data.buffer);
+  const bigAmt = BigInt(Math.round(amountRaw));
+  view.setUint32(1, Number(bigAmt & 0xFFFFFFFFn), true);
+  view.setUint32(5, Number((bigAmt >> 32n) & 0xFFFFFFFFn), true);
+  return new TXI({keys:[{pubkey:srcATA,isSigner:false,isWritable:true},{pubkey:dstATA,isSigner:false,isWritable:true},{pubkey:authority,isSigner:true,isWritable:false}],programId:TOKEN_PID,data});
+}
+
+function tToggleSendMode() {
+  const custom = document.getElementById('tSendMode').value === 'custom';
+  document.getElementById('tUniformAmt').style.display = custom ? 'none' : '';
+  document.getElementById('tUniformHint').style.display = custom ? 'none' : '';
+  document.getElementById('tCustomHint').style.display = custom ? '' : 'none';
+}
+
+function tGoToRecipients() {
+  if (!tMint) { alert('حمّل رمزاً أولاً'); return; }
+  if (document.getElementById('tSendMode').value === 'uniform' && !document.getElementById('tAmount').value) { alert('أدخل مبلغاً'); return; }
+  document.getElementById('tConfigCard').style.display = 'none';
+  document.getElementById('tRecipientsCard').style.display = '';
+}
+
+function tLoadCsv(input) {
+  const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => { document.getElementById('tRecipients').value = e.target.result; };
+  reader.readAsText(file);
+}
+
+async function tParseAndPreview() {
+  const raw = document.getElementById('tRecipients').value.trim();
+  if (!raw) { alert('الصق بعض العناوين أولاً'); return; }
+  const mode = document.getElementById('tSendMode').value;
+  const uniformAmt = parseFloat(document.getElementById('tAmount').value || '0');
+  const lines = raw.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+  tRecipientList = []; const errors = [];
+  for (const line of lines) {
+    const parts = line.split(/[,\t\s]+/);
+    const addr = parts[0].trim();
+    let amt = mode === 'uniform' ? uniformAmt : parseFloat(parts[1] || '0');
+    try { new PK(addr); } catch { errors.push('غير صالح: ' + addr); continue; }
+    if (amt <= 0) { errors.push('مبلغ صفر: ' + addr); continue; }
+    tRecipientList.push({ addr, amtRaw: Math.round(amt * Math.pow(10, tDecimals)), amtDisplay: amt });
+  }
+  if (errors.length) { alert('أخطاء:\n' + errors.slice(0,5).join('\n')); }
+  if (!tRecipientList.length) return;
+  let atasToCreate = 0;
+  tLog('جاري التحقق من الحسابات الوجهة...');
+  document.getElementById('tPreviewCard').style.display = '';
+  document.getElementById('tRecipientsCard').style.display = 'none';
+  const sample = tRecipientList.slice(0, 20);
+  for (const r of sample) {
+    try { const ata = await findATA(new PK(r.addr), tMint); if (!await tConn.getAccountInfo(ata)) atasToCreate++; } catch {}
+  }
+  if (tRecipientList.length > 20) atasToCreate = Math.round(atasToCreate * tRecipientList.length / 20);
+  const totalTokens = tRecipientList.reduce((s,r) => s + r.amtDisplay, 0);
+  const svcFee = Math.max(0.01, Math.ceil(tRecipientList.length / 100) * 0.01);
+  const ataRent = atasToCreate * 0.00203928;
+  document.getElementById('tFeeCount').textContent = tRecipientList.length;
+  document.getElementById('tFeeTokens').textContent = totalTokens.toLocaleString();
+  document.getElementById('tFeeATAs').textContent = atasToCreate + ' × ~0.002 SOL = ' + ataRent.toFixed(4) + ' SOL';
+  document.getElementById('tFeeSvc').textContent = svcFee.toFixed(3) + ' SOL';
+  document.getElementById('tFeeGrand').textContent = '~' + (svcFee + ataRent).toFixed(4) + ' SOL';
+  document.getElementById('tPreviewSummary').innerHTML = `<div style="font-size:13px;color:var(--muted);line-height:1.8">
+    إرسال <b style="color:var(--accent)">${totalTokens.toLocaleString()} رمزاً</b> إلى <b style="color:var(--accent)">${tRecipientList.length} عنواناً</b>
+    في ~${Math.ceil(tRecipientList.length / 5)} معاملات.</div>`;
+  tLog('');
+}
+
+function tBack() {
+  document.getElementById('tPreviewCard').style.display = 'none';
+  document.getElementById('tRecipientsCard').style.display = '';
+  document.getElementById('tLog').style.display = 'none';
+  document.getElementById('tLog').textContent = '';
+  document.getElementById('tProgressBar').style.display = 'none';
+}
+
+function tLog(msg, cls='') {
+  const el = document.getElementById('tLog');
+  el.style.display = 'block';
+  el.innerHTML += (cls ? `<span style="color:${cls}">${msg}</span>` : msg) + '\n';
+  el.scrollTop = el.scrollHeight;
+}
+
+async function tExecute() {
+  const btn = document.getElementById('tSendBtn');
+  btn.disabled = true; btn.textContent = 'جاري الإرسال…';
+  document.getElementById('tProgressBar').style.display = 'block';
+  const fill = document.getElementById('tProgressFill');
+  tLog('بدء الـ Airdrop…');
+  try {
+    const senderATA = await findATA(tOwner, tMint);
+    const svcFee = Math.max(0.01, Math.ceil(tRecipientList.length / 100) * 0.01);
+    tLog('إرسال رسوم الخدمة (' + svcFee.toFixed(3) + ' SOL)…');
+    const feeTx = new TX();
+    feeTx.add(SYS.transfer({fromPubkey: tOwner, toPubkey: T_FEE_W, lamports: Math.round(svcFee * 1e9)}));
+    feeTx.recentBlockhash = (await tConn.getLatestBlockhash()).blockhash;
+    feeTx.feePayer = tOwner;
+    const feeSig = await tConn.sendRawTransaction((await tProvider.signTransaction(feeTx)).serialize());
+    await tConn.confirmTransaction(feeSig, 'confirmed');
+    tLog('✓ تم تأكيد الرسوم', '#14f195');
+    const BATCH = 5; let sent = 0, txSigs = [];
+    for (let i = 0; i < tRecipientList.length; i += BATCH) {
+      const batch = tRecipientList.slice(i, i + BATCH);
+      const tx = new TX();
+      for (const r of batch) {
+        const destPK = new PK(r.addr);
+        const destATA = await findATA(destPK, tMint);
+        if (!await tConn.getAccountInfo(destATA)) tx.add(createATAIx(tOwner, destATA, destPK, tMint));
+        tx.add(tokenTransferIx(senderATA, destATA, tOwner, r.amtRaw));
+      }
+      tx.recentBlockhash = (await tConn.getLatestBlockhash()).blockhash;
+      tx.feePayer = tOwner;
+      const sig = await tConn.sendRawTransaction((await tProvider.signTransaction(tx)).serialize());
+      txSigs.push(sig); sent += batch.length;
+      tLog(`✓ دفعة ${Math.ceil((i+1)/BATCH)}: تم إرسال ${batch.length}`, '#14f195');
+      fill.style.width = Math.round(sent / tRecipientList.length * 100) + '%';
+    }
+    document.getElementById('tPreviewCard').style.display = 'none';
+    document.getElementById('tDoneCard').style.display = '';
+    document.getElementById('tDoneText').textContent = `تم الـ Airdrop بنجاح إلى ${sent} عنواناً في ${txSigs.length} معاملات.`;
+    const txDiv = document.getElementById('tTxLinks');
+    txSigs.forEach(sig => {
+      const a = document.createElement('a');
+      a.href = 'https://solscan.io/tx/' + sig; a.target = '_blank';
+      a.textContent = sig.slice(0,8)+'…'; a.style.cssText = 'background:#0f2018;border:1px solid var(--accent);border-radius:6px;padding:4px 10px;font-size:12px;color:var(--accent)';
+      txDiv.appendChild(a);
+    });
+  } catch(e) {
+    tLog('✗ خطأ: ' + e.message, '#ff5c5c');
+    btn.disabled = false; btn.textContent = '🚀 Airdrop الرموز →';
+  }
+}
+
+function tReset() {
+  tRecipientList = []; tMint = null;
+  ['tConfigCard','tRecipientsCard','tPreviewCard','tDoneCard'].forEach(id => document.getElementById(id).style.display = 'none');
+  document.getElementById('tConfigCard').style.display = '';
+  ['tMintAddr','tAmount','tRecipients'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('tTokenInfo').style.display = 'none';
+  document.getElementById('tLog').textContent = ''; document.getElementById('tLog').style.display = 'none';
+  document.getElementById('tProgressBar').style.display = 'none';
+  document.getElementById('tProgressFill').style.width = '0';
+  document.getElementById('tSendBtn').disabled = false;
+  document.getElementById('tSendBtn').textContent = '🚀 Airdrop الرموز →';
+}
+</script>
+<script src="/js/ads.js"></script>
+</body>
+</html>

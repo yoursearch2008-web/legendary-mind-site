@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SolMint — Create your Solana token in 60 seconds</title>
+<title>SolMint — أنشئ رمز Solana الخاص بك في 60 ثانية</title>
+<meta name="description" content="أنشئ رمز SPL الخاص بك على Solana في 60 ثانية. لا يلزم كود. حدد الاسم والرمز والعرض والبيانات الوصفية. 100% غير وصائي." />
+<meta name="keywords" content="إنشاء رمز سولانا, solmint عربي, spl token creation arabic, mint token solana, phantom wallet" />
+<meta property="og:title" content="SolMint — أنشئ رمز Solana في 60 ثانية" />
+<meta property="og:description" content="أطلق رمز SPL الخاص بك بدون كود. اسم ورمز وعرض — مباشرةً من محفظتك." />
+<link rel="canonical" href="https://soltools.fyi/ar/solmint/" />
 <link rel="alternate" hreflang="en" href="https://soltools.fyi/solmint/" />
 <link rel="alternate" hreflang="fr" href="https://soltools.fyi/fr/solmint/" />
 <link rel="alternate" hreflang="ar" href="https://soltools.fyi/ar/solmint/" />
@@ -12,17 +17,21 @@
   :root { --bg:#0b0e14; --card:#141a26; --accent:#14f195; --accent2:#9945ff; --text:#e6edf3; --muted:#8b98a9; --danger:#ff5c5c; --border:#222c3d; }
   * { box-sizing:border-box; margin:0; padding:0; }
   body { background:radial-gradient(1200px 700px at 50% -5%,#1a2333 0%,var(--bg) 60%); color:var(--text);
-         font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif; min-height:100vh; }
+         font-family:Tahoma,'Segoe UI',Arial,sans-serif; min-height:100vh; direction:rtl; }
   .wrap { max-width:600px; margin:0 auto; padding:36px 20px 80px; }
+  .lang-bar { text-align:left; margin-bottom:20px; }
+  .lang-bar a { color:var(--muted); font-size:13px; text-decoration:none; padding:4px 8px; border-radius:6px; border:1px solid transparent; margin-right:4px; }
+  .lang-bar a:hover { border-color:var(--border); color:var(--text); }
+  .lang-bar a.active { color:var(--accent); border-color:var(--accent); }
   .logo { font-weight:800; font-size:26px; letter-spacing:-0.5px; margin-bottom:4px; }
   .logo span { background:linear-gradient(90deg,var(--accent),var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .tag { color:var(--muted); font-size:14px; margin-bottom:28px; }
+  .tag { color:var(--muted); font-size:14px; margin-bottom:28px; line-height:1.7; }
   .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; margin-bottom:16px; }
   .card h3 { font-size:15px; font-weight:700; margin-bottom:18px; color:var(--text); }
   label { display:block; color:var(--muted); font-size:13px; margin-bottom:6px; margin-top:14px; }
   label:first-of-type { margin-top:0; }
   input, textarea { width:100%; background:#0f1622; border:1px solid var(--border); border-radius:10px; padding:11px 14px;
-                    color:var(--text); font-size:14px; outline:none; transition:border-color .15s; }
+                    color:var(--text); font-size:14px; outline:none; transition:border-color .15s; direction:ltr; text-align:left; }
   input:focus, textarea:focus { border-color:var(--accent); }
   textarea { resize:vertical; min-height:80px; font-family:inherit; }
   .row2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
@@ -34,7 +43,7 @@
   button.secondary { background:#243044; color:var(--text); }
   .pill { display:inline-block; background:#0f1622; border:1px solid var(--border); border-radius:999px; padding:4px 12px; font-size:13px; color:var(--muted); }
   .ok { color:var(--accent); } .err { color:var(--danger); }
-  #log { font-family:ui-monospace,Consolas,monospace; font-size:12px; color:var(--muted); white-space:pre-wrap; max-height:200px; overflow:auto; margin-top:14px; }
+  #log { font-family:ui-monospace,Consolas,monospace; font-size:12px; color:var(--muted); white-space:pre-wrap; max-height:200px; overflow:auto; margin-top:14px; direction:ltr; text-align:left; }
   .fee-box { background:#0a1418; border:1px solid #1a3040; border-radius:12px; padding:16px; margin-top:14px; }
   .fee-box .row { display:flex; justify-content:space-between; font-size:13px; padding:4px 0; }
   .fee-box .row .label { color:var(--muted); }
@@ -45,7 +54,7 @@
   .result-card .big { font-size:48px; margin-bottom:12px; }
   .result-card h3 { font-size:20px; font-weight:800; color:var(--accent); margin-bottom:8px; }
   .mint-addr { font-family:ui-monospace,Consolas,monospace; font-size:12px; color:var(--muted); word-break:break-all;
-               background:#0f1622; border:1px solid var(--border); border-radius:8px; padding:10px 14px; margin:14px 0; }
+               background:#0f1622; border:1px solid var(--border); border-radius:8px; padding:10px 14px; margin:14px 0; direction:ltr; text-align:left; }
   a { color:var(--accent); text-decoration:none; }
   a:hover { text-decoration:underline; }
   .step-indicator { display:flex; gap:8px; margin-bottom:24px; }
@@ -56,104 +65,110 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="logo">Sol<span>Mint</span></div>
-  <div class="tag">Launch your own Solana token in 60 seconds. No code needed.</div>
+  <div class="lang-bar">
+    <a href="/solmint/">EN</a>
+    <a href="/fr/solmint/">FR</a>
+    <a href="/ar/solmint/" class="active">AR</a>
+  </div>
 
-  <!-- Step indicator -->
+  <div class="logo">Sol<span>Mint</span></div>
+  <div class="tag">أطلق رمزك الخاص على Solana في 60 ثانية. لا يلزم كود.</div>
+
   <div class="step-indicator">
     <div class="step active" id="s1"></div>
     <div class="step" id="s2"></div>
     <div class="step" id="s3"></div>
   </div>
 
-  <!-- Step 1: Connect -->
+  <!-- الخطوة 1: ربط المحفظة -->
   <div class="card" id="connectCard">
-    <h3>Step 1 — Connect Wallet</h3>
+    <h3>الخطوة 1 — ربط المحفظة</h3>
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
       <button id="btnPhantom" class="secondary" style="width:auto">👻 Phantom</button>
       <button id="btnSolflare" class="secondary" style="width:auto">☀️ Solflare</button>
       <button id="btnBackpack" class="secondary" style="width:auto">🎒 Backpack</button>
-      <span class="pill" id="walletPill">Not connected</span>
+      <span class="pill" id="walletPill">غير متصل</span>
     </div>
   </div>
 
-  <!-- Step 2: Token config -->
+  <!-- الخطوة 2: إعداد الرمز -->
   <div class="card" id="configCard" style="display:none">
-    <h3>Step 2 — Configure Token</h3>
+    <h3>الخطوة 2 — إعداد الرمز</h3>
 
     <div class="row2">
       <div>
-        <label>Token Name</label>
+        <label>اسم الرمز</label>
         <input id="tName" placeholder="My Awesome Token" maxlength="32"/>
       </div>
       <div>
-        <label>Symbol</label>
+        <label>الرمز المختصر</label>
         <input id="tSymbol" placeholder="MAT" maxlength="10" style="text-transform:uppercase"/>
       </div>
     </div>
 
     <div class="row3" style="margin-top:14px">
       <div>
-        <label>Decimals</label>
+        <label>المنازل العشرية</label>
         <input id="tDecimals" type="number" value="6" min="0" max="9"/>
       </div>
       <div style="grid-column:span 2">
-        <label>Total Supply</label>
+        <label>العرض الكلي</label>
         <input id="tSupply" type="number" value="1000000000" min="1"/>
       </div>
     </div>
 
-    <label>Description (optional)</label>
-    <textarea id="tDesc" placeholder="What is this token for?"></textarea>
+    <label>الوصف (اختياري)</label>
+    <textarea id="tDesc" placeholder="ما الغرض من هذا الرمز؟"></textarea>
 
-    <label>Image URL (optional — paste a direct image link)</label>
+    <label>رابط الصورة (اختياري — الصق رابطاً مباشراً للصورة)</label>
     <input id="tImage" placeholder="https://example.com/token-logo.png"/>
 
     <div class="fee-box" style="margin-top:18px">
-      <div class="row"><span class="label">Network rent (mint account)</span><span class="value">~0.0015 SOL</span></div>
-      <div class="row"><span class="label">Network rent (metadata)</span><span class="value">~0.0100 SOL</span></div>
-      <div class="row"><span class="label">Transaction fee</span><span class="value">~0.0001 SOL</span></div>
-      <div class="row"><span class="label">SolMint service fee</span><span class="value">0.05 SOL</span></div>
-      <div class="row total"><span class="label">Total estimated cost</span><span class="value">~0.062 SOL</span></div>
+      <div class="row"><span class="label">إيجار الشبكة (حساب mint)</span><span class="value">~0.0015 SOL</span></div>
+      <div class="row"><span class="label">إيجار الشبكة (البيانات الوصفية)</span><span class="value">~0.0100 SOL</span></div>
+      <div class="row"><span class="label">رسوم المعاملة</span><span class="value">~0.0001 SOL</span></div>
+      <div class="row"><span class="label">رسوم خدمة SolMint</span><span class="value">0.05 SOL</span></div>
+      <div class="row total"><span class="label">التكلفة الإجمالية التقديرية</span><span class="value">~0.062 SOL</span></div>
     </div>
 
-    <button id="reviewBtn" style="margin-top:18px">Review &amp; Create Token →</button>
+    <button id="reviewBtn" style="margin-top:18px">مراجعة وإنشاء الرمز →</button>
   </div>
 
-  <!-- Step 3: Review + Launch -->
+  <!-- الخطوة 3: المراجعة والإطلاق -->
   <div class="card" id="reviewCard" style="display:none">
-    <h3>Step 3 — Review &amp; Launch</h3>
+    <h3>الخطوة 3 — مراجعة وإطلاق</h3>
     <div id="reviewContent"></div>
     <div id="log"></div>
     <div style="display:flex;gap:10px;margin-top:14px">
-      <button class="secondary" id="backBtn" style="width:auto;padding:12px 20px">← Back</button>
-      <button id="launchBtn">Launch Token</button>
+      <button class="secondary" id="backBtn" style="width:auto;padding:12px 20px">→ رجوع</button>
+      <button id="launchBtn">إطلاق الرمز</button>
     </div>
   </div>
 
-  <!-- Result -->
+  <!-- النتيجة -->
   <div class="card result-card" id="resultCard" style="display:none">
     <div class="big">🚀</div>
-    <h3>Token Launched!</h3>
+    <h3>تم إطلاق الرمز!</h3>
     <div id="resultText" style="color:var(--muted);font-size:14px;margin-bottom:8px"></div>
     <div class="mint-addr" id="mintAddr"></div>
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px">
-      <a id="solscanLink" href="#" target="_blank"><button style="width:auto;padding:12px 20px">View on Solscan</button></a>
-      <button class="secondary" id="newTokenBtn" style="width:auto;padding:12px 20px">Create another</button>
+      <a id="solscanLink" href="#" target="_blank"><button style="width:auto;padding:12px 20px">عرض على Solscan</button></a>
+      <button class="secondary" id="newTokenBtn" style="width:auto;padding:12px 20px">إنشاء رمز آخر</button>
     </div>
   </div>
 
-  <!-- Info -->
+  <!-- معلومات -->
   <div class="card" style="margin-top:8px">
-    <div style="font-size:13px;color:var(--muted);line-height:1.6">
-      <b style="color:var(--text)">What you get:</b> A live SPL token on Solana mainnet with your name, symbol, decimals, and full supply minted to your wallet. Import into any Solana wallet instantly.<br><br>
-      <b style="color:var(--text)">Safety:</b> 100% non-custodial. You sign every transaction. We never hold your funds or keys.<br><br>
-      <b style="color:var(--text)">Service fee:</b> 0.05 SOL is transferred in the same transaction you approve — fully transparent.
+    <div style="font-size:13px;color:var(--muted);line-height:1.8">
+      <b style="color:var(--text)">ما ستحصل عليه:</b> رمز SPL حي على Solana mainnet باسمك ورمزك ومنازلك العشرية وكامل العرض محوّلاً إلى محفظتك. استورده فوراً في أي محفظة Solana.<br><br>
+      <b style="color:var(--text)">الأمان:</b> 100% غير وصائي. أنت توقّع كل معاملة. نحن لا نحتفظ بأموالك أو مفاتيحك أبداً.<br><br>
+      <b style="color:var(--text)">رسوم الخدمة:</b> 0.05 SOL تُحوَّل في نفس المعاملة التي توافق عليها — شفافية كاملة.
     </div>
   </div>
 </div>
 
 <script src="https://unpkg.com/@solana/web3.js@1.95.3/lib/index.iife.min.js"></script>
-<script src="app.js"></script>
-<script src="/js/ads.js"></script></body>
+<script src="../../solmint/app.js"></script>
+<script src="/js/ads.js"></script>
+</body>
 </html>

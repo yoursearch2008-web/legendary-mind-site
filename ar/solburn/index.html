@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SolBurn — Burn spam tokens & recover SOL</title>
+<title>SolBurn — احرق رموز السبام واسترجع SOL</title>
+<meta name="description" content="احرق رموز السبام والـ Airdrop واسترجع SOL المحجوز. SolBurn يغلق حسابات الرموز ويحرقها في خطوة واحدة. محفظة نظيفة، SOL مسترجع." />
+<meta name="keywords" content="حرق رموز سولانا, solburn عربي, spam token solana, استرجاع SOL, phantom wallet" />
+<meta property="og:title" content="SolBurn — احرق رموز السبام واسترجع SOL" />
+<meta property="og:description" content="دمّر الرموز غير المرغوب بها واسترجع SOL المحجوز بنقرة واحدة." />
+<link rel="canonical" href="https://soltools.fyi/ar/solburn/" />
 <link rel="alternate" hreflang="en" href="https://soltools.fyi/solburn/" />
 <link rel="alternate" hreflang="fr" href="https://soltools.fyi/fr/solburn/" />
 <link rel="alternate" hreflang="ar" href="https://soltools.fyi/ar/solburn/" />
@@ -11,11 +16,15 @@
 <style>
   :root{--bg:#0b0e14;--card:#141a26;--accent:#ff6b35;--accent2:#9945ff;--text:#e6edf3;--muted:#8b98a9;--green:#14f195;--red:#ff5c5c}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:radial-gradient(1200px 700px at 50% -5%,#1a1a2e 0%,var(--bg) 60%);color:var(--text);font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}
+  body{background:radial-gradient(1200px 700px at 50% -5%,#1a1a2e 0%,var(--bg) 60%);color:var(--text);font-family:Tahoma,'Segoe UI',Arial,sans-serif;min-height:100vh;direction:rtl}
   .wrap{max-width:680px;margin:0 auto;padding:40px 20px 80px}
+  .lang-bar{text-align:left;margin-bottom:20px}
+  .lang-bar a{color:var(--muted);font-size:13px;text-decoration:none;padding:4px 8px;border-radius:6px;border:1px solid transparent;margin-right:4px}
+  .lang-bar a:hover{border-color:#222c3d;color:var(--text)}
+  .lang-bar a.active{color:var(--accent);border-color:var(--accent)}
   .logo{font-weight:800;font-size:26px;letter-spacing:-0.5px;margin-bottom:4px}
   .logo span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .tag{color:var(--muted);font-size:14px;margin-bottom:28px}
+  .tag{color:var(--muted);font-size:14px;margin-bottom:28px;line-height:1.7}
   .badge{display:inline-block;background:#ff6b3522;border:1px solid #ff6b3544;color:var(--accent);font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;margin-bottom:24px}
   .card{background:var(--card);border:1px solid #222c3d;border-radius:16px;padding:24px;margin-bottom:20px}
   h3{font-size:15px;font-weight:600;margin-bottom:16px}
@@ -30,7 +39,7 @@
   .stat .lbl{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
   .stat .val{font-weight:700;font-size:20px;color:var(--accent)}
   .stat .val.green{color:var(--green)}
-  table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:16px}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:16px;direction:ltr}
   th{text-align:left;color:var(--muted);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:8px 10px;border-bottom:1px solid #1c2535}
   td{padding:8px 10px;border-bottom:1px solid #0f1520;vertical-align:middle}
   tr:last-child td{border-bottom:none}
@@ -46,7 +55,7 @@
   .btn-sm{padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:.15s;background:#1c2535;color:var(--text)}
   .btn-sm:hover{background:#243044}
   .actions-row{display:flex;gap:10px;margin-bottom:12px}
-  #log{background:#080c12;border:1px solid #1c2535;border-radius:10px;padding:14px;font-family:monospace;font-size:12px;line-height:1.7;max-height:220px;overflow-y:auto;margin-top:16px;white-space:pre-wrap;word-break:break-all}
+  #log{background:#080c12;border:1px solid #1c2535;border-radius:10px;padding:14px;font-family:monospace;font-size:12px;line-height:1.7;max-height:220px;overflow-y:auto;margin-top:16px;white-space:pre-wrap;word-break:break-all;direction:ltr;text-align:left}
   .ok{color:var(--green)}.err{color:var(--red)}.warn-text{color:#ffc800}
   #shareCard{background:linear-gradient(135deg,#1a1a2e,#16213e);border:1px solid #ff6b3544;text-align:center;padding:32px;border-radius:16px;display:none;margin-top:20px}
   #shareCard h2{font-size:22px;margin-bottom:8px;color:var(--accent)}
@@ -59,13 +68,19 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="logo">Sol<span>Burn</span></div>
-  <div class="tag">Burn spam & airdrop tokens. Recover locked SOL rent.</div>
-  <div class="badge">0.001 SOL fee per account closed</div>
+  <div class="lang-bar">
+    <a href="/solburn/">EN</a>
+    <a href="/fr/solburn/">FR</a>
+    <a href="/ar/solburn/" class="active">AR</a>
+  </div>
 
-  <!-- Step 1: Connect -->
+  <div class="logo">Sol<span>Burn</span></div>
+  <div class="tag">احرق رموز السبام والـ Airdrop. استرجع SOL المحجوز كرسوم إيجار.</div>
+  <div class="badge">0.001 SOL رسوم لكل حساب مغلق</div>
+
+  <!-- الخطوة 1: ربط المحفظة -->
   <div class="card" id="connectCard">
-    <h3>Connect Wallet</h3>
+    <h3>ربط المحفظة</h3>
     <div class="wallet-row">
       <button class="wallet-btn" id="btnPhantom"  onclick="connectWallet('Phantom')">Phantom</button>
       <button class="wallet-btn" id="btnSolflare" onclick="connectWallet('Solflare')">Solflare</button>
@@ -73,68 +88,69 @@
     </div>
   </div>
 
-  <!-- Step 2: Scan + burn -->
+  <!-- الخطوة 2: الفحص والحرق -->
   <div id="scanCard">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-      <span class="pill" id="walletPill">Not connected</span>
+      <span class="pill" id="walletPill">غير متصل</span>
       <div style="display:flex;gap:8px">
-        <button class="btn-sm" id="rescanBtn" onclick="scan()" style="display:none">Rescan</button>
-        <button class="btn-sm" id="disconnectBtn" onclick="disconnect()" style="display:none">Disconnect</button>
+        <button class="btn-sm" id="rescanBtn" onclick="scan()" style="display:none">إعادة الفحص</button>
+        <button class="btn-sm" id="disconnectBtn" onclick="disconnect()" style="display:none">قطع الاتصال</button>
       </div>
     </div>
 
     <div class="info-box">
-      ⚠️ <strong>Warning:</strong> Burning tokens is <em>irreversible</em>. Only burn tokens you don't want.
-      Spam/airdrop tokens with no real value are safe to burn. If unsure, leave checked off.
+      ⚠️ <strong>تحذير:</strong> حرق الرموز <em>لا يمكن التراجع عنه</em>. احرق فقط الرموز التي لا تريدها.
+      رموز السبام والـ Airdrop عديمة القيمة آمنة للحرق. إذا لم تكن متأكداً، اتركها غير محددة.
     </div>
 
     <div class="stats-row">
-      <div class="stat"><div class="lbl">Accounts found</div><div class="val" id="acctCount">—</div></div>
-      <div class="stat"><div class="lbl">SOL recoverable</div><div class="val" id="reclaimSol">—</div></div>
-      <div class="stat"><div class="lbl">You receive</div><div class="val green" id="netSol">—</div></div>
+      <div class="stat"><div class="lbl">الحسابات المكتشفة</div><div class="val" id="acctCount">—</div></div>
+      <div class="stat"><div class="lbl">SOL قابل للاسترجاع</div><div class="val" id="reclaimSol">—</div></div>
+      <div class="stat"><div class="lbl">تستلم</div><div class="val green" id="netSol">—</div></div>
     </div>
 
     <div id="accountTableWrap" style="display:none">
       <div class="actions-row">
-        <button class="btn-sm" onclick="selectAll(true)">Select All</button>
-        <button class="btn-sm" onclick="selectAll(false)">Deselect All</button>
+        <button class="btn-sm" onclick="selectAll(true)">تحديد الكل</button>
+        <button class="btn-sm" onclick="selectAll(false)">إلغاء التحديد</button>
       </div>
-      <div class="sel-info" id="selInfo">0 selected</div>
+      <div class="sel-info" id="selInfo">0 محدد</div>
       <div style="overflow-x:auto">
         <table>
           <thead>
             <tr>
               <th></th>
-              <th>Token</th>
-              <th>Amount</th>
-              <th>Account</th>
-              <th>Rent (SOL)</th>
+              <th>الرمز</th>
+              <th>الكمية</th>
+              <th>الحساب</th>
+              <th>الإيجار (SOL)</th>
             </tr>
           </thead>
           <tbody id="accountTableBody"></tbody>
         </table>
       </div>
-      <p class="sel-info" style="margin-bottom:8px">Fee: <span id="feeDisp">—</span> SOL total &nbsp;·&nbsp; You get: <span id="netDisp">—</span> SOL</p>
-      <button class="btn btn-burn" id="burnBtn" onclick="burnSelected()" disabled>Burn & Recover SOL</button>
+      <p class="sel-info" style="margin-bottom:8px">الرسوم: <span id="feeDisp">—</span> SOL إجمالي &nbsp;·&nbsp; تستلم: <span id="netDisp">—</span> SOL</p>
+      <button class="btn btn-burn" id="burnBtn" onclick="burnSelected()" disabled>احرق واسترجع SOL</button>
     </div>
 
     <div id="log"></div>
   </div>
 
   <div id="shareCard">
-    <h2 id="shareTitle">🔥 Burned & Recovered!</h2>
-    <p id="shareSubtitle">Spam tokens gone. SOL back in your wallet.</p>
-    <a class="share-btn" id="shareTw" href="#" target="_blank">Share on X</a>
-    <a class="share-btn" href="https://soltools.fyi" target="_blank" style="background:#14f19520;color:var(--green)">More SolTools</a>
+    <h2 id="shareTitle">🔥 تم الحرق والاسترجاع!</h2>
+    <p id="shareSubtitle">رموز السبام اختفت. SOL عاد إلى محفظتك.</p>
+    <a class="share-btn" id="shareTw" href="#" target="_blank">شارك على X</a>
+    <a class="share-btn" href="https://soltools.fyi/ar/" target="_blank" style="background:#14f19520;color:var(--green)">المزيد من SolTools</a>
   </div>
 
   <div style="text-align:center;color:var(--muted);font-size:12px;margin-top:28px;line-height:1.8">
-    100% client-side · Phantom signs · We never see your keys<br>
-    Fee: 0.001 SOL per account · <a href="https://soltools.fyi" style="color:var(--accent);text-decoration:none">soltools.fyi</a>
+    100% في المتصفح · Phantom يوقّع · لا نرى مفاتيحك أبداً<br>
+    الرسوم: 0.001 SOL لكل حساب · <a href="https://soltools.fyi/ar/" style="color:var(--accent);text-decoration:none">soltools.fyi</a>
   </div>
 </div>
 
 <script src="https://unpkg.com/@solana/web3.js@1.95.3/lib/index.iife.min.js"></script>
-<script src="app.js"></script>
-<script src="/js/ads.js"></script></body>
+<script src="../../solburn/app.js"></script>
+<script src="/js/ads.js"></script>
+</body>
 </html>

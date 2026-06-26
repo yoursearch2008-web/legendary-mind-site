@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SolSwap — Best rates on Solana</title>
+<title>SolSwap — Meilleurs taux sur Solana | Agrégateur Jupiter</title>
+<meta name="description" content="Échangez vos tokens Solana aux meilleurs prix sur tous les DEX. SolSwap utilise l'agrégateur Jupiter pour trouver le meilleur taux parmi 20+ pools de liquidité." />
+<meta name="keywords" content="solswap français, échange solana meilleur prix, jupiter aggregator, swap solana dex, phantom wallet swap" />
+<meta property="og:title" content="SolSwap — Échangez au meilleur taux sur Solana" />
+<meta property="og:description" content="Meilleurs prix sur tous les DEX Solana. Agrégateur Jupiter. 0,3% de frais seulement." />
+<link rel="canonical" href="https://soltools.fyi/fr/solswap/" />
 <link rel="alternate" hreflang="en" href="https://soltools.fyi/solswap/" />
 <link rel="alternate" hreflang="fr" href="https://soltools.fyi/fr/solswap/" />
 <link rel="alternate" hreflang="ar" href="https://soltools.fyi/ar/solswap/" />
@@ -14,6 +19,10 @@
   body { background:radial-gradient(1200px 700px at 50% -5%, #1a2333 0%, var(--bg) 60%);
          color:var(--text); font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif; min-height:100vh; }
   .wrap { max-width:520px; margin:0 auto; padding:40px 20px 80px; }
+  .lang-bar { text-align:right; margin-bottom:20px; }
+  .lang-bar a { color:var(--muted); font-size:13px; text-decoration:none; padding:4px 8px; border-radius:6px; border:1px solid transparent; margin-left:4px; }
+  .lang-bar a:hover { border-color:#222c3d; color:var(--text); }
+  .lang-bar a.active { color:var(--accent); border-color:var(--accent); }
   .logo { font-weight:800; font-size:26px; letter-spacing:-0.5px; margin-bottom:4px; }
   .logo span { background:linear-gradient(90deg,var(--accent),var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
   .tag { color:var(--muted); font-size:14px; margin-bottom:32px; }
@@ -28,27 +37,31 @@
 </head>
 <body>
 <div class="wrap">
+  <div class="lang-bar">
+    <a href="/solswap/">EN</a>
+    <a href="/fr/solswap/" class="active">FR</a>
+    <a href="/ar/solswap/">AR</a>
+  </div>
+
   <div class="logo">Sol<span>Swap</span></div>
-  <div class="tag">Best rates across all Solana DEXes. Powered by Jupiter aggregator.</div>
+  <div class="tag">Meilleurs taux sur tous les DEX Solana. Propulsé par l'agrégateur Jupiter.</div>
 
   <div class="stats-row">
-    <div class="stat"><div class="lbl">Routes checked</div><div class="val">20+</div></div>
-    <div class="stat"><div class="lbl">DEXes</div><div class="val">30+</div></div>
-    <div class="stat"><div class="lbl">Fee</div><div class="val">0.3%</div></div>
+    <div class="stat"><div class="lbl">Routes vérifiées</div><div class="val">20+</div></div>
+    <div class="stat"><div class="lbl">DEX</div><div class="val">30+</div></div>
+    <div class="stat"><div class="lbl">Frais</div><div class="val">0.3%</div></div>
   </div>
 
   <div class="swap-wrap" id="swap-wrap"></div>
 
   <div class="footer-note">
-    Powered by <a href="https://jup.ag" target="_blank">Jupiter</a> aggregator.
-    Best execution guaranteed — routes split across Raydium, Orca, Meteora, Phoenix &amp; more.<br>
-    A 0.3% platform fee is charged on successful swaps. No fee if swap fails.
+    Propulsé par <a href="https://jup.ag" target="_blank">Jupiter</a> aggregator.
+    Meilleure exécution garantie — routes réparties sur Raydium, Orca, Meteora, Phoenix &amp; plus.<br>
+    Des frais de plateforme de 0,3% sont prélevés sur les swaps réussis. Aucun frais si le swap échoue.
   </div>
 </div>
 
-<!-- Dependencies -->
 <script src="https://unpkg.com/@solana/web3.js@1.95.3/lib/index.iife.min.js"></script>
-<!-- Jupiter Terminal -->
 <script src="https://terminal.jup.ag/main-v3.js" data-preload></script>
 <script>
   const { PublicKey } = solanaWeb3;
@@ -59,8 +72,6 @@
     platformFeeAndAccounts: {
       feeBps: 30,
       feeAccounts: new Map([
-        // Referral account: 4DikgdR1PL115hrTgt6HQKobB8Y4PvNPE8JBBYKG1mCK
-        // PDAs derived from REFER4ZgmyYx9c6He5XfaTMiGfdLwRnkV4RPp9t9iF3
         ['So11111111111111111111111111111111111111112',     new PublicKey('5HjiTcoskdKDxZuBBHsuaNwDaDUhyzL8UKXR2Ub4YTMu')],
         ['EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',  new PublicKey('3wEwyZUfeTRgw3bznNtTgPMv9pqumi66KvzVW8idk1VS')],
         ['Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB',   new PublicKey('3P2gjeQu9DvjZMARghVLNpGrokM32GvE82du5fW6creg')],
@@ -70,30 +81,19 @@
     },
     defaultExplorer: 'Solscan',
     containerStyles: { borderRadius: '20px' },
-    containerClassName: '',
     theme: {
       palette: {
-        bgApp: ['#141a26'],
-        bgPrimary: ['#1d2635'],
-        bgSecondary: ['#222c3d'],
-        textPrimary: ['#e6edf3'],
-        textSecondary: ['#8b98a9'],
-        textReadOnly: ['#8b98a9'],
-        iconPrimary: ['#14f195'],
-        accent: ['#14f195'],
-        warning: ['#ffc800'],
-        error: ['#ff5c5c'],
-        success: ['#14f195'],
-        highlight: ['rgba(20,241,149,0.1)'],
-        buttonPrimary: ['#14f195'],
-        buttonPrimaryText: ['#04110a'],
-        buttonSecondary: ['#243044'],
-        buttonSecondaryText: ['#e6edf3'],
-        borderDefault: ['#222c3d'],
-        focusBorder: ['#14f195'],
+        bgApp: ['#141a26'], bgPrimary: ['#1d2635'], bgSecondary: ['#222c3d'],
+        textPrimary: ['#e6edf3'], textSecondary: ['#8b98a9'], textReadOnly: ['#8b98a9'],
+        iconPrimary: ['#14f195'], accent: ['#14f195'], warning: ['#ffc800'],
+        error: ['#ff5c5c'], success: ['#14f195'], highlight: ['rgba(20,241,149,0.1)'],
+        buttonPrimary: ['#14f195'], buttonPrimaryText: ['#04110a'],
+        buttonSecondary: ['#243044'], buttonSecondaryText: ['#e6edf3'],
+        borderDefault: ['#222c3d'], focusBorder: ['#14f195'],
       },
     },
   });
 </script>
-<script src="/js/ads.js"></script></body>
+<script src="/js/ads.js"></script>
+</body>
 </html>

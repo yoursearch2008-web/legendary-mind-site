@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SolTools — Outils Solana Gratuits | SolSweep, SolSwap, SolMint</title>
+  <meta name="description" content="Outils Solana gratuits. Récupérez le SOL bloqué dans les comptes de tokens vides avec SolSweep. Échangez, créez, envoyez et brûlez vos SPL tokens. Sans inscription, sans serveur." />
+  <meta name="keywords" content="outils solana gratuits, récupérer SOL bloqué, solsweep, spl token defi, phantom wallet, solana wallet france, crypto solana" />
+  <meta property="og:title" content="SolTools — Outils Gratuits pour Solana" />
+  <meta property="og:description" content="5 outils Solana gratuits : récupérez le SOL bloqué, échangez, créez un token, envoyez en masse, brûlez des tokens inutiles." />
+  <meta property="og:url" content="https://soltools.fyi/fr/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SolTools — Outils Solana Gratuits" />
+  <meta name="twitter:description" content="Récupérez le SOL bloqué en 30 secondes. Gratuit, sans inscription." />
+  <link rel="canonical" href="https://soltools.fyi/fr/" />
+  <link rel="alternate" hreflang="en" href="https://soltools.fyi/" />
+  <link rel="alternate" hreflang="fr" href="https://soltools.fyi/fr/" />
+  <link rel="alternate" hreflang="ar" href="https://soltools.fyi/ar/" />
+  <link rel="alternate" hreflang="x-default" href="https://soltools.fyi/" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "SolTools",
+    "url": "https://soltools.fyi/fr/",
+    "description": "Outils Solana gratuits — récupérez SOL, échangez, créez, envoyez, brûlez des SPL tokens",
+    "inLanguage": "fr",
+    "offers": [
+      {"@type":"Offer","name":"SolSweep","description":"Fermez les comptes SPL vides et récupérez le SOL bloqué","price":"0","priceCurrency":"USD"},
+      {"@type":"Offer","name":"SolSwap","description":"Meilleurs taux d'échange via Jupiter","price":"0","priceCurrency":"USD"},
+      {"@type":"Offer","name":"SolMint","description":"Créez des tokens SPL en 60 secondes","price":"0","priceCurrency":"USD"},
+      {"@type":"Offer","name":"SolSend","description":"Envoyez des tokens à plusieurs destinataires","price":"0","priceCurrency":"USD"},
+      {"@type":"Offer","name":"SolBurn","description":"Brûlez les tokens indésirables","price":"0","priceCurrency":"USD"}
+    ]
+  }
+  </script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#0b0e14;--card:#141a26;--accent:#14f195;--accent2:#9945ff;--text:#e6edf3;--muted:#8b98a9;--border:#222c3d}
+    body{background:radial-gradient(1400px 700px at 50% -5%,#1a2333 0%,var(--bg) 60%);color:var(--text);font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}
+    .wrap{max-width:960px;margin:0 auto;padding:48px 20px 80px}
+    .lang-bar{text-align:right;margin-bottom:24px}
+    .lang-bar a{color:var(--muted);font-size:13px;text-decoration:none;padding:4px 10px;border-radius:6px;border:1px solid transparent;margin-left:4px}
+    .lang-bar a:hover{border-color:var(--border);color:var(--text)}
+    .lang-bar a.active{color:var(--accent);border-color:var(--accent)}
+    .hero{text-align:center;margin-bottom:56px}
+    .hero h1{font-size:48px;font-weight:900;letter-spacing:-1px;line-height:1.1;margin-bottom:12px}
+    .hero h1 span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .hero p{color:var(--muted);font-size:18px;max-width:520px;margin:12px auto 0;line-height:1.6}
+    .badge{display:inline-block;background:#14f19518;color:var(--accent);border:1px solid #14f19540;border-radius:99px;padding:4px 14px;font-size:13px;font-weight:600;margin-bottom:16px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-bottom:48px}
+    .tool-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 24px;text-decoration:none;color:var(--text);transition:transform .12s,border-color .12s;display:block}
+    .tool-card:hover{transform:translateY(-3px);border-color:var(--accent)}
+    .tool-icon{font-size:32px;margin-bottom:12px}
+    .tool-name{font-size:18px;font-weight:700;margin-bottom:6px}
+    .tool-desc{color:var(--muted);font-size:14px;line-height:1.5}
+    .tool-earn{display:inline-block;margin-top:10px;color:var(--accent);font-size:12px;font-weight:600}
+    .trust{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;padding:32px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:48px}
+    .trust-item{text-align:center}
+    .trust-val{font-size:28px;font-weight:800;color:var(--accent)}
+    .trust-lbl{font-size:13px;color:var(--muted);margin-top:2px}
+    .faq{max-width:680px;margin:0 auto}
+    .faq h2{font-size:24px;font-weight:700;margin-bottom:24px;text-align:center}
+    .faq-item{border-bottom:1px solid var(--border);padding:16px 0}
+    .faq-q{font-weight:600;margin-bottom:6px}
+    .faq-a{color:var(--muted);font-size:14px;line-height:1.6}
+    .disclaimer{font-size:11px;color:var(--muted);text-align:center;margin-top:32px;padding:12px;border:1px solid var(--border);border-radius:8px;line-height:1.6;opacity:.7}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="lang-bar">
+    <a href="/">EN</a>
+    <a href="/fr/" class="active">FR</a>
+    <a href="/ar/">AR</a>
+  </div>
+
+  <div class="hero">
+    <div class="badge">Gratuit pour toujours · Sans inscription · Wallet Phantom</div>
+    <h1>Outils <span>Solana</span> gratuits</h1>
+    <p>Récupérez le SOL bloqué, échangez des tokens, créez, envoyez &amp; brûlez — tout côté client, tout gratuit.</p>
+  </div>
+
+  <div class="trust">
+    <div class="trust-item"><div class="trust-val">0.002–0.05</div><div class="trust-lbl">SOL récupéré par compte vide</div></div>
+    <div class="trust-item"><div class="trust-val">10–30</div><div class="trust-lbl">comptes vides en moyenne par wallet</div></div>
+    <div class="trust-item"><div class="trust-val">100%</div><div class="trust-lbl">côté client · sans serveur</div></div>
+    <div class="trust-item"><div class="trust-val">30s</div><div class="trust-lbl">temps moyen pour récupérer le SOL</div></div>
+  </div>
+
+  <div class="grid">
+    <a href="/fr/solsweep/" class="tool-card">
+      <div class="tool-icon">🧹</div>
+      <div class="tool-name">SolSweep</div>
+      <div class="tool-desc">Fermez les comptes SPL vides et récupérez le dépôt de loyer bloqué directement dans votre wallet.</div>
+      <span class="tool-earn">Récupérez du SOL →</span>
+    </a>
+    <a href="/fr/solswap/" class="tool-card">
+      <div class="tool-icon">🔄</div>
+      <div class="tool-name">SolSwap</div>
+      <div class="tool-desc">Meilleur taux d'échange via le routage Jupiter. Toujours le meilleur prix sur tous les DEX Solana.</div>
+      <span class="tool-earn">Échanger maintenant →</span>
+    </a>
+    <a href="/fr/solmint/" class="tool-card">
+      <div class="tool-icon">🪙</div>
+      <div class="tool-name">SolMint</div>
+      <div class="tool-desc">Créez votre propre token SPL en 60 secondes. Sans code. Définissez nom, symbole, supply et métadonnées.</div>
+      <span class="tool-earn">Créer un token →</span>
+    </a>
+    <a href="/fr/solsend/" class="tool-card">
+      <div class="tool-icon">📤</div>
+      <div class="tool-name">SolSend</div>
+      <div class="tool-desc">Envoyez des tokens SPL à plusieurs destinataires en une seule transaction. Idéal pour les airdrops et paiements.</div>
+      <span class="tool-earn">Envoyer des tokens →</span>
+    </a>
+    <a href="/fr/solburn/" class="tool-card">
+      <div class="tool-icon">🔥</div>
+      <div class="tool-name">SolBurn</div>
+      <div class="tool-desc">Détruisez définitivement les tokens indésirables ou spam et récupérez le loyer de leurs comptes.</div>
+      <span class="tool-earn">Brûler des tokens →</span>
+    </a>
+  </div>
+
+  <div class="faq">
+    <h2>Questions fréquentes</h2>
+    <div class="faq-item">
+      <div class="faq-q">Est-ce sécurisé ? Détenez-vous mes tokens ?</div>
+      <div class="faq-a">Non. Tous les outils sont 100% côté client. Votre wallet Phantom signe chaque transaction localement — rien n'est envoyé à un serveur. Vous pouvez inspecter chaque transaction avant de signer.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Combien de SOL puis-je récupérer avec SolSweep ?</div>
+      <div class="faq-a">Chaque compte de token vide contient ~0,002 SOL comme dépôt de loyer. Un wallet DeFi actif en possède généralement 10 à 30, donc la plupart des utilisateurs récupèrent 0,02 à 0,10 SOL dès le premier nettoyage.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Quels sont les frais ?</div>
+      <div class="faq-a">SolSweep prélève 10% du loyer récupéré. SolSwap prend 0,3% de commission via Jupiter. Tous les autres outils ne facturent que les frais de réseau Solana (gas).</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Quel wallet est supporté ?</div>
+      <div class="faq-a">Phantom Wallet sur desktop et mobile. Solflare et Backpack sont également supportés sur la plupart des outils.</div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    Les crypto-actifs sont des investissements à haut risque. Leur valeur peut fluctuer significativement. N'investissez que ce que vous êtes prêt à perdre.
+    SolTools ne fournit pas de conseil financier.
+  </div>
+</div>
+<script src="/js/ads.js"></script>
+</body>
+</html>

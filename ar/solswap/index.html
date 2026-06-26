@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SolSwap — أفضل الأسعار على Solana | مجمّع Jupiter</title>
+<meta name="description" content="تبادل رموزك على Solana بأفضل الأسعار عبر جميع البورصات اللامركزية. SolSwap يستخدم مجمّع Jupiter للعثور على أفضل سعر عبر 20+ حوض سيولة." />
+<meta name="keywords" content="سولسواب عربي, تبادل سولانا افضل سعر, jupiter aggregator عربي, مبادلة سولانا, محفظة فانتوم" />
+<meta property="og:title" content="SolSwap — تبادل بأفضل سعر على Solana" />
+<meta property="og:description" content="أفضل الأسعار عبر جميع البورصات اللامركزية. مجمّع Jupiter. رسوم 0.3% فقط." />
+<link rel="canonical" href="https://soltools.fyi/ar/solswap/" />
+<link rel="alternate" hreflang="en" href="https://soltools.fyi/solswap/" />
+<link rel="alternate" hreflang="fr" href="https://soltools.fyi/fr/solswap/" />
+<link rel="alternate" hreflang="ar" href="https://soltools.fyi/ar/solswap/" />
+<link rel="alternate" hreflang="x-default" href="https://soltools.fyi/solswap/" />
+<style>
+  :root { --bg:#0b0e14; --card:#141a26; --accent:#14f195; --accent2:#9945ff; --text:#e6edf3; --muted:#8b98a9; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:radial-gradient(1200px 700px at 50% -5%, #1a2333 0%, var(--bg) 60%);
+         color:var(--text); font-family:Tahoma,'Segoe UI',Arial,sans-serif; min-height:100vh; direction:rtl; }
+  .wrap { max-width:520px; margin:0 auto; padding:40px 20px 80px; }
+  .lang-bar { text-align:left; margin-bottom:20px; }
+  .lang-bar a { color:var(--muted); font-size:13px; text-decoration:none; padding:4px 8px; border-radius:6px; border:1px solid transparent; margin-right:4px; }
+  .lang-bar a:hover { border-color:#222c3d; color:var(--text); }
+  .lang-bar a.active { color:var(--accent); border-color:var(--accent); }
+  .logo { font-weight:800; font-size:26px; letter-spacing:-0.5px; margin-bottom:4px; }
+  .logo span { background:linear-gradient(90deg,var(--accent),var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .tag { color:var(--muted); font-size:14px; margin-bottom:32px; line-height:1.7; }
+  .swap-wrap { background:var(--card); border:1px solid #222c3d; border-radius:20px; overflow:hidden; min-height:500px; direction:ltr; }
+  .footer-note { text-align:center; color:var(--muted); font-size:12px; margin-top:18px; line-height:1.8; }
+  .footer-note a { color:var(--accent); text-decoration:none; }
+  .stats-row { display:flex; gap:16px; margin-bottom:20px; }
+  .stat { flex:1; background:var(--card); border:1px solid #222c3d; border-radius:12px; padding:14px 16px; text-align:center; }
+  .stat .lbl { color:var(--muted); font-size:12px; margin-bottom:4px; }
+  .stat .val { font-weight:700; font-size:18px; color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="lang-bar">
+    <a href="/solswap/">EN</a>
+    <a href="/fr/solswap/">FR</a>
+    <a href="/ar/solswap/" class="active">AR</a>
+  </div>
+
+  <div class="logo">Sol<span>Swap</span></div>
+  <div class="tag">أفضل الأسعار عبر جميع بورصات Solana اللامركزية. مدعوم بمجمّع Jupiter.</div>
+
+  <div class="stats-row">
+    <div class="stat"><div class="lbl">المسارات المفحوصة</div><div class="val">20+</div></div>
+    <div class="stat"><div class="lbl">بورصات لامركزية</div><div class="val">30+</div></div>
+    <div class="stat"><div class="lbl">الرسوم</div><div class="val">0.3%</div></div>
+  </div>
+
+  <div class="swap-wrap" id="swap-wrap"></div>
+
+  <div class="footer-note">
+    مدعوم بـ <a href="https://jup.ag" target="_blank">Jupiter</a> aggregator.
+    أفضل تنفيذ مضمون — مسارات موزعة على Raydium وOrca وMeteora وPhoenix وأكثر.<br>
+    رسوم منصة 0.3% تُخصم من المبادلات الناجحة فقط. لا رسوم إذا فشلت المبادلة.
+  </div>
+</div>
+
+<script src="https://unpkg.com/@solana/web3.js@1.95.3/lib/index.iife.min.js"></script>
+<script src="https://terminal.jup.ag/main-v3.js" data-preload></script>
+<script>
+  const { PublicKey } = solanaWeb3;
+  window.Jupiter.init({
+    displayMode: 'integrated',
+    integratedTargetId: 'swap-wrap',
+    endpoint: 'https://mainnet.helius-rpc.com/?api-key=5192916f-045b-4f83-b8a1-f829be7cf95b',
+    platformFeeAndAccounts: {
+      feeBps: 30,
+      feeAccounts: new Map([
+        ['So11111111111111111111111111111111111111112',     new PublicKey('5HjiTcoskdKDxZuBBHsuaNwDaDUhyzL8UKXR2Ub4YTMu')],
+        ['EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',  new PublicKey('3wEwyZUfeTRgw3bznNtTgPMv9pqumi66KvzVW8idk1VS')],
+        ['Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB',   new PublicKey('3P2gjeQu9DvjZMARghVLNpGrokM32GvE82du5fW6creg')],
+        ['JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN',   new PublicKey('5q8MUcR88j9MBo3bJNXmqARcZ5EcKy8wkVuvmokgd5K5')],
+        ['DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263',  new PublicKey('5abmqnZvAygaNz2icUSeWvDYHBU2a8HvDSdcqRoSXCij')],
+      ]),
+    },
+    defaultExplorer: 'Solscan',
+    containerStyles: { borderRadius: '20px' },
+    theme: {
+      palette: {
+        bgApp: ['#141a26'], bgPrimary: ['#1d2635'], bgSecondary: ['#222c3d'],
+        textPrimary: ['#e6edf3'], textSecondary: ['#8b98a9'], textReadOnly: ['#8b98a9'],
+        iconPrimary: ['#14f195'], accent: ['#14f195'], warning: ['#ffc800'],
+        error: ['#ff5c5c'], success: ['#14f195'], highlight: ['rgba(20,241,149,0.1)'],
+        buttonPrimary: ['#14f195'], buttonPrimaryText: ['#04110a'],
+        buttonSecondary: ['#243044'], buttonSecondaryText: ['#e6edf3'],
+        borderDefault: ['#222c3d'], focusBorder: ['#14f195'],
+      },
+    },
+  });
+</script>
+<script src="/js/ads.js"></script>
+</body>
+</html>

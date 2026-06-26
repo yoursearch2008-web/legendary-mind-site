@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SolTools — أدوات Solana مجانية | SolSweep, SolSwap, SolMint</title>
+  <meta name="description" content="أدوات Solana مجانية. استرجع SOL المحجوز في حسابات الرموز الفارغة مع SolSweep. تبادل، أنشئ، أرسل واحرق رموز SPL. بدون تسجيل، بدون خادم." />
+  <meta name="keywords" content="أدوات سولانا مجانية, استرجاع SOL, سولانا محفظة, spl token عربي, ديفاي سولانا, فانتوم ووليت" />
+  <meta property="og:title" content="SolTools — أدوات مجانية لـ Solana" />
+  <meta property="og:description" content="5 أدوات Solana مجانية: استرجع SOL المحجوز، تبادل، أنشئ رمزاً، أرسل بالجملة، احرق الرموز غير المرغوب بها." />
+  <meta property="og:url" content="https://soltools.fyi/ar/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SolTools — أدوات Solana مجانية" />
+  <meta name="twitter:description" content="استرجع SOL المحجوز في 30 ثانية. مجاني، بدون تسجيل." />
+  <link rel="canonical" href="https://soltools.fyi/ar/" />
+  <link rel="alternate" hreflang="en" href="https://soltools.fyi/" />
+  <link rel="alternate" hreflang="fr" href="https://soltools.fyi/fr/" />
+  <link rel="alternate" hreflang="ar" href="https://soltools.fyi/ar/" />
+  <link rel="alternate" hreflang="x-default" href="https://soltools.fyi/" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "SolTools",
+    "url": "https://soltools.fyi/ar/",
+    "description": "أدوات Solana مجانية — استرجع SOL، تبادل، أنشئ، أرسل، احرق رموز SPL",
+    "inLanguage": "ar",
+    "offers": [
+      {"@type":"Offer","name":"SolSweep","description":"أغلق حسابات SPL الفارغة واسترجع SOL المحجوز","price":"0","priceCurrency":"USD"},
+      {"@type":"Offer","name":"SolSwap","description":"أفضل أسعار التبادل عبر Jupiter","price":"0","priceCurrency":"USD"},
+      {"@type":"Offer","name":"SolMint","description":"أنشئ رموز SPL في 60 ثانية","price":"0","priceCurrency":"USD"},
+      {"@type":"Offer","name":"SolSend","description":"أرسل الرموز إلى عناوين متعددة","price":"0","priceCurrency":"USD"},
+      {"@type":"Offer","name":"SolBurn","description":"احرق الرموز غير المرغوب بها","price":"0","priceCurrency":"USD"}
+    ]
+  }
+  </script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#0b0e14;--card:#141a26;--accent:#14f195;--accent2:#9945ff;--text:#e6edf3;--muted:#8b98a9;--border:#222c3d}
+    body{background:radial-gradient(1400px 700px at 50% -5%,#1a2333 0%,var(--bg) 60%);color:var(--text);font-family:Tahoma,'Segoe UI',Arial,sans-serif;min-height:100vh;direction:rtl}
+    .wrap{max-width:960px;margin:0 auto;padding:48px 20px 80px}
+    .lang-bar{text-align:left;margin-bottom:24px}
+    .lang-bar a{color:var(--muted);font-size:13px;text-decoration:none;padding:4px 10px;border-radius:6px;border:1px solid transparent;margin-right:4px}
+    .lang-bar a:hover{border-color:var(--border);color:var(--text)}
+    .lang-bar a.active{color:var(--accent);border-color:var(--accent)}
+    .hero{text-align:center;margin-bottom:56px}
+    .hero h1{font-size:46px;font-weight:900;line-height:1.2;margin-bottom:12px}
+    .hero h1 span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .hero p{color:var(--muted);font-size:18px;max-width:520px;margin:12px auto 0;line-height:1.8}
+    .badge{display:inline-block;background:#14f19518;color:var(--accent);border:1px solid #14f19540;border-radius:99px;padding:4px 14px;font-size:13px;font-weight:600;margin-bottom:16px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-bottom:48px}
+    .tool-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 24px;text-decoration:none;color:var(--text);transition:transform .12s,border-color .12s;display:block}
+    .tool-card:hover{transform:translateY(-3px);border-color:var(--accent)}
+    .tool-icon{font-size:32px;margin-bottom:12px}
+    .tool-name{font-size:18px;font-weight:700;margin-bottom:6px}
+    .tool-desc{color:var(--muted);font-size:14px;line-height:1.7}
+    .tool-earn{display:inline-block;margin-top:10px;color:var(--accent);font-size:12px;font-weight:600}
+    .trust{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;padding:32px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:48px}
+    .trust-item{text-align:center}
+    .trust-val{font-size:28px;font-weight:800;color:var(--accent)}
+    .trust-lbl{font-size:13px;color:var(--muted);margin-top:2px}
+    .faq{max-width:680px;margin:0 auto}
+    .faq h2{font-size:24px;font-weight:700;margin-bottom:24px;text-align:center}
+    .faq-item{border-bottom:1px solid var(--border);padding:16px 0}
+    .faq-q{font-weight:600;margin-bottom:6px}
+    .faq-a{color:var(--muted);font-size:14px;line-height:1.8}
+    .disclaimer{font-size:11px;color:var(--muted);text-align:center;margin-top:32px;padding:12px;border:1px solid var(--border);border-radius:8px;line-height:1.8;opacity:.7}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="lang-bar">
+    <a href="/">EN</a>
+    <a href="/fr/">FR</a>
+    <a href="/ar/" class="active">AR</a>
+  </div>
+
+  <div class="hero">
+    <div class="badge">مجاني للأبد · بدون تسجيل · محفظة Phantom</div>
+    <h1>أدوات <span>Solana</span> مجانية</h1>
+    <p>استرجع SOL المحجوز، تبادل الرموز، أنشئ، أرسل &amp; احرق — كل شيء في المتصفح، كل شيء مجاني.</p>
+  </div>
+
+  <div class="trust">
+    <div class="trust-item"><div class="trust-val">0.002–0.05</div><div class="trust-lbl">SOL مستعاد لكل حساب فارغ</div></div>
+    <div class="trust-item"><div class="trust-val">10–30</div><div class="trust-lbl">حساباً فارغاً في المتوسط بكل محفظة</div></div>
+    <div class="trust-item"><div class="trust-val">100%</div><div class="trust-lbl">في المتصفح · بدون خادم</div></div>
+    <div class="trust-item"><div class="trust-val">30ث</div><div class="trust-lbl">متوسط وقت استرجاع SOL</div></div>
+  </div>
+
+  <div class="grid">
+    <a href="/ar/solsweep/" class="tool-card">
+      <div class="tool-icon">🧹</div>
+      <div class="tool-name">SolSweep</div>
+      <div class="tool-desc">أغلق حسابات SPL الفارغة واسترجع رسوم الإيجار المحجوزة مباشرةً إلى محفظتك.</div>
+      <span class="tool-earn">← استرجع SOL</span>
+    </a>
+    <a href="/ar/solswap/" class="tool-card">
+      <div class="tool-icon">🔄</div>
+      <div class="tool-name">SolSwap</div>
+      <div class="tool-desc">أفضل أسعار التبادل عبر توجيه Jupiter. دائماً أفضل سعر على جميع بورصات Solana اللامركزية.</div>
+      <span class="tool-earn">← تبادل الآن</span>
+    </a>
+    <a href="/ar/solmint/" class="tool-card">
+      <div class="tool-icon">🪙</div>
+      <div class="tool-name">SolMint</div>
+      <div class="tool-desc">أنشئ رمزك الخاص SPL في 60 ثانية. بدون كود. حدد الاسم والرمز والعرض والبيانات الوصفية.</div>
+      <span class="tool-earn">← أنشئ رمزاً</span>
+    </a>
+    <a href="/ar/solsend/" class="tool-card">
+      <div class="tool-icon">📤</div>
+      <div class="tool-name">SolSend</div>
+      <div class="tool-desc">أرسل رموز SPL إلى عدة مستلمين في معاملة واحدة. مثالي لـ Airdrops والمدفوعات الجماعية.</div>
+      <span class="tool-earn">← أرسل رموزاً</span>
+    </a>
+    <a href="/ar/solburn/" class="tool-card">
+      <div class="tool-icon">🔥</div>
+      <div class="tool-name">SolBurn</div>
+      <div class="tool-desc">دمّر نهائياً الرموز غير المرغوب بها أو رموز السبام واسترجع إيجار حساباتها.</div>
+      <span class="tool-earn">← احرق رموزاً</span>
+    </a>
+  </div>
+
+  <div class="faq">
+    <h2>أسئلة شائعة</h2>
+    <div class="faq-item">
+      <div class="faq-q">هل هذا آمن؟ هل تحتفظون برموزي؟</div>
+      <div class="faq-a">لا. جميع الأدوات تعمل 100% في متصفحك. محفظة Phantom الخاصة بك توقّع كل معاملة محلياً — لا شيء يُرسل إلى أي خادم. يمكنك فحص كل معاملة قبل التوقيع.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">كم يمكنني استرجاع من SOL باستخدام SolSweep؟</div>
+      <div class="faq-a">كل حساب رمز فارغ يحتجز ~0.002 SOL كرسوم إيجار. المحفظة النشطة في DeFi تحتوي عادةً على 10 إلى 30 حساباً، لذا يسترجع معظم المستخدمين 0.02 إلى 0.10 SOL في أول تنظيف.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">ما هي الرسوم؟</div>
+      <div class="faq-a">SolSweep يأخذ 10% من الإيجار المسترجع. SolSwap يأخذ 0.3% عمولة عبر Jupiter. جميع الأدوات الأخرى لا تتقاضى سوى رسوم شبكة Solana (Gas).</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">ما المحافظ المدعومة؟</div>
+      <div class="faq-a">Phantom Wallet على سطح المكتب والجوال. Solflare وBackpack مدعومان أيضاً على معظم الأدوات.</div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    العملات المشفرة استثمارات عالية المخاطر. قيمتها يمكن أن تتقلب بشكل كبير. لا تستثمر إلا ما أنت مستعد لخسارته.
+    SolTools لا تقدم نصائح مالية.
+  </div>
+</div>
+<script src="/js/ads.js"></script>
+</body>
+</html>

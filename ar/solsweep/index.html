@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SolSweep — استرجع SOL المحجوز في حسابات الرموز الفارغة</title>
+<meta name="description" content="SolSweep يغلق حساباتك الفارغة من رموز SPL ويعيد إليك SOL المحجوز. غير وصائي، 100% في متصفحك. اربط Phantom واسترجع SOL بنقرة واحدة." />
+<meta name="keywords" content="استرجاع SOL محجوز, حسابات رموز فارغة سولانا, solsweep عربي, phantom wallet عربي, solana rent recover" />
+<meta property="og:title" content="SolSweep — استرجع SOL المحجوز في محفظتك" />
+<meta property="og:description" content="أغلق حسابات الرموز الفارغة واسترجع SOL المحجوز بنقرة واحدة. مجاني، غير وصائي." />
+<link rel="canonical" href="https://soltools.fyi/ar/solsweep/" />
+<link rel="alternate" hreflang="en" href="https://soltools.fyi/solsweep/" />
+<link rel="alternate" hreflang="fr" href="https://soltools.fyi/fr/solsweep/" />
+<link rel="alternate" hreflang="ar" href="https://soltools.fyi/ar/solsweep/" />
+<link rel="alternate" hreflang="x-default" href="https://soltools.fyi/solsweep/" />
+<style>
+  :root { --bg:#0b0e14; --card:#141a26; --accent:#14f195; --accent2:#9945ff; --text:#e6edf3; --muted:#8b98a9; --danger:#ff5c5c; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:radial-gradient(1200px 600px at 50% -10%, #1a2333 0%, var(--bg) 60%);
+         color:var(--text); font-family:Tahoma,'Segoe UI',Arial,sans-serif; min-height:100vh; direction:rtl; }
+  .wrap { max-width:680px; margin:0 auto; padding:32px 20px 80px; }
+  .lang-bar { text-align:left; margin-bottom:20px; }
+  .lang-bar a { color:var(--muted); font-size:13px; text-decoration:none; padding:4px 8px; border-radius:6px; border:1px solid transparent; margin-right:4px; }
+  .lang-bar a:hover { border-color:#222c3d; color:var(--text); }
+  .lang-bar a.active { color:var(--accent); border-color:var(--accent); }
+  .logo { font-weight:800; font-size:28px; letter-spacing:-0.5px; }
+  .logo span { background:linear-gradient(90deg,var(--accent),var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .tag { color:var(--muted); margin:6px 0 28px; line-height:1.7; }
+  .card { background:var(--card); border:1px solid #222c3d; border-radius:16px; padding:24px; margin-bottom:18px; }
+  button { font-size:15px; font-weight:700; border:0; border-radius:12px; padding:13px 20px; cursor:pointer; color:#04110a;
+           background:linear-gradient(90deg,var(--accent),#0fd182); transition:transform .05s, opacity .2s; white-space:nowrap; }
+  button:hover { transform:translateY(-1px); }
+  button:disabled { opacity:.45; cursor:not-allowed; transform:none; }
+  button.secondary { background:#243044; color:var(--text); }
+  button.wallet-btn { background:#243044; color:var(--text); font-size:14px; padding:10px 16px; display:flex; align-items:center; gap:8px; }
+  button.wallet-btn.active { background:linear-gradient(90deg,var(--accent),#0fd182); color:#04110a; }
+  button.tweet-btn { background:#1d9bf0; color:#fff; font-size:15px; }
+  .row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+  .big { font-size:40px; font-weight:800; line-height:1.1; }
+  .accent { color:var(--accent); }
+  .muted { color:var(--muted); font-size:14px; }
+  .pill { display:inline-block; background:#0f1622; border:1px solid #2a3344; border-radius:999px; padding:4px 12px; font-size:13px; color:var(--muted); }
+  .fee-note { font-size:13px; color:var(--muted); line-height:1.8; }
+  .ok { color:var(--accent); } .err { color:var(--danger); }
+  a { color:var(--accent); }
+  #log { font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12px; color:var(--muted); white-space:pre-wrap;
+         max-height:180px; overflow:auto; margin-top:14px; direction:ltr; text-align:left; }
+  .acct-table { width:100%; border-collapse:collapse; margin-top:14px; font-size:12px; direction:ltr; }
+  .acct-table th { text-align:left; color:var(--muted); font-weight:600; padding:4px 6px; border-bottom:1px solid #1d2633; }
+  .acct-table td { padding:5px 6px; border-bottom:1px solid #161e2c; color:var(--muted); font-family:ui-monospace,Consolas,monospace; }
+  .acct-table td.sol { color:var(--accent); }
+  #moreRow td { color:var(--accent); font-family:inherit; cursor:pointer; padding-top:8px; }
+  #shareCard { text-align:center; }
+  #shareCard .big.success { background:linear-gradient(90deg,var(--accent),var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  #shareCard .share-sub { color:var(--muted); font-size:15px; margin:8px 0 22px; }
+  #shareCard .row { justify-content:center; }
+  .badge { display:inline-block; background:#0f2018; border:1px solid var(--accent); border-radius:8px; padding:3px 10px; font-size:12px; color:var(--accent); margin-right:8px; vertical-align:middle; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="lang-bar">
+    <a href="/solsweep/">EN</a>
+    <a href="/fr/solsweep/">FR</a>
+    <a href="/ar/solsweep/" class="active">AR</a>
+  </div>
+
+  <div class="logo">Sol<span>Sweep</span></div>
+  <div class="tag">أغلق حسابات الرموز الميتة واسترجع SOL المحجوز بداخلها. غير وصائي — أنت توقّع، نحن لا نلمس مفاتيحك أبداً.</div>
+
+  <!-- ربط المحفظة -->
+  <div class="card" id="connectCard">
+    <div class="muted" style="margin-bottom:14px">اربط محفظة Solana الخاصة بك لبدء الفحص</div>
+    <div class="row" id="walletBtns">
+      <button class="wallet-btn" id="btnPhantom">👻 Phantom</button>
+      <button class="wallet-btn" id="btnSolflare">☀️ Solflare</button>
+      <button class="wallet-btn" id="btnBackpack">🎒 Backpack</button>
+    </div>
+    <div style="margin-top:14px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+      <span class="pill" id="walletPill">غير متصل</span>
+      <button class="secondary" id="rescanBtn" style="display:none; padding:8px 14px; font-size:13px;">↻ إعادة الفحص</button>
+      <button class="secondary" id="disconnectBtn" style="display:none; padding:8px 14px; font-size:13px;">قطع الاتصال</button>
+    </div>
+  </div>
+
+  <!-- نتائج الفحص -->
+  <div class="card" id="scanCard" style="display:none">
+    <div class="row" style="justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:12px">
+      <div>
+        <div class="muted">قابل للاسترجاع</div>
+        <div class="big accent"><span id="reclaimSol">0</span> <span style="font-size:24px">SOL</span></div>
+        <div class="muted" style="margin-top:4px">
+          <span id="acctCount">0</span> حساباً فارغاً ·
+          ستحتفظ بـ <span id="netSol">0</span> SOL بعد رسوم <span id="feePct">10</span>%
+        </div>
+      </div>
+      <button id="reclaimBtn" disabled>استرجع SOL</button>
+    </div>
+
+    <div id="accountTableWrap" style="display:none">
+      <table class="acct-table">
+        <thead><tr><th>Mint</th><th>النوع</th><th style="text-align:right">SOL محجوز</th></tr></thead>
+        <tbody id="accountTableBody"></tbody>
+      </table>
+    </div>
+
+    <div id="log"></div>
+  </div>
+
+  <!-- بطاقة المشاركة (بعد الاسترجاع الناجح) -->
+  <div class="card" id="shareCard" style="display:none">
+    <div class="big success">🎉 <span id="recoveredAmt">0</span> SOL تم استرجاعه!</div>
+    <div class="share-sub">
+      أُغلق <span id="closedCount">0</span> حساباً فارغاً · المحفظة نظيفة الآن
+    </div>
+    <div class="row">
+      <button class="tweet-btn" id="tweetBtn">𝕏 مشاركة</button>
+      <button class="secondary" id="sweepAgainBtn">فحص مرة أخرى</button>
+    </div>
+  </div>
+
+  <!-- كيف يعمل -->
+  <div class="card">
+    <div class="fee-note">
+      <b>كيف يعمل:</b> كل حساب رمز SPL يحجز ~0.002 SOL كرسوم إيجار. عندما لا تمتلك ذلك الرمز بعد الآن، يبقى الحساب فارغاً لكن SOL يبقى محجوزاً. SolSweep يجد كل الحسابات الفارغة ويغلقها بنقرة واحدة — فيعود الإيجار إليك.<br><br>
+      <b>الرسوم:</b> رسوم <span id="feePct2">10</span>% على SOL المسترجع مضمنة في نفس المعاملة التي توافق عليها. لا استرجاع، لا رسوم. ترى المبالغ الدقيقة دائماً قبل التوقيع.<br><br>
+      <b>الأمان:</b> 100% في متصفحك. نحن نبني المعاملة فقط؛ <b>أنت</b> توافق عليها في محفظتك. لا نرى عبارة الاسترداد ولا المفتاح الخاص أبداً. فقط الحسابات الفارغة (رصيد صفر) تُغلق — رموزك لا تُمس أبداً.
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/@solana/web3.js@1.95.3/lib/index.iife.min.js"></script>
+<script src="../../solsweep/app.js"></script>
+<script src="/js/ads.js"></script>
+</body>
+</html>

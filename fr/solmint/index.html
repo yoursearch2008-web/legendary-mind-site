@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SolMint — Create your Solana token in 60 seconds</title>
+<title>SolMint — Créez votre token Solana en 60 secondes</title>
+<meta name="description" content="Créez votre propre token SPL Solana en 60 secondes. Aucun code nécessaire. Définissez nom, symbole, supply et métadonnées. 100% non-custodial." />
+<meta name="keywords" content="créer token solana, solmint français, spl token creation, mint token solana, phantom wallet" />
+<meta property="og:title" content="SolMint — Créez un token Solana en 60 secondes" />
+<meta property="og:description" content="Lancez votre propre token SPL sans code. Nom, symbole, supply — directement depuis votre wallet." />
+<link rel="canonical" href="https://soltools.fyi/fr/solmint/" />
 <link rel="alternate" hreflang="en" href="https://soltools.fyi/solmint/" />
 <link rel="alternate" hreflang="fr" href="https://soltools.fyi/fr/solmint/" />
 <link rel="alternate" hreflang="ar" href="https://soltools.fyi/ar/solmint/" />
@@ -14,6 +19,10 @@
   body { background:radial-gradient(1200px 700px at 50% -5%,#1a2333 0%,var(--bg) 60%); color:var(--text);
          font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif; min-height:100vh; }
   .wrap { max-width:600px; margin:0 auto; padding:36px 20px 80px; }
+  .lang-bar { text-align:right; margin-bottom:20px; }
+  .lang-bar a { color:var(--muted); font-size:13px; text-decoration:none; padding:4px 8px; border-radius:6px; border:1px solid transparent; margin-left:4px; }
+  .lang-bar a:hover { border-color:var(--border); color:var(--text); }
+  .lang-bar a.active { color:var(--accent); border-color:var(--accent); }
   .logo { font-weight:800; font-size:26px; letter-spacing:-0.5px; margin-bottom:4px; }
   .logo span { background:linear-gradient(90deg,var(--accent),var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
   .tag { color:var(--muted); font-size:14px; margin-bottom:28px; }
@@ -56,104 +65,110 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="logo">Sol<span>Mint</span></div>
-  <div class="tag">Launch your own Solana token in 60 seconds. No code needed.</div>
+  <div class="lang-bar">
+    <a href="/solmint/">EN</a>
+    <a href="/fr/solmint/" class="active">FR</a>
+    <a href="/ar/solmint/">AR</a>
+  </div>
 
-  <!-- Step indicator -->
+  <div class="logo">Sol<span>Mint</span></div>
+  <div class="tag">Lancez votre propre token Solana en 60 secondes. Aucun code requis.</div>
+
   <div class="step-indicator">
     <div class="step active" id="s1"></div>
     <div class="step" id="s2"></div>
     <div class="step" id="s3"></div>
   </div>
 
-  <!-- Step 1: Connect -->
+  <!-- Étape 1 : Connecter -->
   <div class="card" id="connectCard">
-    <h3>Step 1 — Connect Wallet</h3>
+    <h3>Étape 1 — Connecter le Wallet</h3>
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
       <button id="btnPhantom" class="secondary" style="width:auto">👻 Phantom</button>
       <button id="btnSolflare" class="secondary" style="width:auto">☀️ Solflare</button>
       <button id="btnBackpack" class="secondary" style="width:auto">🎒 Backpack</button>
-      <span class="pill" id="walletPill">Not connected</span>
+      <span class="pill" id="walletPill">Non connecté</span>
     </div>
   </div>
 
-  <!-- Step 2: Token config -->
+  <!-- Étape 2 : Configurer le token -->
   <div class="card" id="configCard" style="display:none">
-    <h3>Step 2 — Configure Token</h3>
+    <h3>Étape 2 — Configurer le Token</h3>
 
     <div class="row2">
       <div>
-        <label>Token Name</label>
-        <input id="tName" placeholder="My Awesome Token" maxlength="32"/>
+        <label>Nom du token</label>
+        <input id="tName" placeholder="Mon Super Token" maxlength="32"/>
       </div>
       <div>
-        <label>Symbol</label>
-        <input id="tSymbol" placeholder="MAT" maxlength="10" style="text-transform:uppercase"/>
+        <label>Symbole</label>
+        <input id="tSymbol" placeholder="MST" maxlength="10" style="text-transform:uppercase"/>
       </div>
     </div>
 
     <div class="row3" style="margin-top:14px">
       <div>
-        <label>Decimals</label>
+        <label>Décimales</label>
         <input id="tDecimals" type="number" value="6" min="0" max="9"/>
       </div>
       <div style="grid-column:span 2">
-        <label>Total Supply</label>
+        <label>Supply totale</label>
         <input id="tSupply" type="number" value="1000000000" min="1"/>
       </div>
     </div>
 
-    <label>Description (optional)</label>
-    <textarea id="tDesc" placeholder="What is this token for?"></textarea>
+    <label>Description (optionnel)</label>
+    <textarea id="tDesc" placeholder="À quoi sert ce token ?"></textarea>
 
-    <label>Image URL (optional — paste a direct image link)</label>
-    <input id="tImage" placeholder="https://example.com/token-logo.png"/>
+    <label>URL de l'image (optionnel — collez un lien direct vers l'image)</label>
+    <input id="tImage" placeholder="https://exemple.com/logo-token.png"/>
 
     <div class="fee-box" style="margin-top:18px">
-      <div class="row"><span class="label">Network rent (mint account)</span><span class="value">~0.0015 SOL</span></div>
-      <div class="row"><span class="label">Network rent (metadata)</span><span class="value">~0.0100 SOL</span></div>
-      <div class="row"><span class="label">Transaction fee</span><span class="value">~0.0001 SOL</span></div>
-      <div class="row"><span class="label">SolMint service fee</span><span class="value">0.05 SOL</span></div>
-      <div class="row total"><span class="label">Total estimated cost</span><span class="value">~0.062 SOL</span></div>
+      <div class="row"><span class="label">Loyer réseau (compte mint)</span><span class="value">~0.0015 SOL</span></div>
+      <div class="row"><span class="label">Loyer réseau (métadonnées)</span><span class="value">~0.0100 SOL</span></div>
+      <div class="row"><span class="label">Frais de transaction</span><span class="value">~0.0001 SOL</span></div>
+      <div class="row"><span class="label">Frais de service SolMint</span><span class="value">0.05 SOL</span></div>
+      <div class="row total"><span class="label">Coût total estimé</span><span class="value">~0.062 SOL</span></div>
     </div>
 
-    <button id="reviewBtn" style="margin-top:18px">Review &amp; Create Token →</button>
+    <button id="reviewBtn" style="margin-top:18px">Vérifier &amp; Créer le Token →</button>
   </div>
 
-  <!-- Step 3: Review + Launch -->
+  <!-- Étape 3 : Vérifier + Lancer -->
   <div class="card" id="reviewCard" style="display:none">
-    <h3>Step 3 — Review &amp; Launch</h3>
+    <h3>Étape 3 — Vérifier &amp; Lancer</h3>
     <div id="reviewContent"></div>
     <div id="log"></div>
     <div style="display:flex;gap:10px;margin-top:14px">
-      <button class="secondary" id="backBtn" style="width:auto;padding:12px 20px">← Back</button>
-      <button id="launchBtn">Launch Token</button>
+      <button class="secondary" id="backBtn" style="width:auto;padding:12px 20px">← Retour</button>
+      <button id="launchBtn">Lancer le Token</button>
     </div>
   </div>
 
-  <!-- Result -->
+  <!-- Résultat -->
   <div class="card result-card" id="resultCard" style="display:none">
     <div class="big">🚀</div>
-    <h3>Token Launched!</h3>
+    <h3>Token lancé !</h3>
     <div id="resultText" style="color:var(--muted);font-size:14px;margin-bottom:8px"></div>
     <div class="mint-addr" id="mintAddr"></div>
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px">
-      <a id="solscanLink" href="#" target="_blank"><button style="width:auto;padding:12px 20px">View on Solscan</button></a>
-      <button class="secondary" id="newTokenBtn" style="width:auto;padding:12px 20px">Create another</button>
+      <a id="solscanLink" href="#" target="_blank"><button style="width:auto;padding:12px 20px">Voir sur Solscan</button></a>
+      <button class="secondary" id="newTokenBtn" style="width:auto;padding:12px 20px">Créer un autre</button>
     </div>
   </div>
 
-  <!-- Info -->
+  <!-- Infos -->
   <div class="card" style="margin-top:8px">
     <div style="font-size:13px;color:var(--muted);line-height:1.6">
-      <b style="color:var(--text)">What you get:</b> A live SPL token on Solana mainnet with your name, symbol, decimals, and full supply minted to your wallet. Import into any Solana wallet instantly.<br><br>
-      <b style="color:var(--text)">Safety:</b> 100% non-custodial. You sign every transaction. We never hold your funds or keys.<br><br>
-      <b style="color:var(--text)">Service fee:</b> 0.05 SOL is transferred in the same transaction you approve — fully transparent.
+      <b style="color:var(--text)">Ce que vous obtenez :</b> un token SPL actif sur le mainnet Solana avec votre nom, symbole, décimales et supply complète mintée dans votre wallet. Importez-le instantanément dans n'importe quel wallet Solana.<br><br>
+      <b style="color:var(--text)">Sécurité :</b> 100% non-custodial. Vous signez chaque transaction. Nous ne détenons jamais vos fonds ni vos clés.<br><br>
+      <b style="color:var(--text)">Frais de service :</b> 0,05 SOL est transféré dans la même transaction que vous approuvez — totalement transparent.
     </div>
   </div>
 </div>
 
 <script src="https://unpkg.com/@solana/web3.js@1.95.3/lib/index.iife.min.js"></script>
-<script src="app.js"></script>
-<script src="/js/ads.js"></script></body>
+<script src="../../solmint/app.js"></script>
+<script src="/js/ads.js"></script>
+</body>
 </html>

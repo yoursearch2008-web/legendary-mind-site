@@ -1,21 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- SolTools — primary pages -->
-  <url><loc>https://soltools.fyi/</loc><lastmod>2026-06-25</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://soltools.fyi/solsweep/</loc><lastmod>2026-06-25</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://soltools.fyi/solswap/</loc><lastmod>2026-06-25</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://soltools.fyi/solmint/</loc><lastmod>2026-06-25</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://soltools.fyi/solsend/</loc><lastmod>2026-06-25</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://soltools.fyi/solburn/</loc><lastmod>2026-06-25</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <!-- GTA content pages -->
-  <url><loc>https://soltools.fyi/pages/graphics.html</loc><lastmod>2026-04-25</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://soltools.fyi/pages/map.html</loc><lastmod>2026-04-25</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://soltools.fyi/pages/gameplay.html</loc><lastmod>2026-04-25</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://soltools.fyi/pages/story.html</loc><lastmod>2026-04-25</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://soltools.fyi/pages/online.html</loc><lastmod>2026-04-25</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://soltools.fyi/pages/gta5-cheats.html</loc><lastmod>2026-04-25</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://soltools.fyi/pages/gta6-release-date.html</loc><lastmod>2026-04-25</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://soltools.fyi/pages/gta6-characters.html</loc><lastmod>2026-04-25</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://soltools.fyi/pages/gta5-mods.html</loc><lastmod>2026-04-25</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://soltools.fyi/pages/gta6-tips.html</loc><lastmod>2026-04-25</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- ── English (primary) ─────────────────────────────────────────────── -->
+  <url>
+    <loc>https://soltools.fyi/</loc>
+    <lastmod>2026-06-26</lastmod><changefreq>weekly</changefreq><priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://soltools.fyi/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://soltools.fyi/fr/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://soltools.fyi/ar/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://soltools.fyi/"/>
+  </url>
+  <url>
+    <loc>https://soltools.fyi/solsweep/</loc>
+    <lastmod>2026-06-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://soltools.fyi/solsweep/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://soltools.fyi/fr/solsweep/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://soltools.fyi/ar/solsweep/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://soltools.fyi/solsweep/"/>
+  </url>
+  <url>
+    <loc>https://soltools.fyi/solswap/</loc>
+    <lastmod>2026-06-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://soltools.fyi/solswap/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://soltools.fyi/fr/solswap/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://soltools.fyi/ar/solswap/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://soltools.fyi/solswap/"/>
+  </url>
+  <url>
+    <loc>https://soltools.fyi/solmint/</loc>
+    <lastmod>2026-06-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://soltools.fyi/solmint/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://soltools.fyi/fr/solmint/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://soltools.fyi/ar/solmint/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://soltools.fyi/solmint/"/>
+  </url>
+  <url>
+    <loc>https://soltools.fyi/solsend/</loc>
+    <lastmod>2026-06-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://soltools.fyi/solsend/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://soltools.fyi/fr/solsend/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://soltools.fyi/ar/solsend/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://soltools.fyi/solsend/"/>
+  </url>
+  <url>
+    <loc>https://soltools.fyi/solburn/</loc>
+    <lastmod>2026-06-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://soltools.fyi/solburn/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://soltools.fyi/fr/solburn/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://soltools.fyi/ar/solburn/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://soltools.fyi/solburn/"/>
+  </url>
+
+  <!-- ── French ────────────────────────────────────────────────────────── -->
+  <url><loc>https://soltools.fyi/fr/</loc><lastmod>2026-06-26</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://soltools.fyi/fr/solsweep/</loc><lastmod>2026-06-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://soltools.fyi/fr/solswap/</loc><lastmod>2026-06-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://soltools.fyi/fr/solmint/</loc><lastmod>2026-06-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://soltools.fyi/fr/solsend/</loc><lastmod>2026-06-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://soltools.fyi/fr/solburn/</loc><lastmod>2026-06-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- ── Arabic ────────────────────────────────────────────────────────── -->
+  <url><loc>https://soltools.fyi/ar/</loc><lastmod>2026-06-26</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://soltools.fyi/ar/solsweep/</loc><lastmod>2026-06-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://soltools.fyi/ar/solswap/</loc><lastmod>2026-06-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://soltools.fyi/ar/solmint/</loc><lastmod>2026-06-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://soltools.fyi/ar/solsend/</loc><lastmod>2026-06-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://soltools.fyi/ar/solburn/</loc><lastmod>2026-06-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
 </urlset>
