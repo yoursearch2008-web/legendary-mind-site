@@ -2,7 +2,13 @@
  * Cookie Consent — EU GDPR / AFM compliance
  * Must load BEFORE ads.js. Sets window.ST_ADS_OK flag.
  * ads.js checks this flag before injecting A-ADS.
+ * Also registers the PWA service worker.
  */
+
+// PWA service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
 
 (function () {
   const STORE_KEY = 'st-cookie-consent';
