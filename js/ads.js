@@ -1,38 +1,34 @@
 /**
  * SolTools Monetization Layer
- * - Exchange affiliate banners (high CPA: $30-200 per referral)
- * - A-ADS crypto ad slot (no approval, paste your unit ID)
- * - Coinzilla / Hypelab slot (paste zone ID after approval)
+ * - Exchange affiliate banners (CPA + revenue share)
+ * - A-ADS / Coinzilla crypto ad slot
+ * - AFM-compliant crypto risk disclaimer (required for EU/NL targeting)
+ *
+ * EXCHANGES: Bitvavo (DNB-registered NL), OKX (DNB-registered), Ledger, Koinly
+ * Removed: Bybit (unregistered NL), Binance (DNB ban since 2022)
  */
 
 // ── CONFIG — fill your referral codes here ────────────────────────────────
 const ADS_CONFIG = {
-  bybit_ref:    'SOLTOOLS',   // bybit.com/invite → get your code
-  binance_ref:  'SOLTOOLS',   // binance.com/activity/referral
-  okx_ref:      'SOLTOOLS',   // okx.com/join
-  ledger_ref:   'SOLTOOLS',   // ledger.com/affiliate
-  a_ads_unit:   '',           // a-ads.com → sign up free → unit ID (e.g. "2345678")
-  coinzilla_zone: '',         // coinzilla.io → zone ID after approval
-  hypelab_slug:   '',         // hypelab.com → property slug after approval
+  bitvavo_ref:    '',   // bitvavo.com/en/affiliate → get code (10% fee share)
+  okx_ref:        'SOLTOOLS',   // okx.com/join
+  ledger_ref:     'SOLTOOLS',   // ledger.com/affiliate
+  koinly_ref:     '',   // koinly.io/affiliates → get code (30% recurring)
+  a_ads_unit:     '',   // a-ads.com → sign up free → unit ID (e.g. "2345678")
+  coinzilla_zone: '',   // coinzilla.io → zone ID after approval
+  hypelab_slug:   '',   // hypelab.com → property slug after approval
 };
 
 const EXCHANGES = [
   {
-    name: 'Bybit',
-    logo: '🟡',
-    color: '#f7a600',
-    text: 'Trade SOL on Bybit',
-    sub: 'Up to $30,000 welcome bonus',
-    url: () => `https://www.bybit.com/invite?ref=${ADS_CONFIG.bybit_ref}`,
-    cta: 'Claim Bonus →',
-  },
-  {
-    name: 'Binance',
-    logo: '🟠',
-    color: '#f0b90b',
-    text: 'Buy SOL on Binance',
-    sub: 'World\'s largest crypto exchange',
-    url: () => `https://accounts.binance.com/register?ref=${ADS_CONFIG.binance_ref}`,
+    name: 'Bitvavo',
+    logo: '🇳🇱',
+    color: '#1a6fff',
+    text: 'Buy SOL on Bitvavo',
+    sub: 'DNB-registered · #1 crypto exchange in the Netherlands',
+    url: () => ADS_CONFIG.bitvavo_ref
+      ? `https://bitvavo.com/?a=${ADS_CONFIG.bitvavo_ref}`
+      : 'https://bitvavo.com/',
     cta: 'Start Trading →',
   },
   {
@@ -53,6 +49,17 @@ const EXCHANGES = [
     url: () => `https://shop.ledger.com/pages/referral-program?referral=${ADS_CONFIG.ledger_ref}`,
     cta: 'Shop Ledger →',
   },
+  {
+    name: 'Koinly',
+    logo: '📊',
+    color: '#7b3fe4',
+    text: 'File your Solana taxes with Koinly',
+    sub: 'Auto-import · Netherlands, Belgium, 20+ countries',
+    url: () => ADS_CONFIG.koinly_ref
+      ? `https://koinly.io/?via=${ADS_CONFIG.koinly_ref}`
+      : 'https://koinly.io/',
+    cta: 'Calculate Taxes →',
+  },
 ];
 
 let _exchIdx = Math.floor(Math.random() * EXCHANGES.length);
@@ -62,6 +69,15 @@ function injectStyles() {
   const s = document.createElement('style');
   s.id = 'soltools-ad-styles';
   s.textContent = `
+    /* ── AFM risk disclaimer ── */
+    #st-afm{
+      background:rgba(255,200,0,.06);border:1px solid rgba(255,200,0,.18);
+      border-radius:10px;padding:10px 16px;margin:0 0 16px;
+      font-family:-apple-system,Segoe UI,Roboto,sans-serif;
+      font-size:.72rem;color:#c8a900;line-height:1.5;
+    }
+    #st-afm strong{font-weight:700}
+
     /* ── Sticky bottom bar ── */
     #st-sticky{
       position:fixed;bottom:0;left:0;right:0;z-index:9000;
@@ -124,6 +140,30 @@ function injectStyles() {
   document.head.appendChild(s);
 }
 
+// ── AFM / EU crypto risk disclaimer ──────────────────────────────────────
+// Required for advertising targeting Dutch / EU users (AFM rules, Jan 2024)
+
+function injectAfmDisclaimer() {
+  if (document.getElementById('st-afm')) return;
+  const wrap = document.querySelector('.wrap');
+  if (!wrap) return;
+  const box = document.createElement('div');
+  box.id = 'st-afm';
+  const isFr = location.pathname.startsWith('/fr/');
+  const isAr = location.pathname.startsWith('/ar/');
+  if (isFr) {
+    box.innerHTML = `<strong>⚠️ Avertissement :</strong> Les crypto-actifs sont volatils et non réglementés. Vous pouvez perdre tout ou partie de votre investissement. Ce site perçoit des commissions d'affiliation.`;
+  } else if (isAr) {
+    box.innerHTML = `<strong>⚠️ تحذير:</strong> العملات المشفرة متقلبة وغير منظمة. قد تخسر جزءاً أو كل استثمارك. هذا الموقع يتلقى عمولة إحالة.`;
+    box.style.direction = 'rtl';
+  } else {
+    box.innerHTML = `<strong>⚠️ Risk warning:</strong> Crypto assets are highly volatile and unregulated. You may lose part or all of your investment. This site receives affiliate commissions. <em>— AFM/DNB disclosure, Netherlands.</em>`;
+  }
+  const firstCard = wrap.querySelector('.card, .stats-row, h3, #connectCard');
+  if (firstCard) wrap.insertBefore(box, firstCard);
+  else wrap.prepend(box);
+}
+
 // ── Sticky affiliate bar ──────────────────────────────────────────────────
 
 function injectStickyBar() {
@@ -137,7 +177,7 @@ function injectStickyBar() {
       <div class="st-main">${ex.text}</div>
       <div class="st-sub">${ex.sub}</div>
     </div>
-    <a class="st-cta" href="${ex.url()}" target="_blank" rel="noopener" onclick="stTrack('sticky','${ex.name}')">${ex.cta}</a>
+    <a class="st-cta" href="${ex.url()}" target="_blank" rel="noopener sponsored" onclick="stTrack('sticky','${ex.name}')">${ex.cta}</a>
     <button class="st-close" onclick="stClose()" title="Close">✕</button>
   `;
   document.body.appendChild(bar);
@@ -159,7 +199,7 @@ function createNativeBanner(exIdx) {
   a.className = 'st-native-banner';
   a.href = ex.url();
   a.target = '_blank';
-  a.rel = 'noopener';
+  a.rel = 'noopener sponsored';
   a.setAttribute('onclick', `stTrack('native','${ex.name}')`);
   a.innerHTML = `
     <div class="snb-icon">${ex.logo}</div>
@@ -202,12 +242,9 @@ function injectAdNetworkSlot() {
     script.async = true;
     script.setAttribute('data-zone', ADS_CONFIG.coinzilla_zone);
     slot.appendChild(script);
-  } else {
-    // Placeholder until ad network approved — shows nothing to users
-    // but structure is ready. Remove this else block after adding your unit ID.
   }
 
-  // Inject before "How it works" card or before last card
+  // Inject before last card
   const cards = document.querySelectorAll('.card');
   const lastCard = cards[cards.length - 1];
   if (lastCard) lastCard.insertAdjacentElement('beforebegin', slot);
@@ -225,9 +262,9 @@ function stTrack(pos, name) {
 
 document.addEventListener('DOMContentLoaded', () => {
   injectStyles();
+  injectAfmDisclaimer();
   injectStickyBar();
   injectNativeBanner();
   injectAdNetworkSlot();
-  // Rotate exchange shown on next page view
   _exchIdx = (_exchIdx + 1) % EXCHANGES.length;
 });
