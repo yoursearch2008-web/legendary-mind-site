@@ -11,8 +11,8 @@
 // ── CONFIG — fill your referral codes here ────────────────────────────────
 const ADS_CONFIG = {
   bitvavo_ref:    '2CD7BFA42C',   // bitvavo.com/invite?a=2CD7BFA42C (10% fee share)
-  okx_ref:        'SOLTOOLS',   // okx.com/join
-  ledger_ref:     'SOLTOOLS',   // ledger.com/affiliate
+  okx_ref:        '',   // okx.com/join → get code (optional)
+  ledger_ref:     '',   // ledger.com/affiliate → get code (optional)
   koinly_ref:     '85756FAD',   // koinly.io/?via=85756FAD (30% recurring)
   a_ads_unit:     '511975',   // a-ads.com unit ID
   coinzilla_zone: '',   // coinzilla.io → zone ID after approval
@@ -37,7 +37,7 @@ const EXCHANGES = [
     color: '#ffffff',
     text: 'Trade SOL on OKX',
     sub: 'Zero-fee spot trading available',
-    url: () => `https://www.okx.com/join/${ADS_CONFIG.okx_ref}`,
+    url: () => ADS_CONFIG.okx_ref ? `https://www.okx.com/join/${ADS_CONFIG.okx_ref}` : 'https://www.okx.com/',
     cta: 'Trade Free →',
   },
   {
@@ -46,7 +46,7 @@ const EXCHANGES = [
     color: '#14f195',
     text: 'Secure your SOL with Ledger',
     sub: 'Hardware wallet — your keys, your crypto',
-    url: () => `https://shop.ledger.com/pages/referral-program?referral=${ADS_CONFIG.ledger_ref}`,
+    url: () => ADS_CONFIG.ledger_ref ? `https://shop.ledger.com/pages/referral-program?referral=${ADS_CONFIG.ledger_ref}` : 'https://shop.ledger.com/',
     cta: 'Shop Ledger →',
   },
   {
