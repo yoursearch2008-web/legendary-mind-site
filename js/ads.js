@@ -14,7 +14,7 @@ const ADS_CONFIG = {
   okx_ref:        'SOLTOOLS',   // okx.com/join
   ledger_ref:     'SOLTOOLS',   // ledger.com/affiliate
   koinly_ref:     '',   // koinly.io/affiliates → get code (30% recurring)
-  a_ads_unit:     '',   // a-ads.com → sign up free → unit ID (e.g. "2345678")
+  a_ads_unit:     '511975',   // a-ads.com unit ID
   coinzilla_zone: '',   // coinzilla.io → zone ID after approval
   hypelab_slug:   '',   // hypelab.com → property slug after approval
 };
